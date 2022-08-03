@@ -1,0 +1,150 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Characters
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 8192
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 2
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 061c5a4f639de1040bfeda9712fda771, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: c48d3db0bdb71294dbc5f9c8a0f1ad60, type: 3}
+  - {fileID: 21300000, guid: 66ae58512d3e2d64fb33839a7cd0aa34, type: 3}
+  - {fileID: 21300000, guid: 2628dc515d76094429e8353bdf429735, type: 3}
+  - {fileID: 21300000, guid: f820dc81fc2720340b871dbb27ee0bd6, type: 3}
+  - {fileID: 21300000, guid: 4b61b1e1f0a19c34ea8728305d5b9f04, type: 3}
+  - {fileID: 21300000, guid: f6f23692cf939004a9a3aa022e2c1ab5, type: 3}
+  - {fileID: 21300000, guid: 7d9332a2b81fc2746a7107038c6f7203, type: 3}
+  - {fileID: 21300000, guid: 18949ec2c139a7549864229e2d7b668e, type: 3}
+  - {fileID: 21300000, guid: 17f15fc27c79ab84483ad07785b94610, type: 3}
+  - {fileID: 21300000, guid: 22713223aa93b0146abe177c226285b7, type: 3}
+  - {fileID: 21300000, guid: 4a78a0c33ed787941bbd84823021959b, type: 3}
+  - {fileID: 21300000, guid: 8b011ac376376294c9826470861c8e59, type: 3}
+  - {fileID: 21300000, guid: 8552b0f36d190df4abe393a369271b65, type: 3}
+  - {fileID: 21300000, guid: 1d00381486416114b8a118c714b5091b, type: 3}
+  - {fileID: 21300000, guid: 5ff7025497258924b8c031fc21ea28dd, type: 3}
+  - {fileID: 21300000, guid: b7bb9ab474f017b4bb94ab4c61288979, type: 3}
+  - {fileID: 21300000, guid: 337e92d417a0f5e48b8598b5b0284964, type: 3}
+  - {fileID: 21300000, guid: c5725f45ad9cc5243979f2220c1c8956, type: 3}
+  - {fileID: 21300000, guid: b19753654c0048344b7b496e7e6d0057, type: 3}
+  - {fileID: 21300000, guid: f702bfc52626ed642aca3a736942ac2d, type: 3}
+  - {fileID: 21300000, guid: 4ab08e0697013ee4cb8df8183af01538, type: 3}
+  - {fileID: 21300000, guid: 5133893639bbdde42975568d3058a842, type: 3}
+  - {fileID: 21300000, guid: c3997e8627d3230458ea2d658c76767e, type: 3}
+  - {fileID: 21300000, guid: 4021a59672aff574ca567fdc7477b7c6, type: 3}
+  - {fileID: 21300000, guid: 969f6a27459931f42a1672c7443a93c5, type: 3}
+  - {fileID: 21300000, guid: 2112d90831843bf458fd14031b928d20, type: 3}
+  - {fileID: 21300000, guid: 8aa32948b0f85ff44a75a0c652547cb4, type: 3}
+  - {fileID: 21300000, guid: 18e764597423f434985729ab8ce1aac7, type: 3}
+  - {fileID: 21300000, guid: 5f31ed597d8d3ca4d855ecc2ff4a79a9, type: 3}
+  - {fileID: 21300000, guid: c17aa6d92c0327a4986d6ccc57b8624b, type: 3}
+  - {fileID: 21300000, guid: e895b54ab82d07d40b2c90c88b90f4da, type: 3}
+  - {fileID: 21300000, guid: a4b67e5aa81270d40afd3fa610933625, type: 3}
+  - {fileID: 21300000, guid: 9d53a6ca989ba154796f7f5ca50575c6, type: 3}
+  - {fileID: 21300000, guid: 88654dda034027d4fad4002a42b18429, type: 3}
+  - {fileID: 21300000, guid: aef2ba0be7f9a3e41ac6a1b9b60152a6, type: 3}
+  - {fileID: 21300000, guid: 12fd1cab15ee7d847aa6f46683c95475, type: 3}
+  - {fileID: 21300000, guid: 9239148c955b1594fb8b32aa75945238, type: 3}
+  - {fileID: 21300000, guid: ca39a88c613b3df4ba29df3350a22d49, type: 3}
+  - {fileID: 21300000, guid: eec6619c76935c64dbc25f2bdef4397d, type: 3}
+  - {fileID: 21300000, guid: efc6affc4ca57ec42aa927015f04fa3b, type: 3}
+  - {fileID: 21300000, guid: 0175251de26244c40be9384eefbf160e, type: 3}
+  - {fileID: 21300000, guid: 4a2ef92db8dd18547a3a13d4d4c7e641, type: 3}
+  - {fileID: 21300000, guid: f8dc3f2d3cef2ff4ab1379df61f9f0fd, type: 3}
+  - {fileID: 21300000, guid: 06fd1ecee0625e94a89b85e82ba697df, type: 3}
+  - {fileID: 21300000, guid: d8e0302f250708a4984a4c0a31198654, type: 3}
+  - {fileID: 21300000, guid: 0de80fbf7e20fcc45896baf9b66d72b7, type: 3}
+  - {fileID: 21300000, guid: 2fdd65eff5ec63e4db6ac7d06042c8f7, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - ch-037_nightmare_josh_stone
+  - ch-011_alliance_carlos_oliveira1
+  - ch-045_mercenaries_hunk
+  - ch-004_premier_sheva_alomar1
+  - ch-002_premier_leon_s_kennedy1
+  - ch-013_alliance_steve_burnside1
+  - ch-019_alliance_chris_redfield1
+  - ch-047_mercenaries_chris_redfield
+  - ch-022_outbreak_kevin_ryman
+  - ch-049_mercenaries_albert_wesker
+  - ch-009_premier_jill_valentine1
+  - ch-043_nightmare_ada_wong
+  - ch-015_alliance_hunk_partner_mod
+  - ch-023_outbreak_david_king
+  - ch-039_nightmare_carlos_oliveira
+  - ch-021_outbreak_excella_gionne_infection_mod
+  - ch-040_nightmare_mysterious_mask
+  - ch-029_outbreak_rebecca_chambers_infection_mod
+  - ch-035_nightmare_sergei_vladimir
+  - ch-028_outbreak_chris_redfield
+  - ch-048_mercenaries_jill_valentine
+  - ch-003_premier_claire_redfield1
+  - ch-006_premier_ada_wong1
+  - ch-025_outbreak_jill_valentine_infection_mod
+  - ch-014_alliance_jack_krauser1
+  - ch-030_outbreak_hunk
+  - ch-027_outbreak_ada_wong
+  - ch-042_nightmare_leon_s_kennedy
+  - ch-036_nightmare_luis_sera
+  - ch-034_nightmare_chris_redfield
+  - ch-026_outbreak_leon_s_kennedy
+  - ch-024_outbreak_mark_wilkins
+  - ch-012_alliance_josh_stone_partner_mod
+  - ch-046_mercenaries_claire_redfield
+  - ch-007_premier_jack_krauser1
+  - ch-018_alliance_leon_s_kennedy1
+  - ch-017_alliance_billy_coen1
+  - ch-038_nightmare_mikhail_victor
+  - ch-016_alliance_jill_valentine_partner_mod
+  - ch-005_premier_barry_burton1
+  - ch-020_alliance_claire_redfield1
+  - ch-041_nightmare_albert_wesker
+  - ch-008_premier_chris_redfield1
+  - ch-001_premier_albert_wesker1
+  - ch-051_mercenaries_barry_burton
+  - ch-050_mercenaries_rebecca_chambers
+  - ch-044_mercenaries_jack_krauser
+  m_RenderDataMap: {}
+  m_Tag: Characters
+  m_IsVariant: 0

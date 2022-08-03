@@ -1,0 +1,106 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: ActionCards
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 4096
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 0c109b1faf07b5e46a0c2c59269bbf0f, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 07319850e72d8ea47b3a691be8cdede7, type: 3}
+  - {fileID: 21300000, guid: c3fd99c07b0306640a32a0af1c65e4a3, type: 3}
+  - {fileID: 21300000, guid: 2c3217e03fe461c488213cf4a04f4758, type: 3}
+  - {fileID: 21300000, guid: 8a6faf912d1255f46b110ebfe4b068b3, type: 3}
+  - {fileID: 21300000, guid: b5bf0bc21df181043a649cd9c91f91b6, type: 3}
+  - {fileID: 21300000, guid: bec59583359f8a94393ab679b839db53, type: 3}
+  - {fileID: 21300000, guid: b02a2ac3a9a5fdf438f7c79d3b7e8b03, type: 3}
+  - {fileID: 21300000, guid: 65e63d0478a362a4c8d6294cc86363db, type: 3}
+  - {fileID: 21300000, guid: 3795da05ea5b7ad439f885a99dda67a7, type: 3}
+  - {fileID: 21300000, guid: ec89e7150d56ed74c8d2c891dca023b7, type: 3}
+  - {fileID: 21300000, guid: 60e71395de1039a4d9ee4cf918b6a771, type: 3}
+  - {fileID: 21300000, guid: ce8a02d547fa5aa47aac2bac37d81e0f, type: 3}
+  - {fileID: 21300000, guid: 4b913cd51fadb66418544ce37b78f66c, type: 3}
+  - {fileID: 21300000, guid: ec7d13560a34b15498d6274e56776c77, type: 3}
+  - {fileID: 21300000, guid: 5de2752722dcc8e4e9693807c423d483, type: 3}
+  - {fileID: 21300000, guid: 0803e0a762fd5d54ca26a723ed9b8c91, type: 3}
+  - {fileID: 21300000, guid: 51a62b8a36996dc4cba32bf42f20e0d5, type: 3}
+  - {fileID: 21300000, guid: 9cbecdca16f543e41b9c855edb9c8fd1, type: 3}
+  - {fileID: 21300000, guid: 7854801b3d8a35340aa719536c8b0c13, type: 3}
+  - {fileID: 21300000, guid: 3af55d4cba81ca744a51d8eb0a2a397b, type: 3}
+  - {fileID: 21300000, guid: 4106453dd05d46c49b3ff03f2d697199, type: 3}
+  - {fileID: 21300000, guid: 9aa09dfdd3850ea469cd58fdf06de221, type: 3}
+  - {fileID: 21300000, guid: 943af44e39b76074ea50d19d11c18227, type: 3}
+  - {fileID: 21300000, guid: 9476275e0caf2c6498f6f2c55e6bc71f, type: 3}
+  - {fileID: 21300000, guid: 5047807f941c3d54ab49628839d91a99, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - _ac18uroborosinjection
+  - _ac12struggletosurvival
+  - _ac17fiercebattle
+  - _ac28higherpriorities
+  - _ac11masterofunlocking
+  - _ac22desperateescape
+  - _ac19quirkoffate
+  - _ac08backtoback
+  - _ac24ihavethis
+  - _ac40vengefulintentions
+  - _ac34raccooncitypolicedepartment
+  - _ac02deadlyaim
+  - _ac13partners
+  - _ac15greatambition
+  - _ac10omniousbattle
+  - _ac33highvaluetargets
+  - _ac01mansionfoyer
+  - _ac36toetotoe
+  - _ac06themerchant
+  - _ac05reload
+  - _ac07umbrellacorporation
+  - _ac16archrival
+  - _ac14starcrossedduo
+  - _ac03shatteredmemories
+  - _ac04escapefromdeadcity
+  m_RenderDataMap: {}
+  m_Tag: ActionCards
+  m_IsVariant: 0

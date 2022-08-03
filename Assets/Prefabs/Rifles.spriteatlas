@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Rifles
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: d6a043b83da09df45be5d538fd36e6cb, type: 3}
+    - {fileID: 2800000, guid: 90a85022b135270468d01e78406926c4, type: 3}
+    - {fileID: 2800000, guid: 9a0cb58d5b0d0be4395c3f51d6dc0951, type: 3}
+    - {fileID: 2800000, guid: 97b1b22b4f00d7d4b852af5af1507937, type: 3}
+    - {fileID: 2800000, guid: 96b91c9f3b96e32448f056df7a198742, type: 3}
+    - {fileID: 2800000, guid: a7ee9ac81320f18429e6cb6ce86d08d3, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 90a85022b135270468d01e78406926c4, type: 3}
+  - {fileID: 21300000, guid: d6a043b83da09df45be5d538fd36e6cb, type: 3}
+  - {fileID: 21300000, guid: a7ee9ac81320f18429e6cb6ce86d08d3, type: 3}
+  - {fileID: 21300000, guid: 97b1b22b4f00d7d4b852af5af1507937, type: 3}
+  - {fileID: 21300000, guid: 9a0cb58d5b0d0be4395c3f51d6dc0951, type: 3}
+  - {fileID: 21300000, guid: 96b91c9f3b96e32448f056df7a198742, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - ras_rifle2
+  - ras_rifle1
+  - ras_svd
+  - ras_rifle4
+  - ras_rifle3
+  - ras_psg1
+  m_RenderDataMap: {}
+  m_Tag: Rifles
+  m_IsVariant: 0

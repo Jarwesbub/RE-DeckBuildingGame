@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Support
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 5406c1f439541bd4abab535ac6acca75, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 32f10740fab29d94f9c994c7ff0fd254, type: 3}
+  - {fileID: 21300000, guid: 6cbe8562b0bc4b84582fe895fbb5f232, type: 3}
+  - {fileID: 21300000, guid: a58e5e74b2155a74bac19d1a03d56c7c, type: 3}
+  - {fileID: 21300000, guid: 6e4ae205a5ebb7746a80c199925e02fa, type: 3}
+  - {fileID: 21300000, guid: ff0966954a2b1bf41afc2787b5c516ef, type: 3}
+  - {fileID: 21300000, guid: 2738f497add647f47b33a61e7bfea9ad, type: 3}
+  - {fileID: 21300000, guid: 5f4aea0839755fb4d8b03c941f3348de, type: 3}
+  - {fileID: 21300000, guid: 7b1037bab47ab174e8bc121a65f513da, type: 3}
+  - {fileID: 21300000, guid: e87be16bc327eb846a436553a01714a8, type: 3}
+  - {fileID: 21300000, guid: 72b39c1d0935afe4187d342561196932, type: 3}
+  - {fileID: 21300000, guid: afb37d7e4aaf0f6419bbf845504b341e, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - sup_grenade2
+  - sup_bow1
+  - sup_knife3
+  - sup_knife2
+  - sup_grenade1
+  - sup_flash1
+  - sup_flash2
+  - sup_knife1
+  - sup_grenade3
+  - sup_stunrod
+  - sup_bow2
+  m_RenderDataMap: {}
+  m_Tag: Support
+  m_IsVariant: 0

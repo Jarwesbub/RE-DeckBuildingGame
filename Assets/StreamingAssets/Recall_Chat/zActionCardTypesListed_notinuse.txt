@@ -1,0 +1,24 @@
+ACTION CARDS listed by "type" (not for code)
+
+
+//Get cards
+_ac01mansionfoyer
+_ac17fiercebattle
+
+//Firepower
+_ac02deadlyaim
+_ac22desperateescape
+_ac13partners
+
+//Get cards and action
+_ac04escapefromdeadcity
+_ac24ihavethis
+
+//Money
+_ac06themerchant
+
+//Make your pick
+_ac28higherpriorities
+_ac40vengefulintentions
+
+

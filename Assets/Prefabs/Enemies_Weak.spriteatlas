@@ -1,0 +1,128 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Enemies_Weak
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 4096
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: f59485b1a57aaa041a024d7271048c61, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 4191b410382094f49bdc95f9af772dcc, type: 3}
+  - {fileID: 21300000, guid: ef38ac1006dead143b822fc37880ce0f, type: 3}
+  - {fileID: 21300000, guid: 83c14e10114f20a41918a8fd303b4262, type: 3}
+  - {fileID: 21300000, guid: 3df9ac6023b1b874abd5fa099d3b69d2, type: 3}
+  - {fileID: 21300000, guid: 048c13b0904d60b41aebe58a196743b0, type: 3}
+  - {fileID: 21300000, guid: 63bc8e51fc9ef2f49bb4a7be9960046f, type: 3}
+  - {fileID: 21300000, guid: b4c28213f6ff42f44b659a817adbdeee, type: 3}
+  - {fileID: 21300000, guid: 58a4b1538578997488ea84fe7fc413ae, type: 3}
+  - {fileID: 21300000, guid: cfb6b473e31d02a4e8e03abcb7fa58a9, type: 3}
+  - {fileID: 21300000, guid: 8eb87834ffbd45b4699431248153d40b, type: 3}
+  - {fileID: 21300000, guid: 6275ebc494296b34a8e232a742d256b5, type: 3}
+  - {fileID: 21300000, guid: 7e901ae4ad541af43ae2b20e3881bcfd, type: 3}
+  - {fileID: 21300000, guid: a6f297055830ead4fbd2c7d222b3109b, type: 3}
+  - {fileID: 21300000, guid: 80073fe52d75f894e8ae456b707dcd6e, type: 3}
+  - {fileID: 21300000, guid: cc64876689fb9ce46a2cde1042ed04d1, type: 3}
+  - {fileID: 21300000, guid: 3b4c20879d18f314e9095ebea7af111e, type: 3}
+  - {fileID: 21300000, guid: 908d391896345f14c84ea3434502783e, type: 3}
+  - {fileID: 21300000, guid: 083a66481cc7ff34fa02d8a41e84ec76, type: 3}
+  - {fileID: 21300000, guid: b26179a8798c88341ade857cc30c2dbb, type: 3}
+  - {fileID: 21300000, guid: bf663d799b96607409678ffca59004ef, type: 3}
+  - {fileID: 21300000, guid: 68fc194a2d6565c4088ebb1d4866dc83, type: 3}
+  - {fileID: 21300000, guid: 6677586a38863384fa0341ec805f6d16, type: 3}
+  - {fileID: 21300000, guid: 2f7fa1ea19dbc454480077a723ffc74e, type: 3}
+  - {fileID: 21300000, guid: e28df05b82c529b4a9f31c21603403a8, type: 3}
+  - {fileID: 21300000, guid: caa3084c83f3416449788306c5949048, type: 3}
+  - {fileID: 21300000, guid: 0072516ca98cc6348af36df4dac42938, type: 3}
+  - {fileID: 21300000, guid: 56d99e6cc1d88b048bb972f7c6ed375c, type: 3}
+  - {fileID: 21300000, guid: ddcc34ac349344b4d94824f7a558d78c, type: 3}
+  - {fileID: 21300000, guid: a7c0e4dc2eacef445ad07826dbeae49d, type: 3}
+  - {fileID: 21300000, guid: e5c0024dd5af1374c94cf6789d387665, type: 3}
+  - {fileID: 21300000, guid: 7ed6864d175ff744ba389a665d7df40f, type: 3}
+  - {fileID: 21300000, guid: 8b3746cd99ed791488f5f13b1d89ce4e, type: 3}
+  - {fileID: 21300000, guid: b03f77ed1ddb9b54d89b746c717954dd, type: 3}
+  - {fileID: 21300000, guid: 9a29f04e6f73c3c4684ed37446082131, type: 3}
+  - {fileID: 21300000, guid: 502081be010f1734f83d51411bfd9bb9, type: 3}
+  - {fileID: 21300000, guid: fc981cbeb054ff6488e4462ba9afdba7, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - ma-095_mercenaries_los_ganados
+  - ma-035_alliance_los_illuminados_monk1
+  - ma-033_alliance_zombie_horde1
+  - ma-096_mercenaries_los_illuminados_bow
+  - ma-028_alliance_kipepeo_las_plagas1
+  - ma-064_nightmare_zombie_technician
+  - ma-062_nightmare_novistador
+  - ma-087_mercenaries_venomous_snake
+  - ma-027_alliance_zombie_male1
+  - ma-022_alliance_lurker1
+  - ma-083_mercenaries_los_ganados_male
+  - ma-059_nightmare_militia_flail
+  - ma-011_premier_dr_salvador1
+  - ma-047_outbreak_reinforced_zombie
+  - ma-003_premier_zombie_female1
+  - ma-002_premier_zombie_male1
+  - ma-005_premier_bui_kichwa1
+  - ma-045_outbreak_wasp
+  - ma-004_premier_zombie_butcher1
+  - ma-044_outbreak_grave_zombie
+  - ma-001_premier_majini1
+  - ma-093_mercenaries_los_ganados_handscythe
+  - ma-066_nightmare_ivy
+  - ma-063_nightmare_zombie_security_guard
+  - ma-073_mercenaries_town_majini
+  - ma-060_nightmare_militia_stun_rod
+  - ma-076_mercenaries_base_majini_gun_skill_mod
+  - ma-023_alliance_infected_bat1
+  - ma-084_mercenaries_los_ganados_female
+  - ma-051_outbreak_zombie_cop
+  - ma-052_outbreak_eliminator
+  - ma-074_mercenaries_town_majini_shovel
+  - ma-088_mercenaries_tribal_majini_bow
+  - ma-089_mercenaries_tribal_majini_oil_pot
+  - ma-097_mercenaries_militia_bow
+  - ma-077_mercenaries_chicken
+  m_RenderDataMap: {}
+  m_Tag: Enemies_Weak
+  m_IsVariant: 0

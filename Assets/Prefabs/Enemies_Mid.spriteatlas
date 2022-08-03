@@ -1,0 +1,106 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Enemies_Mid
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 4096
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 8d7a78e3dc7f95345814a76470980fbf, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: ec896610252104c4882c7029d8346c4a, type: 3}
+  - {fileID: 21300000, guid: b7ab778162aecdd46825fe24674f88ca, type: 3}
+  - {fileID: 21300000, guid: 104d2b5263a4ebf46a3dbd1806dd15ec, type: 3}
+  - {fileID: 21300000, guid: a84d2e82c605049468d31045cd827771, type: 3}
+  - {fileID: 21300000, guid: 8662f4e28ab37df43be4c456157ab3bc, type: 3}
+  - {fileID: 21300000, guid: 101cfe43f6a1f794bb0acb7ee7ea8b97, type: 3}
+  - {fileID: 21300000, guid: f2bd6f348e89f6b4f8635612f111299e, type: 3}
+  - {fileID: 21300000, guid: da2417947aea63c40b1d64a728308bae, type: 3}
+  - {fileID: 21300000, guid: 775763d4b6048d049b0dfb0ec10414cb, type: 3}
+  - {fileID: 21300000, guid: 22191a3506249974798facb5220b53b1, type: 3}
+  - {fileID: 21300000, guid: fee35dd5db7c92841a7640f92d8b74fd, type: 3}
+  - {fileID: 21300000, guid: 64ff7476f98aac14f939afe0d776a3cf, type: 3}
+  - {fileID: 21300000, guid: e992c1d750c8fbd45848f90a2272e8be, type: 3}
+  - {fileID: 21300000, guid: c8ddfa288f5d22748b768238aed737ef, type: 3}
+  - {fileID: 21300000, guid: 222f9ac803e58bb41a31b177fc128f61, type: 3}
+  - {fileID: 21300000, guid: 52e01739b1fc53f419c5097d966a4646, type: 3}
+  - {fileID: 21300000, guid: fe7d961a47ef02b48a53cbaa386f8405, type: 3}
+  - {fileID: 21300000, guid: 56e7b8ac259d5f24ebeb544d94010207, type: 3}
+  - {fileID: 21300000, guid: d0cdca0dfe6477047a2af6032223cdeb, type: 3}
+  - {fileID: 21300000, guid: ae118b4dab8f4324680571a0120dea97, type: 3}
+  - {fileID: 21300000, guid: 7b4079adc8fc9f340ba77017356b4811, type: 3}
+  - {fileID: 21300000, guid: 154356bd2a9d63545bcc2fe008dcd5fd, type: 3}
+  - {fileID: 21300000, guid: ff58267edc9cc31468b40973bb215dc1, type: 3}
+  - {fileID: 21300000, guid: 3d17d51f937fbab43867d7b79c8c9a5b, type: 3}
+  - {fileID: 21300000, guid: a7c483ef90aecfa4690068af6fb65373, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - ma-098_mercenaries_base_majini_shield
+  - ma-094_mercenaries_los_ganados_pitchfork
+  - ma-050_outbreak_grave_digger
+  - ma-009_premier_mimicry_marcus1
+  - ma-015_premier_cerberus1
+  - ma-036_alliance_reaper_partner_mod
+  - ma-069_nightmare_cerberus
+  - ma-008_premier_hunter1
+  - ma-061_nightmare_militia_rocket_launcher
+  - ma-085_mercenaries_adjule_skill_mod
+  - ma-067_nightmare_neptune
+  - ma-086_mercenaries_los_illuminados_scythe
+  - ma-006_premier_licker1
+  - ma-024_alliance_licker_beta1
+  - ma-058_nightmare_colmillos
+  - ma-090_mercenaries_tribal_majini_shield
+  - ma-096_mercenaries_los_illuminados_bow
+  - ma-092_mercenaries_town_majini_motorcycle
+  - ma-081_mercenaries_los_illuminados_shield
+  - ma-030_alliance_cephalo_las_plagas1
+  - ma-048_outbreak_crimson_head
+  - ma-037_alliance_guardian_of_insanity1
+  - ma-017_premier_executioner1
+  - ma-046_outbreak_web_spinner_infection_mod
+  - ma-049_outbreak_reinforced_licker
+  m_RenderDataMap: {}
+  m_Tag: Enemies_Mid
+  m_IsVariant: 0

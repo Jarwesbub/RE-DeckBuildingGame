@@ -1,0 +1,108 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Enemies_Hard
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 4096
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: d161863c53f11aa458fa3904a420784f, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 1431b530b13954b468fa33d4b0541dc4, type: 3}
+  - {fileID: 21300000, guid: 979bfab03f20a254c80a8ef54259ecb6, type: 3}
+  - {fileID: 21300000, guid: cad66c01da991724fb65610618b0370e, type: 3}
+  - {fileID: 21300000, guid: f2bb6653ff22acb4fbe5e6510a766217, type: 3}
+  - {fileID: 21300000, guid: f0ff13e38922f5f47afccf4c493b0de3, type: 3}
+  - {fileID: 21300000, guid: 8923883423650444b8864475af59f011, type: 3}
+  - {fileID: 21300000, guid: fd783a64fe9d98e47976373344a72393, type: 3}
+  - {fileID: 21300000, guid: 3b6af7a422627d74bb101bc065d840ce, type: 3}
+  - {fileID: 21300000, guid: 52e41d15bba68304d90f0e8d6d07c020, type: 3}
+  - {fileID: 21300000, guid: 9e6222750756a5348983817775253614, type: 3}
+  - {fileID: 21300000, guid: 8cc64da5dc34cd640a6e1329cf0439c9, type: 3}
+  - {fileID: 21300000, guid: 2db86237241fb6446b8ff7e33a026e6e, type: 3}
+  - {fileID: 21300000, guid: 5a4dedb7b5c452b42b30aa9b7035f02a, type: 3}
+  - {fileID: 21300000, guid: c85a612872c961345866d198c132b59f, type: 3}
+  - {fileID: 21300000, guid: 92c6fac8633b1004c948b93de1035410, type: 3}
+  - {fileID: 21300000, guid: 52184de8a99ffe84a8a756fe194ff367, type: 3}
+  - {fileID: 21300000, guid: 5a99cfe8cd787554bb1c1c2157dfc37f, type: 3}
+  - {fileID: 21300000, guid: c9228c7933d4c594399ae3828b219751, type: 3}
+  - {fileID: 21300000, guid: 3787d84af9363c14797e20829b1bd3f7, type: 3}
+  - {fileID: 21300000, guid: 136b968b8812f414d9a1b8bacd5fea31, type: 3}
+  - {fileID: 21300000, guid: 2ada09ec17948f148abc89577e6d8f5b, type: 3}
+  - {fileID: 21300000, guid: d680ec2d5a26f2f4f8fc828617a50c4c, type: 3}
+  - {fileID: 21300000, guid: 2b6d370e16c46e44d8ce4219809a939d, type: 3}
+  - {fileID: 21300000, guid: 169e774e0bf86c24fb41e0f6620bcf23, type: 3}
+  - {fileID: 21300000, guid: 0c4ffe4efd2659641a82aa8cf2420f73, type: 3}
+  - {fileID: 21300000, guid: 10772f7f4e96f174492593fc4df0d0d2, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - ma-079_mercenaries_big_man_majini
+  - ma-041_outbreak_tyrant_t-002_infection_mod
+  - ma-014_premier_gatling_gun_majini1
+  - ma-034_alliance_nosferatu1
+  - ma-055_nightmare_bitores_mendez
+  - ma-026_alliance_garrador1
+  - ma-080_mercenaries_chainsaw_majini
+  - ma-029_alliance_albert_wesker1
+  - ma-091_mercenaries_crocodile
+  - ma-078_mercenaries_red_executioner
+  - ma-043_outbreak_nemesis_2nd_from_infection_mod
+  - ma-068_nightmare_hunter
+  - ma-007_premier_nemesis_t-type1
+  - ma-057_nightmare_jack_krauser
+  - ma-016_premier_el_gigante1
+  - ma-054_nightmare_osmund_saddler
+  - ma-025_alliance_duvalia_las_plagas1
+  - ma-032_alliance_iron_maiden1
+  - ma-056_nightmare_regenerator
+  - ma-042_outbreak_yawn_infection_mod
+  - ma-075_mercenaries_giant_majini
+  - ma-010_premier_uroboros_aheri1
+  - ma-065_nightmare_verdugo
+  - ma-082_mercenaries_jj
+  - ma-031_alliance_proto_tyrant1
+  - ma-053_outbreak_lisa_trevor_infection_mod
+  m_RenderDataMap: {}
+  m_Tag: Enemies_Hard
+  m_IsVariant: 0
