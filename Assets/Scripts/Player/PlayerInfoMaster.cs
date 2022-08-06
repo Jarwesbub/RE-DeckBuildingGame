@@ -16,7 +16,18 @@ public class PlayerInfoMaster : MonoBehaviourPun
 
     private void Awake()
     {
-        
+        if (master != null && master != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            master = this;
+            view = GetComponent<PhotonView>();
+            playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
+            DontDestroyOnLoad(this);
+        }
+        /*
         if (master == null)
         {
             master = this;
@@ -24,7 +35,7 @@ public class PlayerInfoMaster : MonoBehaviourPun
             playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
             DontDestroyOnLoad(this);
             Debug.Log("Master Created");
-        }
+        }*/
 
     }
     public void DestroyAllChilds()
@@ -42,6 +53,7 @@ public class PlayerInfoMaster : MonoBehaviourPun
         {
             GameObject.Destroy(child.gameObject);
         }
+
     }
 
 
@@ -101,4 +113,5 @@ public class PlayerInfoMaster : MonoBehaviourPun
 
         LobbyRoomOpen.GetComponent<LobbyRoomOpen>().PlayerInfoOrderReady();
     }
+
 }

@@ -10,7 +10,6 @@ public class StartMenuControl : MonoBehaviour
 
     private void Start()
     {
-
         //string appdatapath = Application.dataPath;
         string appdatapath = Application.persistentDataPath;
         AppDataPath.text = appdatapath + "/Custom_data/";

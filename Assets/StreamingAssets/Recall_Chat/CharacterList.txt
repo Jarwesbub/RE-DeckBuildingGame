@@ -45,3 +45,5 @@ ch-048_mercenaries_jill_valentine
 ch-049_mercenaries_albert_wesker
 ch-050_mercenaries_rebecca_chambers
 ch-051_mercenaries_barry_burton
+ch-100_rare_promo_cloak_hunk
+ch-101_rare_promo_nurse_rebecca

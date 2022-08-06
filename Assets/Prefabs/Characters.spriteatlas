@@ -86,6 +86,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 88654dda034027d4fad4002a42b18429, type: 3}
   - {fileID: 21300000, guid: aef2ba0be7f9a3e41ac6a1b9b60152a6, type: 3}
   - {fileID: 21300000, guid: 12fd1cab15ee7d847aa6f46683c95475, type: 3}
+  - {fileID: 21300000, guid: f7afb3cbd4cb2574b80ddff58079660a, type: 3}
   - {fileID: 21300000, guid: 9239148c955b1594fb8b32aa75945238, type: 3}
   - {fileID: 21300000, guid: ca39a88c613b3df4ba29df3350a22d49, type: 3}
   - {fileID: 21300000, guid: eec6619c76935c64dbc25f2bdef4397d, type: 3}
@@ -97,6 +98,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: d8e0302f250708a4984a4c0a31198654, type: 3}
   - {fileID: 21300000, guid: 0de80fbf7e20fcc45896baf9b66d72b7, type: 3}
   - {fileID: 21300000, guid: 2fdd65eff5ec63e4db6ac7d06042c8f7, type: 3}
+  - {fileID: 21300000, guid: 79100cffe4a1a044b96c1d9b3bcbf87f, type: 3}
   m_PackedSpriteNamesToIndex:
   - ch-037_nightmare_josh_stone
   - ch-011_alliance_carlos_oliveira1
@@ -134,6 +136,7 @@ SpriteAtlas:
   - ch-046_mercenaries_claire_redfield
   - ch-007_premier_jack_krauser1
   - ch-018_alliance_leon_s_kennedy1
+  - ch-101_rare_promo_nurse_rebecca
   - ch-017_alliance_billy_coen1
   - ch-038_nightmare_mikhail_victor
   - ch-016_alliance_jill_valentine_partner_mod
@@ -145,6 +148,7 @@ SpriteAtlas:
   - ch-051_mercenaries_barry_burton
   - ch-050_mercenaries_rebecca_chambers
   - ch-044_mercenaries_jack_krauser
+  - ch-100_rare_promo_cloak_hunk
   m_RenderDataMap: {}
   m_Tag: Characters
   m_IsVariant: 0

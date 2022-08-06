@@ -6,15 +6,17 @@ using Photon.Pun;
 
 public class LeftMenuControl : MonoBehaviourPun
 {
-    public GameObject LeftMenu;
+    public GameObject LeftMenu, OtherSettingsMenu;
     public Text plus1;
-    private bool isVisible;
+    private bool isVisible, isSettingsVisible;
     
 
     private void Start()
     {
         LeftMenu.SetActive(false);
+        OtherSettingsMenu.SetActive(false);
         isVisible = false;
+        isSettingsVisible = false;
         plus1.text = "";
     }
 
@@ -37,5 +39,18 @@ public class LeftMenuControl : MonoBehaviourPun
             isVisible = true;
         }
     }
+    public void OnClickOtherSettingsButton()
+    {
+        if (isSettingsVisible)
+        {
+            OtherSettingsMenu.SetActive(false);
+            isSettingsVisible = false;
+        }
+        else
+        {
+            OtherSettingsMenu.SetActive(true);
+            isSettingsVisible = true;
+        }
 
+    }
 }

@@ -40,9 +40,10 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
 
         if (currentScene == "Game")
             PhotonNetwork.CurrentRoom.IsOpen=false;
-
-
+        //else if (currentScene == "LobbyRoom") //NOT WORKING RN
+            //PhotonNetwork.CurrentRoom.IsOpen = true;
     }
+
     public void OnClickCreateRoom()
     {
         PhotonNetwork.CreateRoom(createInput.text);
@@ -105,10 +106,14 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
     {
         base.OnDisconnected(cause);
         //SceneManager.LoadScene("Loading");
+        if(PlayerInfoMaster!=null)
+            PlayerInfoMaster.GetComponent<PlayerInfoMaster>().DestroyAllChilds();
+
         SceneManager.LoadScene("StartMenu");
+
     }
 
-    public void OnClickReturnToLobby()
+    public void OnClickReturnToLobby() //Works only if new players are not joining
     {
         if (isMaster)
         {
@@ -128,11 +133,12 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
     public void OnClickReturnToMainMenu()
     {
         PlayerInfoMaster.GetComponent<PlayerInfoMaster>().DestroyAllChilds();
-        Destroy(PlayerInfoMaster);
-        //PhotonNetwork.LeaveRoom();
-        //PhotonNetwork.LeaveLobby();
+        //Destroy(PlayerInfoMaster);
+        if(view.IsMine)
+        PhotonNetwork.Destroy(PlayerInfoMaster);
         PhotonNetwork.Disconnect();
-        
+        //System.Diagnostics.Process.Start(Application.dataPath.Replace("_Data", ".exe"));
+
     }
     public void OnClickQuitGame()
     {

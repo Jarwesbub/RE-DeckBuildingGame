@@ -100,7 +100,7 @@ public class ShopCards : MonoBehaviourPun   //
             CheckShopCard(Ammo10, count_Values[0]); //0 = Ammo10;
         }
     }
-    public void OnClickBuyAmmo10() //"Buy" button which sends purchased card to local player's discard pile and deletes it in shop
+    public void OnClickAmmo10Buy() //"Buy" button which sends purchased card to local player's discard pile and deletes it in shop
     {
         if (!waitRPC && view.IsMine)
             BuyShopCard(Ammo10, count_Values[0], "ia_ammo10",0); //0 = Ammo10;
@@ -114,7 +114,7 @@ public class ShopCards : MonoBehaviourPun   //
             CheckShopCard(Ammo20, count_Values[1]); //1 = Ammo20;
         }
     }
-    public void OnClickBuyAmmo20() 
+    public void OnClickAmmo20Buy() 
     {
         if (!waitRPC && view.IsMine)
             BuyShopCard(Ammo20, count_Values[1], "ia_ammo20",1); //1 = Ammo20;
@@ -130,7 +130,7 @@ public class ShopCards : MonoBehaviourPun   //
         }
 
     }
-    public void OnClickBuyAmmo30() 
+    public void OnClickAmmo30Buy() 
     {
         if (!waitRPC && view.IsMine)
             BuyShopCard(Ammo30, count_Values[2], "ia_ammo30", 2); //2 = Ammo30;
@@ -145,7 +145,7 @@ public class ShopCards : MonoBehaviourPun   //
             CheckShopCard(Handgun, count_Values[3]); //3 = Handguns;
         }
     }
-    public void OnClickBuyHandgun()
+    public void OnClickHandgunBuy()
     {
         if (!waitRPC && view.IsMine)
         {
@@ -162,7 +162,7 @@ public class ShopCards : MonoBehaviourPun   //
             CheckShopCard(Knife, count_Values[4]); //4 = Knifes;
         }
     }
-    public void OnClickBuyKnife()
+    public void OnClickKnifeBuy()
     {
         if (!waitRPC && view.IsMine)
         {
@@ -179,7 +179,7 @@ public class ShopCards : MonoBehaviourPun   //
             CheckShopCard(Grenade, count_Values[5]); //5 = Grenades;
         }
     }
-    public void OnClickBuyGrenade()
+    public void OnClickGrenadeBuy()
     {
         if (!waitRPC && view.IsMine)
         {
@@ -196,7 +196,7 @@ public class ShopCards : MonoBehaviourPun   //
             CheckShopCard(HP, count_Values[6]); //6 = HP (herbs and first aid);
         }
     }
-    public void OnClickBuyHPHerbs()
+    public void OnClickHPHerbsBuy()
     {
         if (!waitRPC && view.IsMine)
         {
@@ -215,7 +215,7 @@ public class ShopCards : MonoBehaviourPun   //
             CheckShopCard(Shotgun, count_Values[7]); //7 = Shotguns;
         }
     }
-    public void OnClickBuyShotgun()
+    public void OnClickShotgunBuy()
     {
         if (!waitRPC && view.IsMine)
         {
@@ -232,7 +232,7 @@ public class ShopCards : MonoBehaviourPun   //
             CheckShopCard(AR_SG, count_Values[8]); //8 = Assault rifles and Submachine guns;
         }
     }
-    public void OnClickBuyAR_SG()
+    public void OnClickAR_SGBuy()
     {
         if (!waitRPC && view.IsMine)
         {
@@ -249,7 +249,7 @@ public class ShopCards : MonoBehaviourPun   //
             CheckShopCard(Rifle, count_Values[9]); //9 = Rifles;
         }
     }
-    public void OnClickBuyRifle()
+    public void OnClickRifleBuy()
     {
         if (!waitRPC && view.IsMine)
         {
@@ -268,7 +268,7 @@ public class ShopCards : MonoBehaviourPun   //
             CheckShopCard(Action1, count_Values[10]); //10 = Action1;
         }
     }
-    public void OnClickBuyAction1()
+    public void OnClickAction1Buy()
     {
         if (!waitRPC && view.IsMine)
         {
@@ -285,7 +285,7 @@ public class ShopCards : MonoBehaviourPun   //
             CheckShopCard(Action2, count_Values[11]); //11 = Action2;
         }
     }
-    public void OnClickBuyAction2()
+    public void OnClickAction2Buy()
     {
         if (!waitRPC && view.IsMine)
         {
@@ -302,7 +302,7 @@ public class ShopCards : MonoBehaviourPun   //
             CheckShopCard(Action3, count_Values[12]); //12 = Action3;
         }
     }
-    public void OnClickBuyAction3()
+    public void OnClickAction3Buy()
     {
         if (!waitRPC && view.IsMine)
         {
@@ -319,7 +319,7 @@ public class ShopCards : MonoBehaviourPun   //
             CheckShopCard(Action4, count_Values[13]); //13 = Action4;
         }
     }
-    public void OnClickBuyAction4()
+    public void OnClickAction4Buy()
     {
         if (!waitRPC && view.IsMine)
         {
@@ -336,7 +336,7 @@ public class ShopCards : MonoBehaviourPun   //
             CheckShopCard(Action5, count_Values[14]); //14 = Action5;
         }
     }
-    public void OnClickBuyAction5()
+    public void OnClickAction5Buy()
     {
         if (!waitRPC && view.IsMine)
         {

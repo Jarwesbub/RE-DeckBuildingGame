@@ -6,39 +6,31 @@ using Photon.Realtime;
 
 public class SpawnCards : MonoBehaviourPunCallbacks
 {
-    public int cardCount, handCards;
+    public int handCards, cardCount;
     public GameObject PNCardPrefab, PlayerDeck, CharacterCardPrefab;
-    private GameObject HandCardsParent;
+    private GameObject HandCardsParent, MainCanvas;
     public List<string> sDeck;
     public List<string> sHandCards;
     public List<string> sDiscardPileCards;
     public string currentCard, characterCard;
     float startPosX = -3f, startPosY = -1.8f;
     float posX, posY;
-    PhotonView view;
-    private bool isMaster;
 
     void Awake()
     {
-        view = GetComponent<PhotonView>();
-        isMaster = PhotonNetwork.IsMasterClient;
+        int count = GetComponent<TextFileToList>().textListCount;
 
-        //if (view.IsMine)
+        for (int i = 0; i < count; i++)
         {
-            int count = GetComponent<TextFileToList>().textListCount;
-
-            for (int i = 0; i < count; i++)
-            {
-                string name = GetComponent<TextFileToList>().GetStringFromTextByNumber(i);
-                sDeck.Add(name);
-            }
-
-            HandCardsParent = GameObject.FindWithTag("HandCardsParent");
-            posX = startPosX; posY = startPosY;
-
-            ShuffleDeck();
+            string name = GetComponent<TextFileToList>().GetStringFromTextByNumber(i);
+            sDeck.Add(name);
+            cardCount++;
         }
 
+        HandCardsParent = GameObject.FindWithTag("HandCardsParent");
+        MainCanvas = GameObject.FindWithTag("MainCanvas");
+        posX = startPosX; posY = startPosY;
+        ShuffleDeck(false);
     }
     public void DrawCard() //Button
     {
@@ -71,13 +63,11 @@ public class SpawnCards : MonoBehaviourPunCallbacks
             object[] myCustomInitData = new object[]
             {
                 currentCard
-
             };
             GameObject card = PhotonNetwork.Instantiate(PNCardPrefab.name, pos, Quaternion.identity, 0, myCustomInitData);
             card.transform.SetParent(HandCardsParent.transform, false);
             card.GetComponent<SpriteFromAtlas>().SetHandCardSpriteVisibility(true);
 
-            cardCount--;
             sDeck.Remove(sDeck[0]);
         }
         if(sDeck.Count==0)
@@ -89,11 +79,11 @@ public class SpawnCards : MonoBehaviourPunCallbacks
 
             }
             sDiscardPileCards.Clear();
-            ShuffleDeck();
+            ShuffleDeck(true);
             Debug.Log("Shuffling Deck !");
         }
     }
-    private void ShuffleDeck()
+    private void ShuffleDeck(bool sendShuffleInfo)
     {
         int count = sDeck.Count;
         for (int i = 0; i < count; i++)
@@ -103,9 +93,9 @@ public class SpawnCards : MonoBehaviourPunCallbacks
             sDeck[i] = sDeck[randomIndex];
             sDeck[randomIndex] = temp;
         }
-
+        if(sendShuffleInfo)
+            MainCanvas.GetComponent<GameControl>().DeckIsShuffled();
     }
-
 
     private void GetHandCardSpriteData()
     {
@@ -137,6 +127,7 @@ public class SpawnCards : MonoBehaviourPunCallbacks
             if (sHandCards[i] == name)
             {
                 sHandCards.Remove(sHandCards[i]);
+                cardCount--;
                 break;
             }
         }
@@ -147,7 +138,7 @@ public class SpawnCards : MonoBehaviourPunCallbacks
     public void SHOP_AddCardToDiscardPile(string newCard)
     {
         sDiscardPileCards.Add(newCard);
-
+        cardCount++;
     }
 
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HandCardPosControl : MonoBehaviour
 {
-    public GameObject parentObject;
+    private GameObject parentObject, MainCanvas;
 
     void Awake()
     {
@@ -12,7 +12,11 @@ public class HandCardPosControl : MonoBehaviour
         gameObject.transform.SetParent(parentObject.transform);
         transform.localScale = new Vector3(0.7f, 0.7f, 0.7f);
     }
-
+    private void Start()
+    {
+        MainCanvas = GameObject.FindWithTag("MainCanvas");
+        MainCanvas.GetComponent<GameControl>().NewHandCardSpawned();
+    }
     void OnMouseDrag()
     {
         transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
