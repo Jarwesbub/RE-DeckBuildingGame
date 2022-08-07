@@ -12,8 +12,9 @@ public class MansionCards : MonoBehaviourPun
     public GameObject LeftMenuControl;
     private Image image;
     PhotonView view;
-    public GameObject MansionActionButtons, OtherActionButtons;
-    public TMP_Text mansionActionTMP;
+    public GameObject MansionActionButtons, OtherActionButtons, ToggleOtherActions;
+    public TMP_Text mansionActionTMP, mansionDeckCountTMP;
+    public int MansionDeckCount;
     [SerializeField] private string enemyName;
     public List<string> mansionDeck;
     private string[] mansionDeckStringList;
@@ -29,11 +30,12 @@ public class MansionCards : MonoBehaviourPun
     {
         mansionTxt = "";
         mansionActionTMP.text = mansionTxt;
-        
+
         MansionDoor.SetActive(true);
         activeOtherActionBtn = false;
         MansionActionButtons.SetActive(false);
         OtherActionButtons.SetActive(false);
+        ToggleOtherActions.SetActive(false);
 
         SetMansionAnimation();
 
@@ -43,7 +45,7 @@ public class MansionCards : MonoBehaviourPun
             ShuffleMansionDeck();
             StartCoroutine(AddDelay_SendMansionDeckToClients());
         }
-        
+
     }
     private string[] SetMansionCardsList()
     {
@@ -55,6 +57,7 @@ public class MansionCards : MonoBehaviourPun
             string card = MansionCardPrefab.GetComponent<TextFileToList>().GetStringFromTextByNumber(i);
             cardList[i] = card;
         }
+
         return cardList;
     }
     IEnumerator AddDelay_SendMansionDeckToClients() // Gives clients more time to do actions - 500 action limit/second ! -
@@ -78,6 +81,9 @@ public class MansionCards : MonoBehaviourPun
         {
             mansionDeck.Add(s);
         }
+
+        MansionDeckCount = mansionDeck.Count;
+        mansionDeckCountTMP.text = "Mansion card count: " + MansionDeckCount;
     }
 
     private void ShuffleMansionDeck() //
@@ -95,6 +101,8 @@ public class MansionCards : MonoBehaviourPun
     {
         OnClickSetMansionTextEmpty();
         MansionActionButtons.SetActive(false);
+        ToggleOtherActions.SetActive(false);
+        OtherActionButtons.SetActive(false);
     }
 
     public void DoorAnimationEnds()
@@ -136,12 +144,12 @@ public class MansionCards : MonoBehaviourPun
     {
         if(activeOtherActionBtn)
         {
-            OtherActionButtons.SetActive(false);
+            ToggleOtherActions.SetActive(false);
             activeOtherActionBtn = false;
         }
         else
         {
-            OtherActionButtons.SetActive(true);
+            ToggleOtherActions.SetActive(true);
             activeOtherActionBtn = true;
         }
 
@@ -162,7 +170,7 @@ public class MansionCards : MonoBehaviourPun
             view.RPC("RPC_DeleteCard", RpcTarget.AllBuffered);
             string txt = nickName + " WINS" + "\n" + "\n" + "Player's Mansion deck updated";
             view.RPC("SetMansionActionText", RpcTarget.AllBuffered, txt);
-            MansionActionButtons.SetActive(false);
+            MansionActionButtons.SetActive(false); OtherActionButtons.SetActive(true);
             LeftMenuControl.GetComponent<LeftMenuControl>().SetPlus1Text();
         }
     }
@@ -170,6 +178,8 @@ public class MansionCards : MonoBehaviourPun
     public void RPC_DeleteCard()
     {
         mansionDeck.Remove(mansionDeck[0]);
+        MansionDeckCount = mansionDeck.Count;
+        mansionDeckCountTMP.text = "Mansion card count: " + MansionDeckCount;
     }
     ///////////////////////////
     public void OnClickSendCardBottomOfTheDeck() //LOSE btn
@@ -183,7 +193,7 @@ public class MansionCards : MonoBehaviourPun
             view.RPC("RPC_SendCardBottomOfTheDeck", RpcTarget.AllBuffered);
             string txt = nickName + " LOSE" +"\n"+ "\n" + "Player takes damage";
             view.RPC("SetMansionActionText", RpcTarget.AllBuffered, txt);
-            MansionActionButtons.SetActive(false);
+            MansionActionButtons.SetActive(false); OtherActionButtons.SetActive(true);
         }
     }
     [PunRPC]

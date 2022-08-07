@@ -10,9 +10,11 @@ public class HPContol : MonoBehaviour
 {
     public GameObject GameUIControl, localCharacterCard, OtherCharacterCard;
     public TMP_Text localHpTxt, otherHpTxt, localMaxHpTxt, otherMaxHpTxt;
+    public TMP_Text hpPlus, hpMinus;
     private GameObject PlayerInfoMaster;
     public Slider slider;
     public int playerID, myMaxHP, myFullHP;
+    private int myHPDiff;
     public float myHP;
     //[SerializeField] private List<string> CharacterCardList;
     [SerializeField] private List<int> CharacterNumberList;
@@ -32,6 +34,7 @@ public class HPContol : MonoBehaviour
         myHP = slider.value;
         localHpTxt.text = "HP : " + myHP.ToString();
         localMaxHpTxt.text = "Max HP : " + myMaxHP.ToString();
+        ResetMyHPDifferenceText();
 
         GameObject MainCanvas = GameObject.FindWithTag("MainCanvas");
         MainCanvas.GetComponent<GameControl>().ShowLocalPlayerHP();
@@ -93,6 +96,7 @@ public class HPContol : MonoBehaviour
         {
             slider.value += 5;
             HPChange();
+            ShowHPDiff(true);
         }
     }
     public void OnClickTakeHP()
@@ -101,6 +105,7 @@ public class HPContol : MonoBehaviour
         {
             slider.value -= 5;
             HPChange();
+            ShowHPDiff(false);
         }
     }
 
@@ -139,5 +144,33 @@ public class HPContol : MonoBehaviour
             otherMaxHpTxt.text = "YOU ARE DEAD";
 
     }
+    private void ShowHPDiff(bool addHP)
+    {
+        if(!addHP) //If you lose hp
+            myHPDiff -= 5;
+        else if (myMaxHP > 0) //If you get hp but are not dead
+            myHPDiff += 5;
 
+        if(myHPDiff==0)
+        {
+            hpPlus.text = ""; hpMinus.text = "";
+        }
+        else if(myHPDiff<0)
+        {
+            hpMinus.text = myHPDiff.ToString();
+            hpPlus.text = "";
+        }
+        else if (myHPDiff>0)
+        {
+            hpPlus.text = "+" + myHPDiff;
+            hpMinus.text = "";
+        }
+    }
+
+
+    public void ResetMyHPDifferenceText()
+    {
+        hpPlus.text = ""; hpMinus.text = ""; myHPDiff = 0;
+        myHPDiff = 0;
+    }
 }

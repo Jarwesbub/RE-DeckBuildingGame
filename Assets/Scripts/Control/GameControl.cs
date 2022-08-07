@@ -99,12 +99,13 @@ public class GameControl : MonoBehaviourPunCallbacks
             if (!shopMenuOpen && !mansionOpen)
             if (view.IsMine)
             {
-                GetComponent<MansionCards>().SetMansionAnimation();
+                GetComponent<MansionCards>().SetMansionAnimation(); //RESET MANSION
                 MainSpawnCards.GetComponent<SpawnCards>().PutHandCardsToDiscardPile();
             }
         
-        
         cardCount = MainSpawnCards.GetComponent<SpawnCards>().handCards;
+        HPControl.GetComponent<HPContol>().ResetMyHPDifferenceText();
+        
     }
 
     
@@ -148,6 +149,7 @@ public class GameControl : MonoBehaviourPunCallbacks
         if (playerCount > 1)
         {
             OtherCharacterControl.GetComponent<CharacterControl>().SetOtherCharacterSprite(_player);
+            GetComponent<ShopCards>().UpdateAndResetBuysCount(true);
             //ShopMenuObject.GetComponent<ShopCards>().GetCurrentPlayerFromGameControl(currentPlayerID);
         }
         drawHandCardCount = 5; isExtraHandCard = false;
@@ -227,6 +229,11 @@ public class GameControl : MonoBehaviourPunCallbacks
             mansionOpen = true;
         }
     }
+    public void OnClickResetMansion()
+    {
+        GetComponent<MansionCards>().SetMansionAnimation();
+    }
+
 
     public void ShowLocalPlayerHP()
     {

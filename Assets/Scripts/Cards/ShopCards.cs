@@ -8,7 +8,7 @@ using TMPro;
 public class ShopCards : MonoBehaviourPun   //
 {
     private GameObject SpawnCards;
-    public TMP_Text Sold;
+    public TMP_Text Sold, BuysCounttxt;
     public GameObject Ammo10,Ammo20,Ammo30, Handgun,Knife,Grenade,HP;   //All buttons in ShopMenu
     public GameObject Shotgun, AR_SG, Rifle;                           //All buttons in ShopMenu
     public GameObject Action1, Action2, Action3, Action4, Action5;    //All buttons in ShopMenu
@@ -17,6 +17,7 @@ public class ShopCards : MonoBehaviourPun   //
     public GameObject Action1ListPrefab, Action2ListPrefab, Action3ListPrefab, Action4ListPrefab, Action5ListPrefab;
     [SerializeField] private List<GameObject> activeCardObjectList; //List of all objects. Can be accessed by list number! (used in [PunRPC])
     PhotonView view;
+    public int buysCount; //Reset to 0 from GameControl.cs
     private bool isZoomed; //Tells if current card in bigger or normal size
     Vector3 vec_Normal = new Vector3(1, 1, 1);
     Vector3 vec_Zoom = new Vector3(1.8f, 1.8f, 1);
@@ -39,6 +40,8 @@ public class ShopCards : MonoBehaviourPun   //
         waitRPC = false;
         isZoomed = false;
         Sold.text = "";
+        buysCount = 0;
+        BuysCounttxt.text = "Buys (B) = "+buysCount;
         SetCountValuesList();
         
     }
@@ -345,7 +348,20 @@ public class ShopCards : MonoBehaviourPun   //
         }
     }
     /// <summary>
-    /// 
+    
+    public void UpdateAndResetBuysCount(bool reset)
+    {
+        if (reset)
+            buysCount=0;
+        else
+            buysCount++;
+
+            BuysCounttxt.text = "Buys (B) = " + buysCount;
+    }
+
+
+
+
     /// </summary>
     private void CheckShopCard(GameObject cardObj, int cardCount)
     {
@@ -393,6 +409,8 @@ public class ShopCards : MonoBehaviourPun   //
         count_Values[currentCardObject] = cardCount;
         Sold.transform.position = activeCardObjectList[currentCardObject].transform.position;
         Sold.text = "Card bought!"+"\n"+" ("+cardCount.ToString()+" pcs left)";
+
+        UpdateAndResetBuysCount(false); //Update don't reset
 
         //if (count_Value != 0) //Not ammo card
         {
