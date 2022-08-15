@@ -8,7 +8,7 @@ public class SpriteFromAtlas : MonoBehaviour
 {
     public GameObject MainCanvas;
     [SerializeField] List<SpriteAtlas> atlas;
-    private int currentAtlas;
+    public int currentAtlas;
     public string spriteName, characterName;
     private Image image;
     [SerializeField] private bool isVisible, isCharacterCard, isHandCard, isMansionCard;
@@ -16,9 +16,9 @@ public class SpriteFromAtlas : MonoBehaviour
 
     void Awake()
     {
-        currentAtlas = 0;
         image = GetComponent<Image>();
         SetHandCardSpriteVisibility(isVisible);
+        //SetHandCardSpriteVisibility(isVisible);
     }
 
 
@@ -41,21 +41,40 @@ public class SpriteFromAtlas : MonoBehaviour
                     break;
             }
         }
-        /*
-        else if (isMansionCard)
+    }
+    public void CharacterCardStart()
+    {
+        if (isCharacterCard)
         {
-            spriteName = MainCanvas.GetComponent<MansionCards>().enemyName;
-
-            int count = atlas.Count;
-
-            for (int i = 0; i < count; i++)
+            if (image.sprite == null)
             {
-                image.sprite = atlas[i].GetSprite(spriteName);
-                currentAtlas = i;
-                if (image.sprite != null)
-                    break;
+                currentAtlas = 1;
+                image.sprite = atlas[currentAtlas].GetSprite(spriteName);
+
+                if (image.sprite == null) //Bug hotfix: If +4 players -> someones spritename get messed up (multiple names in a row))
+                {
+                    spriteName = "ch-002_premier_leon_s_kennedy1";
+                    Debug.Log("Sprite image name was null!");
+                    SetHandCardSpriteVisibility(true);
+                }
             }
-        }*/
+        }
+    }
+
+
+    public void GetLM_StarterHandCards(string getSprite) // LM_GetStarterHandCards.cs
+    {
+        spriteName = getSprite;
+        int count = atlas.Count;
+
+        for (int i = 0; i < count; i++)
+        {
+            image.sprite = atlas[i].GetSprite(spriteName);
+            currentAtlas = i;
+            if (image.sprite != null)
+                break;
+        }
+        ChangeCardSprite(getSprite);
     }
     
     public void ChangeCardSprite(string name) //CharacterControl.cs
@@ -63,12 +82,6 @@ public class SpriteFromAtlas : MonoBehaviour
         spriteName = name;
         SetHandCardSpriteVisibility(true);
 
-        if (image.sprite == null && isCharacterCard) //Bug hotfix: If +4 players -> someones spritename get messed up (multiple names in a row)
-        {
-            spriteName = "ch-002_premier_leon_s_kennedy1";
-            Debug.Log("Sprite image name was null!");
-            SetHandCardSpriteVisibility(true);
-        }
     }
 
     public void SetHandCardSpriteVisibility(bool show)
@@ -102,4 +115,5 @@ public class SpriteFromAtlas : MonoBehaviour
             image.sprite = atlas[currentAtlas].GetSprite(name);
         }
     }
+
 }

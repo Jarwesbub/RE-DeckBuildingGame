@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
-using Photon.Realtime;
+//using Photon.Pun;
+//using Photon.Realtime;
 
-public class CharacterCard : MonoBehaviourPunCallbacks
+public class CharacterCard : MonoBehaviour
 {
     public List<string> CurrentCharactersList;
 

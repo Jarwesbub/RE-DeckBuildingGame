@@ -12,13 +12,12 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
     public InputField createInput;
     public InputField joinInput;
     private GameObject PlayerInfoMaster;
-    public GameObject RoomInfoListPrefab;
+    public GameObject RoomInfoListPrefab, MainCanvas;
     public GameObject PlayerInfoPrefab;
     public GameObject LobbyRoomControlPrefab;
     public GameObject PlayerListTMP;
-    [SerializeField] private bool isMaster;
+    [SerializeField] private bool isMaster, isGameScene;
     private string currentScene;
-
     private PhotonView view;
 
     void Awake()
@@ -39,9 +38,18 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
         isMaster = PhotonNetwork.IsMasterClient;
 
         if (currentScene == "Game")
-            PhotonNetwork.CurrentRoom.IsOpen=false;
+        {
+            PhotonNetwork.CurrentRoom.IsOpen = false;
+            isGameScene = true;
+        }
+        else if (currentScene == "LobbyRoom")
+        {
+            PlayerInfoMaster.GetComponent<PlayerInfoMaster>().LobbyRoomIsLoaded();
+            PhotonNetwork.CurrentRoom.IsOpen = true;
+
+        }
         //else if (currentScene == "LobbyRoom") //NOT WORKING RN
-            //PhotonNetwork.CurrentRoom.IsOpen = true;
+        //PhotonNetwork.CurrentRoom.IsOpen = true;
     }
 
     public void OnClickCreateRoom()
@@ -78,13 +86,12 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
 
     private void UpdateJoinedPlayerList()
     {
-        //New
-        if (PlayerListTMP != null)
+        if (PlayerListTMP != null) //OLD
             PlayerListTMP.GetComponent<PlayerListTMP>().UpdatePlayerList();
 
+        if(isMaster) //NEW
+            view.RPC("RPCUpdateJoinedPlayers", RpcTarget.AllBuffered);
 
-        //if (view!=null)
-            //view.RPC("RPCUpdateJoinedPlayers", RpcTarget.AllBuffered);
 
     }
     [PunRPC]
@@ -97,51 +104,42 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        Debug.Log(otherPlayer + " Left Room");
+        if (isGameScene)
+            MainCanvas.GetComponent<GameControl>().PlayerLeftRoom(otherPlayer);
 
+
+        //Debug.Log(otherPlayer + " Left Room");
         UpdateJoinedPlayerList();
 
     }
     public override void OnDisconnected(DisconnectCause cause)
     {
         base.OnDisconnected(cause);
-        //SceneManager.LoadScene("Loading");
-        if(PlayerInfoMaster!=null)
-            PlayerInfoMaster.GetComponent<PlayerInfoMaster>().DestroyAllChilds();
-
         SceneManager.LoadScene("StartMenu");
 
     }
 
     public void OnClickReturnToLobby() //Works only if new players are not joining
     {
-        if (isMaster)
+        if (isMaster && view.IsMine)
         {
-            view.RPC("RPC_OnClickReturnToLobby", RpcTarget.AllBuffered);
-            PhotonNetwork.Destroy(PlayerInfoMaster);
+            //view.RPC("RPC_OnClickReturnToLobby", RpcTarget.AllBuffered);
+            //PhotonNetwork.Destroy(PlayerInfoMaster);
+            //PhotonNetwork.CurrentRoom.IsOpen = true;
             PhotonNetwork.LoadLevel("LobbyRoom");
+            
         }
     }
-    [PunRPC]
-    public void RPC_OnClickReturnToLobby()
-    {
-        PlayerInfoMaster.GetComponent<PlayerInfoMaster>().DestroyAllChilds();
-        //SceneManager.LoadScene("LobbyRoom");
-    }
-
 
     public void OnClickReturnToMainMenu()
     {
-        PlayerInfoMaster.GetComponent<PlayerInfoMaster>().DestroyAllChilds();
-        //Destroy(PlayerInfoMaster);
-        if(view.IsMine)
-        PhotonNetwork.Destroy(PlayerInfoMaster);
+        
         PhotonNetwork.Disconnect();
-        //System.Diagnostics.Process.Start(Application.dataPath.Replace("_Data", ".exe"));
 
     }
     public void OnClickQuitGame()
     {
+        PhotonNetwork.Disconnect();
         Application.Quit();
     }
 }

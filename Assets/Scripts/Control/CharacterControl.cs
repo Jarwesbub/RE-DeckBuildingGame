@@ -9,8 +9,8 @@ public class CharacterControl : MonoBehaviourPun
 {
     public GameObject PIMaster, HPControl;
     //public GameObject[] PlayerInfoList;
-    public List<Sprite> CharacterSprites;
-    public List<string> SpriteNames;
+    //public List<Sprite> CharacterSprites;
+    [SerializeField] private List<string> SpriteNames;
     private int playerCount, roomPlayerCount;
     float normalScale = 1.25f;
     private bool isZoomed;
@@ -25,31 +25,32 @@ public class CharacterControl : MonoBehaviourPun
         playerID = PhotonNetwork.LocalPlayer.ActorNumber;
         gameObject.tag = "Player" + playerID.ToString();
         gameObject.SetActive(false);
+        otherPlayerID = 1;
     }
 
-    void OnEnable()
+    void Start()
     {
         roomPlayerCount = PhotonNetwork.CurrentRoom.PlayerCount;
+        GetAllSpritesFromPIMaster();
 
         if (isLocalPlayer)
         {
-            GetAllSpritesFromPIMaster();
             SetLocalCharacterSprite();
         }
-        else if (playerID != 1) //Is other than HOST
+        else if (playerID != 1 || roomPlayerCount <= 1) //Is other than HOST
         {
-            GetAllSpritesFromPIMaster();
             string name = SpriteNames[0]; //Host always starts the game so set his sprite!
             ChangeSpriteByName(name);
             
         }
-        else //Is the HOST
+        else if(roomPlayerCount>1) // Is the HOST -> set second player to OtherCharacterSprite
         {
-            GetAllSpritesFromPIMaster();
             string name = SpriteNames[1]; //Host always starts the game so set his sprite!
             ChangeSpriteByName(name);
-            
         }
+
+        GetComponent<SpriteFromAtlas>().CharacterCardStart();
+
 
     }
     private void GetAllSpritesFromPIMaster()
@@ -64,7 +65,6 @@ public class CharacterControl : MonoBehaviourPun
             string characterName = child.GetComponent<PlayerInfo>().myCharacterCard;
             SpriteNames.Add(characterName);
 
-
         }
 
     }
@@ -75,12 +75,16 @@ public class CharacterControl : MonoBehaviourPun
         ChangeSpriteByName(name);
     }
 
-    public void SetOtherCharacterSprite(Player _player)
-    {
-        otherPlayerID = _player.ActorNumber;
-        if(otherPlayerID > view.ViewID)
+    public void SetOtherCharacterSprite(int playerID)
+    {//BUG Index out of range error when HOST ends turn and loads spritedata from "unenabled object" (Development build only)
+        otherPlayerID = playerID;
+
+        if (otherPlayerID > view.ViewID)
             otherPlayerID -= 1;
-        string name = SpriteNames[otherPlayerID - 1]; //TEST
+
+        int value = otherPlayerID - 1;
+        string name = SpriteNames[value];
+        Debug.Log("OtherCharacterSprite name = " + name);
         ChangeSpriteByName(name);
     }
 

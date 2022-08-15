@@ -8,6 +8,7 @@ using Photon.Pun;
 
 public class TextFileToList : MonoBehaviourPun
 {
+    [SerializeField] private bool useManualTextLoad;
     [SerializeField] private bool shuffleTextList; //Not in actual use rn
     [SerializeField] private string textFileName;
     [SerializeField] private string[] TextList;
@@ -19,7 +20,7 @@ public class TextFileToList : MonoBehaviourPun
     void Awake()
     {
         view = GetComponent<PhotonView>();
-
+        if(!useManualTextLoad)
         {
             //string readFromFilePath = Application.streamingAssetsPath + "/Recall_Chat/" + textFileName + ".txt";
             //string[] fileLines = File.ReadAllLines(readFromFilePath).ToArray();
@@ -37,6 +38,15 @@ public class TextFileToList : MonoBehaviourPun
     public string GetStringFromTextByNumber(int numb)
     {
         return TextList[numb];
+    }
+
+    public void LoadTextFileByName(string name)
+    {
+        string readFromFilePath = Application.persistentDataPath + "/Game_data/" + name + ".txt";
+        string[] fileLines = File.ReadAllLines(readFromFilePath).ToArray();
+        TextList = fileLines;
+        textListCount = TextList.Length;
+        textFileName = name;
     }
 
     public string GetRandomizedCharacterName()

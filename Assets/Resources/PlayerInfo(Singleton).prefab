@@ -50,7 +50,6 @@ MonoBehaviour:
   playerID: 0
   myCharacterCard: 
   PlayerInfoList: []
-  isMaster: 0
 --- !u!212 &567827490546551723
 SpriteRenderer:
   m_ObjectHideFlags: 0

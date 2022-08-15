@@ -150,7 +150,6 @@ GameObject:
   - component: {fileID: 6805244748032663364}
   - component: {fileID: -1434946185778059353}
   - component: {fileID: 7014936705865146939}
-  - component: {fileID: -1340301561975916068}
   m_Layer: 7
   m_Name: CharacterCardPrefab
   m_TagString: isOnlinePlayer
@@ -288,7 +287,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PIMaster: {fileID: 0}
   HPControl: {fileID: 0}
-  CharacterSprites: []
   SpriteNames: []
   isLocalPlayer: 0
   playerID: 0
@@ -308,6 +306,8 @@ MonoBehaviour:
   MainCanvas: {fileID: 0}
   atlas:
   - {fileID: 4343727234628468602, guid: c7287c7e7fba8094486dcc436b6a5df4, type: 2}
+  - {fileID: 4343727234628468602, guid: 970658f56c0375244985d2ab89a5e107, type: 2}
+  currentAtlas: 0
   spriteName: 
   characterName: 
   isVisible: 1
@@ -334,43 +334,10 @@ MonoBehaviour:
   OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents:
-  - {fileID: -1340301561975916068}
+  - {fileID: 0}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &-1340301561975916068
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6805244748032663362}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8efc6b1d64977384eb3405357896c656, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_PositionModel:
-    SynchronizeEnabled: 1
-    TeleportEnabled: 1
-    TeleportIfDistanceGreaterThan: 3
-    InterpolateOption: 2
-    InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 1
-    ExtrapolateOption: 0
-    ExtrapolateSpeed: 1
-    ExtrapolateIncludingRoundTripTime: 1
-    ExtrapolateNumberOfStoredPositions: 1
-  m_RotationModel:
-    SynchronizeEnabled: 0
-    InterpolateOption: 1
-    InterpolateRotateTowardsSpeed: 180
-    InterpolateLerpSpeed: 5
-  m_ScaleModel:
-    SynchronizeEnabled: 0
-    InterpolateOption: 0
-    InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 0
 --- !u!1 &8318116529099348276
 GameObject:
   m_ObjectHideFlags: 0

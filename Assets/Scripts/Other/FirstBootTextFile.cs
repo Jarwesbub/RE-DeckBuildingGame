@@ -38,13 +38,13 @@ public class FirstBootTextFile : MonoBehaviour
         }
         else
         {
-            string[] shop_cards = new string[16]; //+1
+            string[] shop_cards = new string[18]; //+1
             shop_cards[0] = "ActionCardsList1_AllCounted"; shop_cards[1] = "ActionCardsList2_AllCounted"; shop_cards[2] = "ActionCardsList3_AllCounted";
             shop_cards[3] = "ActionCardsList4_AllCounted"; shop_cards[4] = "ActionCardsList5_AllCounted"; shop_cards[5] = "AmmoCountList";
             shop_cards[6] = "AR_SG_List_AllCounted"; shop_cards[7] = "CharacterList"; shop_cards[8] = "GrenadeList_AllCounted";
             shop_cards[9] = "HandgunsList_AllCounted"; shop_cards[10] = "HPItemsList_AllCounted"; shop_cards[11] = "KnifeList_AllCounted";
             shop_cards[12] = "RifleList_AllCounted"; shop_cards[13] = "ShotgunList_AllCounted"; shop_cards[14] = "StartingDeckList";
-            shop_cards[15] = "MansionCards1_AllCounted";
+            shop_cards[15] = "MansionCards1_AllCounted"; shop_cards[16] = "Extra1List_AllCounted"; shop_cards[17] = "CharacterCustomlist";
 
 
             foreach (string textFile in shop_cards)

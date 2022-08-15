@@ -164,7 +164,8 @@ public class MansionCards : MonoBehaviourPun
         {
             GameObject mansionHandCard = Instantiate(MansionHandCardPrefab);
             mansionHandCard.GetComponent<Image>().sprite = image.sprite;
-            mansionHandCard.transform.parent = MansionGridContent.transform;
+            //mansionHandCard.transform.parent = MansionGridContent.transform;
+            mansionHandCard.transform.SetParent(MansionGridContent.transform);
             mansionHandCard.transform.localScale = new Vector3(1f, 1f, 1f);
 
             view.RPC("RPC_DeleteCard", RpcTarget.AllBuffered);

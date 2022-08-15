@@ -42,6 +42,8 @@ TagManager:
   - Shop_GunsAndItemsList
   - Shop_ActionCardsList
   - DeleteCardPlatform
+  - LM_HandCardGridContent
+  - LeftMenu_Control
   layers:
   - Default
   - TransparentFX

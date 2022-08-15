@@ -13,6 +13,7 @@ public class HandCard : MonoBehaviourPun, IPunInstantiateMagicCallback
     {
         SpawnCards = GameObject.FindWithTag("Respawn");
         view = GetComponent<PhotonView>();
+        
     }
 
     // Start is called before the first frame update
@@ -32,6 +33,7 @@ public class HandCard : MonoBehaviourPun, IPunInstantiateMagicCallback
     void SendMyHandCardToSpriteFromAtlas(string cardName)
     {
         currentCard = cardName;
+        
     }
 
     public void DeleteThisCardCompletely()

@@ -7,7 +7,7 @@ using TMPro;
 
 public class DeleteCardsControl : MonoBehaviour
 {
-    public GameObject ShowDeleteActions;
+    public GameObject ShowDeleteActions, LeftMenuControl;
     public TMP_Text showDeleteTxt;
     public Button DeleteCard_btn, DontDeleteCard_btn;
     private GameObject currentDeleteCard;
@@ -28,6 +28,8 @@ public class DeleteCardsControl : MonoBehaviour
     public void OnClickDeleteCard()
     {
         currentDeleteCard.GetComponent<HandCard>().DeleteThisCardCompletely();
+        string name = currentDeleteCard.GetComponent<Image>().sprite.name;
+        LeftMenuControl.GetComponent<LeftMenuControl>().DeleteHandCard(name);
         StartCoroutine(ShowDeletedCardText());
     }
     public void OnClickDontDeleteCard()

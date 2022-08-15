@@ -12,10 +12,14 @@ public class ShopCards : MonoBehaviourPun   //
     public GameObject Ammo10,Ammo20,Ammo30, Handgun,Knife,Grenade,HP;   //All buttons in ShopMenu
     public GameObject Shotgun, AR_SG, Rifle;                           //All buttons in ShopMenu
     public GameObject Action1, Action2, Action3, Action4, Action5;    //All buttons in ShopMenu
+    public GameObject Extra1;
     public GameObject AmmoCountListPrefab, HandgunListPrefab, KnifeListPrefab,GrenadeListPrefab, HPListPrefab;   //ShopLists_AllCounted (.text)
     public GameObject ShotgunListPrefab, AR_SG_ListPrefab, RiflesListPrefab;                                    //ShopLists_AllCounted (.text)
     public GameObject Action1ListPrefab, Action2ListPrefab, Action3ListPrefab, Action4ListPrefab, Action5ListPrefab;
+    public GameObject Extra1ListPrefab;
+    public GameObject LeftMenuControl;
     [SerializeField] private List<GameObject> activeCardObjectList; //List of all objects. Can be accessed by list number! (used in [PunRPC])
+    
     PhotonView view;
     public int buysCount; //Reset to 0 from GameControl.cs
     private bool isZoomed; //Tells if current card in bigger or normal size
@@ -28,6 +32,7 @@ public class ShopCards : MonoBehaviourPun   //
     private int currentCardObject;
     public string[] HandgunList,KnifeList,GrenadeList,HPList, ShotgunList,AR_SG_List,RifleList; //List of all card names by type
     public string[] ActionList1, ActionList2, ActionList3, ActionList4, ActionList5;           //List of all card names by type
+    public string[] ExtraList1;
     private int count_RandomNumber; //Random number for the next card
 
     private void Start()
@@ -73,8 +78,13 @@ public class ShopCards : MonoBehaviourPun   //
         ActionList3 = AddAllCardsToList(Action3, Action3ListPrefab);    //12
         ActionList4 = AddAllCardsToList(Action4, Action4ListPrefab);    //13
         ActionList5 = AddAllCardsToList(Action5, Action5ListPrefab);    //14
-
+        ExtraList1 = AddAllCardsToList(Extra1, Extra1ListPrefab);     //15
     }
+    /// When adding/deleting new SHOP_buttons remember to add changes in text file arrays! (FirstBootTextFile.cs and OverwriteTextFileList.cs)
+    /// Before game start remember to delete everything in "Game_data" -folder" (all txt files are overwritten if "CharactersList_AllCounted" is missing)
+    /// </summary>
+    /// <returns></returns>
+
 
     private string[] AddAllCardsToList(GameObject buttonObject, GameObject allCountedPrefab) //Takes all the .text files and sends them to objects SpriteFromAtlas.cs
     {                                                                                        //Returns finished string value
@@ -106,7 +116,10 @@ public class ShopCards : MonoBehaviourPun   //
     public void OnClickAmmo10Buy() //"Buy" button which sends purchased card to local player's discard pile and deletes it in shop
     {
         if (!waitRPC && view.IsMine)
-            BuyShopCard(Ammo10, count_Values[0], "ia_ammo10",0); //0 = Ammo10;
+        {
+            Add_LM_HandDeck(Ammo10.GetComponent<Image>().sprite);
+            BuyShopCard(Ammo10, count_Values[0], "ia_ammo10", 0); //0 = Ammo10;
+        }
     }
     
     public void OnClickAmmo20() 
@@ -120,8 +133,10 @@ public class ShopCards : MonoBehaviourPun   //
     public void OnClickAmmo20Buy() 
     {
         if (!waitRPC && view.IsMine)
-            BuyShopCard(Ammo20, count_Values[1], "ia_ammo20",1); //1 = Ammo20;
-
+        {
+            Add_LM_HandDeck(Ammo20.GetComponent<Image>().sprite);
+            BuyShopCard(Ammo20, count_Values[1], "ia_ammo20", 1); //1 = Ammo20;
+        }
     }
 
     public void OnClickAmmo30() 
@@ -136,7 +151,10 @@ public class ShopCards : MonoBehaviourPun   //
     public void OnClickAmmo30Buy() 
     {
         if (!waitRPC && view.IsMine)
+        {
+            Add_LM_HandDeck(Ammo30.GetComponent<Image>().sprite);
             BuyShopCard(Ammo30, count_Values[2], "ia_ammo30", 2); //2 = Ammo30;
+        }
 
     }
     ///////////////////////////////////////
@@ -153,6 +171,7 @@ public class ShopCards : MonoBehaviourPun   //
         if (!waitRPC && view.IsMine)
         {
             string name = Handgun.GetComponent<SpriteFromAtlas>().spriteName;
+            Add_LM_HandDeck(Handgun.GetComponent<Image>().sprite);
             BuyShopCard(Handgun, count_Values[3], name, 3); //3 = Handguns;
         }
     }
@@ -170,6 +189,7 @@ public class ShopCards : MonoBehaviourPun   //
         if (!waitRPC && view.IsMine)
         {
             string name = Knife.GetComponent<SpriteFromAtlas>().spriteName;
+            Add_LM_HandDeck(Knife.GetComponent<Image>().sprite);
             BuyShopCard(Knife, count_Values[4], name, 4); //4 = Knifes;
         }
     }
@@ -187,6 +207,7 @@ public class ShopCards : MonoBehaviourPun   //
         if (!waitRPC && view.IsMine)
         {
             string name = Grenade.GetComponent<SpriteFromAtlas>().spriteName;
+            Add_LM_HandDeck(Grenade.GetComponent<Image>().sprite);
             BuyShopCard(Grenade, count_Values[5], name, 5); //5 = Grenades;
         }
     }
@@ -204,6 +225,7 @@ public class ShopCards : MonoBehaviourPun   //
         if (!waitRPC && view.IsMine)
         {
             string name = HP.GetComponent<SpriteFromAtlas>().spriteName;
+            Add_LM_HandDeck(HP.GetComponent<Image>().sprite);
             BuyShopCard(HP, count_Values[6], name, 6); //6 = HP (herbs and first aid);
         }
     }
@@ -223,6 +245,7 @@ public class ShopCards : MonoBehaviourPun   //
         if (!waitRPC && view.IsMine)
         {
             string name = Shotgun.GetComponent<SpriteFromAtlas>().spriteName;
+            Add_LM_HandDeck(Shotgun.GetComponent<Image>().sprite);
             BuyShopCard(Shotgun, count_Values[7], name, 7); //7 = Shotguns;
         }
     }
@@ -240,6 +263,7 @@ public class ShopCards : MonoBehaviourPun   //
         if (!waitRPC && view.IsMine)
         {
             string name = AR_SG.GetComponent<SpriteFromAtlas>().spriteName;
+            Add_LM_HandDeck(AR_SG.GetComponent<Image>().sprite);
             BuyShopCard(AR_SG, count_Values[8], name, 8); //8 = Assault rifles and Submachine guns;
         }
     }
@@ -257,6 +281,7 @@ public class ShopCards : MonoBehaviourPun   //
         if (!waitRPC && view.IsMine)
         {
             string name = Rifle.GetComponent<SpriteFromAtlas>().spriteName;
+            Add_LM_HandDeck(Rifle.GetComponent<Image>().sprite);
             BuyShopCard(Rifle, count_Values[9], name, 9); //9 = Rifles;
         }
     }
@@ -276,6 +301,7 @@ public class ShopCards : MonoBehaviourPun   //
         if (!waitRPC && view.IsMine)
         {
             string name = Action1.GetComponent<SpriteFromAtlas>().spriteName;
+            Add_LM_HandDeck(Action1.GetComponent<Image>().sprite);
             BuyShopCard(Action1, count_Values[10], name, 10); //10 = Action1;
         }
     }
@@ -293,6 +319,7 @@ public class ShopCards : MonoBehaviourPun   //
         if (!waitRPC && view.IsMine)
         {
             string name = Action2.GetComponent<SpriteFromAtlas>().spriteName;
+            Add_LM_HandDeck(Action2.GetComponent<Image>().sprite);
             BuyShopCard(Action2, count_Values[11], name, 11); //11 = Action2;
         }
     }
@@ -310,6 +337,7 @@ public class ShopCards : MonoBehaviourPun   //
         if (!waitRPC && view.IsMine)
         {
             string name = Action3.GetComponent<SpriteFromAtlas>().spriteName;
+            Add_LM_HandDeck(Action3.GetComponent<Image>().sprite);
             BuyShopCard(Action3, count_Values[12], name, 12); //12 = Action3;
         }
     }
@@ -327,6 +355,7 @@ public class ShopCards : MonoBehaviourPun   //
         if (!waitRPC && view.IsMine)
         {
             string name = Action4.GetComponent<SpriteFromAtlas>().spriteName;
+            Add_LM_HandDeck(Action4.GetComponent<Image>().sprite);
             BuyShopCard(Action4, count_Values[13], name, 13); //13 = Action4;
         }
     }
@@ -344,12 +373,29 @@ public class ShopCards : MonoBehaviourPun   //
         if (!waitRPC && view.IsMine)
         {
             string name = Action5.GetComponent<SpriteFromAtlas>().spriteName;
+            Add_LM_HandDeck(Action5.GetComponent<Image>().sprite);
             BuyShopCard(Action5, count_Values[14], name, 14); //14 = Action5;
         }
     }
     /// <summary>
-    
-    public void UpdateAndResetBuysCount(bool reset)
+    public void OnClickExtra1() //Stretch button image bigger and show "Buy" button
+    {
+        if (!waitRPC && view.IsMine)
+        {
+            SetAllCardsToNormalSize();
+            CheckShopCard(Extra1, count_Values[15]); //15 = Extra1;
+        }
+    }
+    public void OnClickExtra1Buy()
+    {
+        if (!waitRPC && view.IsMine)
+        {
+            string name = Extra1.GetComponent<SpriteFromAtlas>().spriteName;
+            Add_LM_HandDeck(Extra1.GetComponent<Image>().sprite);
+            BuyShopCard(Extra1, count_Values[15], name, 15); //15 = Extra1;
+        }
+    }
+    public void UpdateAndResetBuysCount(bool reset) //Buys counter on the top left corner in SHOP
     {
         if (reset)
             buysCount=0;
@@ -402,6 +448,14 @@ public class ShopCards : MonoBehaviourPun   //
                 cardObj.SetActive(false);
             }
     }
+    private void Add_LM_HandDeck(Sprite sprt) //LM = Left menu 
+    {
+        LeftMenuControl.GetComponent<LeftMenuControl>().InstantiateNewHandCard(sprt);
+
+    }
+
+
+
     [PunRPC]
     public void PUN_BuyCard(int cardCount,int count_Value, int randomNumber)
     {
@@ -463,6 +517,9 @@ public class ShopCards : MonoBehaviourPun   //
                 case 14: //Action cards5
                     holdNameRPC = ActionList5[count_RandomNumber];
                     break;
+                case 15: //Extra1 cards
+                    holdNameRPC = ExtraList1[count_RandomNumber];
+                    break;
             }
         }
 
@@ -516,5 +573,7 @@ public class ShopCards : MonoBehaviourPun   //
         Action4.transform.GetChild(0).gameObject.SetActive(false);
         Action5.transform.localScale = vec_Normal;
         Action5.transform.GetChild(0).gameObject.SetActive(false);
+        Extra1.transform.localScale = vec_Normal;
+        Extra1.transform.GetChild(0).gameObject.SetActive(false);
     }
 }

@@ -7,13 +7,11 @@ using UnityEngine.SceneManagement;
 
 public class LobbyRoomOpen : MonoBehaviourPunCallbacks
 {
-    public GameObject PlayerInfoPrefab;
-    public GameObject CharacterList;
+    public GameObject PlayerInfoPrefab, CharacterList, OptionsMenu, HostSetup;
     [SerializeField] private GameObject[] playerInfoList;
-    [SerializeField] private int myID;
+    //[SerializeField] private int myID;
     [SerializeField] private string myCharacterCard;
-    public GameObject startGame_btn;
-    private bool isMaster, readyForGameRoom;
+    private bool isMaster, readyForGameRoom, optionsMenuOn;
     Vector2 playerInfoPos = new Vector2(-6.9f, -1.6f);
     PhotonView view;
 
@@ -23,13 +21,16 @@ public class LobbyRoomOpen : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.AutomaticallySyncScene = true; //Works with PhotonNetwork.LoadLevel();
         view = GetComponent<PhotonView>();
-        myID = view.OwnerActorNr;
+        //myID = view.OwnerActorNr;
         isMaster = PhotonNetwork.IsMasterClient;
+        optionsMenuOn = false;
 
-            if(view.IsMine)
-                startGame_btn.SetActive(true);
+            if (isMaster)
+                HostSetup.SetActive(true);
             else
-                startGame_btn.SetActive(false);
+                HostSetup.SetActive(false);
+
+        OptionsMenu.SetActive(false);
     }
 
     public void ReadyForGameScene() //Accessed from OverWriteTextFileList (attached to this main object)
@@ -76,5 +77,19 @@ public class LobbyRoomOpen : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(1.0f);
         //SceneManager.LoadScene("Game");
         PhotonNetwork.LoadLevel("Game");
+    }
+
+    public void OnClickOpenOptionsMenu()
+    {
+        if(optionsMenuOn)
+        {
+            OptionsMenu.SetActive(false);
+            optionsMenuOn = false;
+        }
+        else
+        {
+            OptionsMenu.SetActive(true);
+            optionsMenuOn = true;
+        }
     }
 }

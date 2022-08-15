@@ -1,0 +1,130 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: CharactersCustom
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 4096
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 58788880426c34247b2642c4ee81a6a0, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 6c265d30b611b1f48a502bcea42f5c0f, type: 3}
+  - {fileID: 21300000, guid: 2a56356010212c148bb60be1a8a266d0, type: 3}
+  - {fileID: 21300000, guid: 7bf9be70a1c3fe24eba8994e81c638f6, type: 3}
+  - {fileID: 21300000, guid: dcbfd4f08cbeb2e46bd94fe9d8d25da6, type: 3}
+  - {fileID: 21300000, guid: d82548c1565c46c4f81c77b0b66ce56c, type: 3}
+  - {fileID: 21300000, guid: b876f8c18f1ecbc45831987c91b0ec3b, type: 3}
+  - {fileID: 21300000, guid: f75506322598f71429fc83cccc30db3b, type: 3}
+  - {fileID: 21300000, guid: d6acea4291befca4999d32e242e3d368, type: 3}
+  - {fileID: 21300000, guid: c54a9272ea14bf14a963e831fd8d1adb, type: 3}
+  - {fileID: 21300000, guid: 9e7eecc246e848346b3ebfc19ba4d410, type: 3}
+  - {fileID: 21300000, guid: a9a17b135dd4bce4d81e6413cf295c52, type: 3}
+  - {fileID: 21300000, guid: 014fbaa354ecfb942a7e0fae54beb8e7, type: 3}
+  - {fileID: 21300000, guid: 2c07b5a4344599c4880520cf736e3ec5, type: 3}
+  - {fileID: 21300000, guid: 7426d1c457e9d9c4da571d26d4742de2, type: 3}
+  - {fileID: 21300000, guid: d177051566124b642b40c0453585b1f3, type: 3}
+  - {fileID: 21300000, guid: 82a779c5e903e8d4aac6851bfd141382, type: 3}
+  - {fileID: 21300000, guid: 7c7c27160c8555f468ab124cdf358102, type: 3}
+  - {fileID: 21300000, guid: 231a5e97945e6704da01ddf260469faf, type: 3}
+  - {fileID: 21300000, guid: 347e37c83f3acb0428a31f7d43b214da, type: 3}
+  - {fileID: 21300000, guid: 4ccb3ce8a28c5cf42ba880c7b34a5153, type: 3}
+  - {fileID: 21300000, guid: e1b20a89e8fa91940bbfe89a64567083, type: 3}
+  - {fileID: 21300000, guid: 248a970aaca186a4ca4814c54e52daef, type: 3}
+  - {fileID: 21300000, guid: cdfb8d5a9d064d643838dc843d1df72d, type: 3}
+  - {fileID: 21300000, guid: 7d63a8dab1174a640b42d69e328c71d3, type: 3}
+  - {fileID: 21300000, guid: 258f1deb3e9648d4791a5d8f211713ab, type: 3}
+  - {fileID: 21300000, guid: a7b7a31c074dced498570b391f65ac0a, type: 3}
+  - {fileID: 21300000, guid: c92d12bcc47b8194c983dfb1a570aca7, type: 3}
+  - {fileID: 21300000, guid: d60ec16d2d605544a8a33759583407ae, type: 3}
+  - {fileID: 21300000, guid: 134c56bdcd0c66d4494cebddfdece09e, type: 3}
+  - {fileID: 21300000, guid: b001380e8b2d02144b9db12396ee9e7c, type: 3}
+  - {fileID: 21300000, guid: c476763e4a249574fae48a0e45ffd573, type: 3}
+  - {fileID: 21300000, guid: 0a72817e5190287489677e5d58fb509f, type: 3}
+  - {fileID: 21300000, guid: aca2638efc2af0947aaad692e5846a73, type: 3}
+  - {fileID: 21300000, guid: f954079e256c50f44b1980ab4c9fb0cd, type: 3}
+  - {fileID: 21300000, guid: cddfc0de7ffb174478647c97c38ed5a4, type: 3}
+  - {fileID: 21300000, guid: 801aa5eefb9e1de4ab24555527099e3c, type: 3}
+  - {fileID: 21300000, guid: 6d5bd55f921005c478a9c784ed62150e, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - ch-222_injured_ada_by_huangzhenyanghz_d4m3lsz
+  - ch-235_sheva_alomar_2_by_huangzhenyanghz_d4mbuy3
+  - ch-218_jill_valentine_4_by_huangzhenyanghz_d4mb98c
+  - ch-208_chris_redfield_by_huangzhenyanghz_d4masio
+  - ch-226_leon_scott_kennedy_2_by_huangzhenyanghz_d4mbksg
+  - ch-224_kevin_ryman_by_huangzhenyanghz_d4mbciy
+  - ch-229_luis_sera_by_huangzhenyanghz_d4mbnby
+  - ch-228_leon_scott_kennedy_by_huangzhenyanghz_d4mbki3
+  - ch-231_rebecca_chambers_2_by_huangzhenyanghz_d4mbpjr
+  - ch-209_claire_redfield_2_by_huangzhenyanghz_d4mathd
+  - ch-207_chris_redfield_2_by_huangzhenyanghz_d4masoz
+  - ch-211_fong_ling_by_huangzhenyanghz_d4mauly
+  - ch-215_jack_krauser_by_huangzhenyanghz_d4mbd96
+  - ch-210_fiona_belli_by_huangzhenyanghz_d4mauew
+  - ch-220_jill_valentine_bsaa_by_huangzhenyanghz_d4masam
+  - ch-216_jill_valentine_2_by_huangzhenyanghz_d4mb8dl
+  - ch-230_nicholai_ginovaef_by_huangzhenyanghz_d4me8bd
+  - ch-225_lady_by_huangzhenyanghz_d4mbdjv
+  - ch-204_allyson_by_huangzhenyanghz_d4mapwh
+  - ch-219_jill_valentine_7_by_huangzhenyanghz_d4mba2r
+  - ch-237_steve_burnside_by_huangzhenyanghz_d4me46u
+  - ch-232_rebecca_chambers_3_by_huangzhenyanghz_d4mbpsr
+  - ch-212_heather_mason_by_huangzhenyanghz_d4mb7bv
+  - ch-221_jill_valentine_revelations_2_by_huangzhenyanghz_d4me90u
+  - ch-202_ada_wong_3_by_huangzhenyanghz_d4marpd
+  - ch-233_regina_by_huangzhenyanghz_d4mbqlq
+  - ch-213_hunk_by_huangzhenyanghz_d4mb7m8
+  - ch-223_jill_valentine_6_by_huangzhenyanghz_d4mb9u5
+  - ch-236_sheva_alomar_by_huangzhenyanghz_d4matz8
+  - ch-205_ashley_graham_2_by_huangzhenyanghz_d4mark4
+  - ch-234_richard_aiken_by_huangzhenyanghz_d4mbqzg
+  - ch-214_injured_ada_by_huangzhenyanghz_d4m3lsz
+  - ch-227_leon_scott_kennedy_4_by_huangzhenyanghz_d4mbl7g
+  - ch-217_jill_valentine_3_by_huangzhenyanghz_d4mb8nz
+  - ch-201_ada_wong_2_by_huangzhenyanghz_d4mapjs
+  - ch-203_albert_wesker_by_huangzhenyanghz_d4me4s0
+  - ch-206_ashley_graham_by_huangzhenyanghz_d4marc5
+  m_RenderDataMap: {}
+  m_Tag: CharactersCustom
+  m_IsVariant: 0

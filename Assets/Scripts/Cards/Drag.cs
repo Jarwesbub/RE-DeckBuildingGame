@@ -12,10 +12,12 @@ public class Drag : MonoBehaviour
     public GameObject DeleteCardPlatform;
     private Canvas canvas;
     private PhotonView view;
+    private PhotonTransformViewClassic transformView;
     [SerializeField]
     private Vector2 cardPosition;
     [SerializeField]
     private Vector2 lastPos;
+    public bool showCardScale; //Owner sees card scale all the time -> others when card gets visible
     private bool isCardVisibleToOthers, isOnDeletePlatform;
     private Vector2 deleteCardPosMin = new Vector2 (6.6f,0.3f), deleteCardPosMax = new Vector2(8.6f, 1.0f);
     //[SerializeField] //DEBUG
@@ -24,44 +26,44 @@ public class Drag : MonoBehaviour
     void Awake()
     {
         DeleteCardPlatform = GameObject.FindWithTag("DeleteCardPlatform");
-        //if (canvas == null)
-        {
-            //canvas = GetComponent<ShowCardToOthers>().MainCanvas;
-            //GameObject canvasObj = GameObject.FindWithTag("MainCanvas");
-            //MainCanvas = gameObject.transform.parent.gameObject;
-            MainCanvas = GameObject.FindWithTag("MainCanvas");
-            canvas = MainCanvas.GetComponent<Canvas>();
-            Debug.Log("MainCanvas =" + MainCanvas + "inDrag.cs");
-        }
+        MainCanvas = GameObject.FindWithTag("MainCanvas");
+        canvas = MainCanvas.GetComponent<Canvas>();
+        //Debug.Log("MainCanvas =" + MainCanvas + "inDrag.cs");       
         isCardVisibleToOthers = false;
         isOnDeletePlatform = false;
+        showCardScale = false;
     }
     void Start()
     {
         view = GetComponent<PhotonView>();
-        
+        transformView = GetComponent<PhotonTransformViewClassic>();
+
+        if (view.IsMine)
+            transformView.m_ScaleModel.SynchronizeEnabled = true;
+
+        else
+            transformView.m_ScaleModel.SynchronizeEnabled = false;
+
+
         lastPos = transform.position;
         cardPosition = transform.position;
     }
 
-
     [PunRPC]
     public void DragHandler(BaseEventData data)
     {
-        //if (view.IsMine) //TESTING WHEN OFF
-        {
-            PointerEventData pointerData = (PointerEventData)data;
+        PointerEventData pointerData = (PointerEventData)data;
 
-            Vector2 position;
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                (RectTransform)canvas.transform,
-                pointerData.position,
-                canvas.worldCamera,
-                out position);
+        Vector2 position;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            (RectTransform)canvas.transform,
+            pointerData.position,
+            canvas.worldCamera,
+            out position);
 
-            transform.position = canvas.transform.TransformPoint(position);
-            transform.localScale = new Vector3(0.7f, 0.7f, 0.7f);
-        }
+        transform.position = canvas.transform.TransformPoint(position);
+        transform.localScale = new Vector3(0.7f, 0.7f, 0.7f);
+        
     }
     public void PointerEnter()
     {
@@ -80,7 +82,6 @@ public class Drag : MonoBehaviour
      || cardPosition.y <= minY || cardPosition.y >= maxY)
         {
             transform.position = lastPos;
-
         }
 
         isOnDeletePlatform = CheckIfOnDeletePlatform(transform.position);
@@ -100,8 +101,6 @@ public class Drag : MonoBehaviour
             if (lastPos.y >= pnLimitY) //When card crosses "visibility line" pnLimitY
                 view.RPC("SetHandCardVisible", RpcTarget.AllBuffered);
 
-        
-
     }
 
     [PunRPC]
@@ -109,7 +108,8 @@ public class Drag : MonoBehaviour
     {
         GetComponent<SpriteFromAtlas>().SetHandCardSpriteVisibility(true);
         isCardVisibleToOthers = true;
-        Debug.Log("Card is now visible to others!");
+        transformView.m_ScaleModel.SynchronizeEnabled = true;
+        //Debug.Log("Card is now visible to others!");
     }
 
 
@@ -129,5 +129,19 @@ public class Drag : MonoBehaviour
     {
         transform.position = lastPos;
     }
+    /*
+    public void LockCardMovement(bool lockMovement)
+    {
+        if (lockMovement)
+        {
+            transformView.m_PositionModel.SynchronizeEnabled = false;
+            transformView.m_ScaleModel.SynchronizeEnabled = false;
+        }
+        else
+        {
+            transformView.m_PositionModel.SynchronizeEnabled = true;
+            transformView.m_ScaleModel.SynchronizeEnabled = true;
+        }
+    }*/
 }
 

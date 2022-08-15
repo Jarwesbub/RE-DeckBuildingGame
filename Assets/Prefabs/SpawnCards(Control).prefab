@@ -62,16 +62,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c971bdbce97cb44d8260271a90ca4c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardCount: 0
   handCards: 0
+  cardCount: 0
   PNCardPrefab: {fileID: 3658572025674238614, guid: d67348666da207f48ba84e3558ff649d, type: 3}
   PlayerDeck: {fileID: 8777308679630463889, guid: 0967153f86a57a84a89b3efe121a9f06, type: 3}
   CharacterCardPrefab: {fileID: 6805244748032663362, guid: dda99378e5304b746ba869d3dc78abce, type: 3}
-  DeleteCardPlatform: {fileID: 0}
+  LM_HandCardPrefab: {fileID: 2564409225766672910, guid: 0619d026698ecdc4486421d8c2c2fd06, type: 3}
+  LM_HandGridContent: {fileID: 0}
   sDeck: []
   sHandCards: []
   sDiscardPileCards: []
   currentCard: 
   characterCard: 
-  deleteCardPosMin: {x: 0, y: 0}
-  deleteCardPosMax: {x: 0, y: 0}

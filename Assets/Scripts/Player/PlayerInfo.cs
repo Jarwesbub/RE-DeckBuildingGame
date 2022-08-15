@@ -17,7 +17,7 @@ public class PlayerInfo : MonoBehaviourPun, IPunInstantiateMagicCallback
     private SpriteRenderer rend;
 
 
-    [SerializeField] private bool isMaster;
+    //[SerializeField] private bool isMaster;
     //public List<Sprite> allCharacters;
     PhotonView view;
 
@@ -26,7 +26,7 @@ public class PlayerInfo : MonoBehaviourPun, IPunInstantiateMagicCallback
 
         view = GetComponent<PhotonView>();
         playerID = view.OwnerActorNr;
-        isMaster = PhotonNetwork.IsMasterClient;
+        //isMaster = PhotonNetwork.IsMasterClient;
 
         rend = GetComponent<SpriteRenderer>();
         rend.enabled = false;
@@ -52,12 +52,5 @@ public class PlayerInfo : MonoBehaviourPun, IPunInstantiateMagicCallback
     {
         myCharacterCard = cardName;
     }
-    void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode mode)
-    {
-        if (scene.name == "Game")
-        {
-           
-            Debug.Log("GAME SCENE LOADED IN U FACE");
-        }
-    }
+
 }
