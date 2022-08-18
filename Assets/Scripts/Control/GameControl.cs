@@ -13,9 +13,9 @@ public class GameControl : MonoBehaviourPunCallbacks
     private GameObject MainSpawnCards;
     public GameObject EndTurnMenuObject, ShopMenuObject, MansionMenuObject;
     private bool shopMenuOpen, mansionOpen;
-    public int currentPlayerID;
+    public int currentPlayerID, currentRound;
     //public Text currentPlayer; //DEBUGGING
-    public TMP_Text currentPlayerTxt,drawHandCards_tmp;
+    public TMP_Text currentPlayerTxt,drawHandCards_tmp, currentRoundTxt;
     //[SerializeField] private List<string> playerNamesList;
     //private string currentPlayerName;
     public bool onButtonLock; // Adds more time for clients to create MansionDeck - 500 action limit/second! -
@@ -43,7 +43,7 @@ public class GameControl : MonoBehaviourPunCallbacks
         
         shopMenuOpen = false;
         mansionOpen = false;
-
+        currentRound = 0;
     }
 
     void Start()
@@ -66,14 +66,8 @@ public class GameControl : MonoBehaviourPunCallbacks
         ShopMenuObject.SetActive(false);
         MansionMenuObject.SetActive(false);
         cardCount = MainSpawnCards.GetComponent<SpawnCards>().cardCount;
-        /*
-        int count = PhotonNetwork.CurrentRoom.PlayerCount;
-        for (int i = 0; i < count; i++)
-        {
-            string name = PhotonNetwork.PlayerList[i].NickName;
-            playerNamesList.Add(name);
-        }
-        */
+
+        RoundChanges();
     }
     public void NewHandCardSpawned()
     {
@@ -180,7 +174,8 @@ public class GameControl : MonoBehaviourPunCallbacks
         {   //BUG Index out of range error when HOST ends turn and loads spritedata from "unenabled object" (Development build only)
             OtherCharacterControl.GetComponent<CharacterControl>().SetOtherCharacterSprite(currentPlayerID);
         }
-
+        if (currentPlayerID == 1)
+            RoundChanges();
         drawHandCardCount = 5; isExtraHandCard = false;
         drawHandCards_tmp.text = "Draw " + drawHandCardCount + " cards";
     }
@@ -190,6 +185,12 @@ public class GameControl : MonoBehaviourPunCallbacks
         currentPlayerTxt.text = "Now Playing: " +name;
         
     }
+    private void RoundChanges()
+    {
+        currentRound++;
+        currentRoundTxt.text = "Round: " + currentRound;
+    }
+
 
     public void OnClickShopMenuButton()
     {

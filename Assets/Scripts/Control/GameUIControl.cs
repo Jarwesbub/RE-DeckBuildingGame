@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Photon.Pun;
+using UnityEngine.Events;
 
 public class GameUIControl : MonoBehaviourPun
 {
@@ -13,6 +14,8 @@ public class GameUIControl : MonoBehaviourPun
     public GameObject ShopMenuButton;
     [SerializeField] string playerName;
     public int playerID;
+
+    UnityEvent roundChangeEvent = new UnityEvent();
 
     void Awake()
     {

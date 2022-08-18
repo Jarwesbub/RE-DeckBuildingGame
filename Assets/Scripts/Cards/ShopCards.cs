@@ -18,17 +18,10 @@ public class ShopCards : MonoBehaviourPun   //
     public GameObject Action1ListPrefab, Action2ListPrefab, Action3ListPrefab, Action4ListPrefab, Action5ListPrefab;
     public GameObject Extra1ListPrefab;
     public GameObject LeftMenuControl;
+    public GameObject ShopScrollBar, Shop_Items;
+    private float scrollBarValue;
     [SerializeField] private List<GameObject> activeCardObjectList; //List of all objects. Can be accessed by list number! (used in [PunRPC])
     
-    /*
-    public struct _Items
-    {
-        public GameObject _Button;
-        public GameObject _CountListPrefab;
-        public string[] _list;
-    }
-    [SerializeField] private GameObject[] AllItems;
-    */
     PhotonView view;
     public int buysCount; //Reset to 0 from GameControl.cs
     private bool isZoomed; //Tells if current card in bigger or normal size
@@ -538,6 +531,12 @@ public class ShopCards : MonoBehaviourPun   //
     private IEnumerator WaitSoldText()
     {
         waitRPC = true;
+
+        ScrollRect rect = Shop_Items.GetComponent<ScrollRect>();
+        rect = Shop_Items.GetComponent<ScrollRect>();
+        rect.StopMovement();
+        rect.enabled = false;
+
         yield return new WaitForSeconds(2f);
         if (holdNameRPC != "")
         {
@@ -548,6 +547,7 @@ public class ShopCards : MonoBehaviourPun   //
         activeCardObjectList[currentCardObject].transform.GetChild(0).gameObject.SetActive(false);
         Sold.text = "";
         waitRPC = false;
+        rect.enabled = true;
     }
 
     public void SetAllCardsToNormalSize() //When ShopMenu button is pressed (GameControl.cs)
@@ -584,5 +584,25 @@ public class ShopCards : MonoBehaviourPun   //
         Action5.transform.GetChild(0).gameObject.SetActive(false);
         Extra1.transform.localScale = vec_Normal;
         Extra1.transform.GetChild(0).gameObject.SetActive(false);
+    }
+
+    public void OnScrollValueChanged()
+    {
+        if (!waitRPC)
+        {
+            if (view.IsMine)
+            {
+                scrollBarValue = ShopScrollBar.GetComponent<Scrollbar>().value;
+
+                view.RPC("ScrollValueChanged", RpcTarget.AllBuffered, scrollBarValue);
+            }
+        }
+
+
+    }
+    [PunRPC] private void ScrollValueChanged(float value)
+    {
+        ShopScrollBar.GetComponent<Scrollbar>().value = value;
+
     }
 }
