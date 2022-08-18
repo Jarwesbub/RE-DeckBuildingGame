@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 997
   m_ShowMode: 4
-  m_Title: Game
+  m_Title: Project
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -118,7 +118,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 1
-  controlID: 68
+  controlID: 91
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -143,7 +143,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 69
+  controlID: 92
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -168,7 +168,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 70
+  controlID: 93
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -193,7 +193,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 71
+  controlID: 94
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -213,8 +213,8 @@ MonoBehaviour:
     y: 0
     width: 296
     height: 596
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 14}
@@ -364,7 +364,7 @@ MonoBehaviour:
     m_HSlider: 0
     m_VSlider: 0
     m_IgnoreScrollWheelUntilClicked: 0
-    m_EnableMouseInput: 0
+    m_EnableMouseInput: 1
     m_EnableSliderZoomHorizontal: 0
     m_EnableSliderZoomVertical: 0
     m_UniformScale: 1
@@ -426,9 +426,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
+      m_SelectedIDs: 32640000
       m_LastClickedID: 0
-      m_ExpandedIDs: 004afeff4e4afeff3052feffa679feffec79feff367ffeff7e7ffeff927ffeff987ffeffaa7ffeff18d3feffccdffeffeae0feff94e1feffdee8feff1aecfeff68fbfeff9201ffffce07ffff0e14fffff016ffff181cfffffc1efffffa1fffffe622ffff8823ffffa624ffff023affff843fffff8a3fffffa23fffffae3fffff4e45ffff7861ffffbe61ffff1467ffff5467ffff6c67ffff7667ffff8c67fffff067ffffa66bffff8c6fffff5e71ffffa471ffffc075fffff475ffff0676ffff0c76ffff1676ffff6689ffffac89ffff028fffff428fffff588fffff628fffff788fffffda8fffff4694fffffa98ffffa4bdffffeabdffff3cc3ffff78c3ffff8cc3ffff92c3ffffa6c3ffff30d4ffff16d8ffff4ef5ffff8ef5ffff20fbfffff4ffffffae870000d4880000868a000098a300004aa5000090a6000038e50000b60d0100680f01006a310100923101009e310100b231010070350100b2350100c6350100de350100143b0100563b01006a3b0100823b0100e64101004242010056420100804201008c430100e8430100fc43010026440100b04e0100c64e0100d24e0100fe4e0100204f0100404f01004c4f0100724f01001e62010046620100606201006c62010092620100a46b0100e66b0100f26b0100186c0100406e0100826e01008e6e0100b46e0100f07b0100327c01003e7c0100647c0100
+      m_ExpandedIDs: fc8affff0091ffffdaa4ffff3caaffff44b3ffff1ebaffff8cbffffff0c4ffff6ccaffffd6cdffff22ceffff5ccfffff54d3ffff9ad3ffff56deffff7adeffff9edeffffe2deffff04dfffff28dfffff4adfffff70dfffff94dfffffc2dfffffe6dfffff26e0ffff48e0ffff6ae0ffff8ce0ffffaee0ffffb8e0ffff1ae6ffff7ef7ffffa2f7ffffc6f7ffff0af8ffff2cf8ffff50f8ffff72f8ffff98f8ffffbcf8ffffeaf8ffff0ef9ffff4ef9ffff70f9ffff92f9ffffb4f9ffffd6f9ffffe0f9ffff20fbffff4e64000078640000886400008e64000098640000d0640000ea640000f86400006e650000f0650000fa6500001e660000306600006c6600007a66000098660000a0660000b8660000d2660000506700005267000088670000a4670000be670000c8670000f4670000fa670000226800004268000054680000946800000ea800001ea8000024a8000058a8000066a8000080a800008ea8000008aa000010aa000020aa00002eaa0000e6aa00003aab00008aab000090ab0000b8ab0000caab0000d2ab00001eac00002aac000000b200000eb20000b0b3000016bb0000e8ca0000f6ca000048cd0000e0da0000eeda0000ccdb000058dc000090dc0000f4dc000044dd00005cdd000006de00001ceb00002aeb000096eb000012ec00006aec00009eec0000d6ec0000e2ec0000ecec0000b4ed00005eee0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -699,9 +699,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -0.23722419, y: 0.17766723, z: 1746.563}
+    m_Target: {x: 0.19193102, y: 0.28804874, z: 2032.9504}
     speed: 2
-    m_Value: {x: -0.23722419, y: 0.17766723, z: 1746.563}
+    m_Value: {x: 0.19193102, y: 0.28804874, z: 2032.9504}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -752,9 +752,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 6.2161446
+    m_Target: 7.2320404
     speed: 2
-    m_Value: 6.2161446
+    m_Value: 7.2320404
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -884,22 +884,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts/Control
+    - Assets/Scenes
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 96
   m_LastFolders:
-  - Assets/Scripts/Control
+  - Assets/Scenes
   m_LastFoldersGridSize: 96
   m_LastProjectPath: D:\GM ja Unity\Unity PELIT 2\RE DeckBuildingGame NEW\RE-DeckBuildingGame
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 0}
+    scrollPos: {x: 0, y: 60}
     m_SelectedIDs: f6630000
     m_LastClickedID: 25590
-    m_ExpandedIDs: 00000000dc630000de630000e0630000e2630000e4630000e663000000ca9a3b
+    m_ExpandedIDs: 00000000e0630000e2630000e4630000e6630000e8630000ea630000006c0000026c00000c6c00002c6c000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -927,7 +927,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000dc630000de630000e0630000e2630000e4630000e6630000
+    m_ExpandedIDs: 00000000e0630000e2630000e4630000e6630000e8630000ea630000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

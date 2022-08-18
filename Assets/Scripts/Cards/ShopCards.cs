@@ -20,11 +20,20 @@ public class ShopCards : MonoBehaviourPun   //
     public GameObject LeftMenuControl;
     [SerializeField] private List<GameObject> activeCardObjectList; //List of all objects. Can be accessed by list number! (used in [PunRPC])
     
+    /*
+    public struct _Items
+    {
+        public GameObject _Button;
+        public GameObject _CountListPrefab;
+        public string[] _list;
+    }
+    [SerializeField] private GameObject[] AllItems;
+    */
     PhotonView view;
     public int buysCount; //Reset to 0 from GameControl.cs
     private bool isZoomed; //Tells if current card in bigger or normal size
     Vector3 vec_Normal = new Vector3(1, 1, 1);
-    Vector3 vec_Zoom = new Vector3(1.8f, 1.8f, 1);
+    Vector3 vec_Zoom = new Vector3(1.5f, 1.5f, 1); //OLD = 1.8f
     [SerializeField] private bool waitRPC;  //Shows if "wait time" is active while sending data in network
     private string holdNameRPC; //Holds the name of the next card (accessed in coroutine)
     //public int myPlayerID,currentPlayerID;
@@ -419,7 +428,7 @@ public class ShopCards : MonoBehaviourPun   //
                 }
                 else
                 {
-                    cardObj.transform.SetAsLastSibling();
+                    //cardObj.transform.SetAsLastSibling(); // Change object order to first
                     cardObj.transform.localScale = vec_Zoom;
                     isZoomed = true;
                     cardObj.transform.GetChild(0).gameObject.SetActive(true);
