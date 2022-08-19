@@ -45,6 +45,7 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: 0c109b1faf07b5e46a0c2c59269bbf0f, type: 3}
+    - {fileID: 21300000, guid: aeac6cbed77564a4abc70d7938a358be, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -74,6 +75,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 9aa09dfdd3850ea469cd58fdf06de221, type: 3}
   - {fileID: 21300000, guid: 943af44e39b76074ea50d19d11c18227, type: 3}
   - {fileID: 21300000, guid: 9476275e0caf2c6498f6f2c55e6bc71f, type: 3}
+  - {fileID: 21300000, guid: aeac6cbed77564a4abc70d7938a358be, type: 3}
   - {fileID: 21300000, guid: 5047807f941c3d54ab49628839d91a99, type: 3}
   m_PackedSpriteNamesToIndex:
   - _ac18uroborosinjection
@@ -100,6 +102,7 @@ SpriteAtlas:
   - _ac16archrival
   - _ac14starcrossedduo
   - _ac03shatteredmemories
+  - ia_custom_jill_sandwich
   - _ac04escapefromdeadcity
   m_RenderDataMap: {}
   m_Tag: ActionCards

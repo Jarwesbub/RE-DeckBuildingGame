@@ -11,12 +11,12 @@ public class ShopCards : MonoBehaviourPun   //
     public TMP_Text Sold, BuysCounttxt;
     public GameObject Ammo10,Ammo20,Ammo30, Handgun,Knife,Grenade,HP;   //All buttons in ShopMenu
     public GameObject Shotgun, AR_SG, Rifle;                           //All buttons in ShopMenu
-    public GameObject Action1, Action2, Action3, Action4, Action5;    //All buttons in ShopMenu
-    public GameObject Extra1;
+    public GameObject Action1, Action2, Action3, Action4, Action5, Action6, Action7;    //All buttons in ShopMenu
+    public GameObject Extra1, Extra2;
     public GameObject AmmoCountListPrefab, HandgunListPrefab, KnifeListPrefab,GrenadeListPrefab, HPListPrefab;   //ShopLists_AllCounted (.text)
     public GameObject ShotgunListPrefab, AR_SG_ListPrefab, RiflesListPrefab;                                    //ShopLists_AllCounted (.text)
-    public GameObject Action1ListPrefab, Action2ListPrefab, Action3ListPrefab, Action4ListPrefab, Action5ListPrefab;
-    public GameObject Extra1ListPrefab;
+    public GameObject Action1ListPrefab, Action2ListPrefab, Action3ListPrefab, Action4ListPrefab, Action5ListPrefab, Action6ListPrefab, Action7ListPrefab;
+    public GameObject Extra1ListPrefab, Extra2ListPrefab;
     public GameObject LeftMenuControl;
     public GameObject ShopScrollBar, Shop_Items;
     private float scrollBarValue;
@@ -33,8 +33,8 @@ public class ShopCards : MonoBehaviourPun   //
     [SerializeField] private List<int> count_Values; //Max ammount of cards/type -> works in harmony with "activeCardObjectList" (same numbers)
     private int currentCardObject;
     public string[] HandgunList,KnifeList,GrenadeList,HPList, ShotgunList,AR_SG_List,RifleList; //List of all card names by type
-    public string[] ActionList1, ActionList2, ActionList3, ActionList4, ActionList5;           //List of all card names by type
-    public string[] ExtraList1;
+    public string[] ActionList1, ActionList2, ActionList3, ActionList4, ActionList5, ActionList6, ActionList7;           //List of all card names by type
+    public string[] ExtraList1, ExtraList2;
     private int count_RandomNumber; //Random number for the next card
 
     private void Start()
@@ -80,7 +80,10 @@ public class ShopCards : MonoBehaviourPun   //
         ActionList3 = AddAllCardsToList(Action3, Action3ListPrefab);    //12
         ActionList4 = AddAllCardsToList(Action4, Action4ListPrefab);    //13
         ActionList5 = AddAllCardsToList(Action5, Action5ListPrefab);    //14
-        ExtraList1 = AddAllCardsToList(Extra1, Extra1ListPrefab);     //15
+        ActionList6 = AddAllCardsToList(Action6, Action6ListPrefab);    //15
+        ActionList7 = AddAllCardsToList(Action7, Action7ListPrefab);    //16
+        ExtraList1 = AddAllCardsToList(Extra1, Extra1ListPrefab);     //17
+        ExtraList2 = AddAllCardsToList(Extra2, Extra1ListPrefab);     //18
     }
     /// When adding/deleting new SHOP_buttons remember to add changes in text file arrays! (FirstBootTextFile.cs and OverwriteTextFileList.cs)
     /// Before game start remember to delete everything in "Game_data" -folder" (all txt files are overwritten if "CharactersList_AllCounted" is missing)
@@ -379,13 +382,49 @@ public class ShopCards : MonoBehaviourPun   //
             BuyShopCard(Action5, count_Values[14], name, 14); //14 = Action5;
         }
     }
+
+    public void OnClickAction6()
+    {
+        if (!waitRPC && view.IsMine)
+        {
+            SetAllCardsToNormalSize();
+            CheckShopCard(Action6, count_Values[15]); //15 = Action6;
+        }
+    }
+    public void OnClickAction6Buy()
+    {
+        if (!waitRPC && view.IsMine)
+        {
+            string name = Action6.GetComponent<SpriteFromAtlas>().spriteName;
+            Add_LM_HandDeck(Action6.GetComponent<Image>().sprite);
+            BuyShopCard(Action6, count_Values[15], name, 15); //15 = Action6;
+        }
+    }
+
+    public void OnClickAction7()
+    {
+        if (!waitRPC && view.IsMine)
+        {
+            SetAllCardsToNormalSize();
+            CheckShopCard(Action7, count_Values[16]); //16 = Action7;
+        }
+    }
+    public void OnClickAction7Buy()
+    {
+        if (!waitRPC && view.IsMine)
+        {
+            string name = Action7.GetComponent<SpriteFromAtlas>().spriteName;
+            Add_LM_HandDeck(Action7.GetComponent<Image>().sprite);
+            BuyShopCard(Action7, count_Values[16], name, 16); //16 = Action7;
+        }
+    }
     /// <summary>
     public void OnClickExtra1() //Stretch button image bigger and show "Buy" button
     {
         if (!waitRPC && view.IsMine)
         {
             SetAllCardsToNormalSize();
-            CheckShopCard(Extra1, count_Values[15]); //15 = Extra1;
+            CheckShopCard(Extra1, count_Values[17]); //17 = Extra1;
         }
     }
     public void OnClickExtra1Buy()
@@ -394,7 +433,24 @@ public class ShopCards : MonoBehaviourPun   //
         {
             string name = Extra1.GetComponent<SpriteFromAtlas>().spriteName;
             Add_LM_HandDeck(Extra1.GetComponent<Image>().sprite);
-            BuyShopCard(Extra1, count_Values[15], name, 15); //15 = Extra1;
+            BuyShopCard(Extra1, count_Values[17], name, 17); //17 = Extra1;
+        }
+    }
+    public void OnClickExtra2() //Stretch button image bigger and show "Buy" button
+    {
+        if (!waitRPC && view.IsMine)
+        {
+            SetAllCardsToNormalSize();
+            CheckShopCard(Extra2, count_Values[18]); //18 = Extra2;
+        }
+    }
+    public void OnClickExtra2Buy()
+    {
+        if (!waitRPC && view.IsMine)
+        {
+            string name = Extra2.GetComponent<SpriteFromAtlas>().spriteName;
+            Add_LM_HandDeck(Extra2.GetComponent<Image>().sprite);
+            BuyShopCard(Extra2, count_Values[18], name, 18); //18 = Extra2;
         }
     }
     public void UpdateAndResetBuysCount(bool reset) //Buys counter on the top left corner in SHOP
@@ -519,8 +575,17 @@ public class ShopCards : MonoBehaviourPun   //
                 case 14: //Action cards5
                     holdNameRPC = ActionList5[count_RandomNumber];
                     break;
-                case 15: //Extra1 cards
+                case 15: //Action cards6
+                    holdNameRPC = ActionList6[count_RandomNumber];
+                    break;
+                case 16: //Action cards7
+                    holdNameRPC = ActionList7[count_RandomNumber];
+                    break;
+                case 17: //Extra1 cards
                     holdNameRPC = ExtraList1[count_RandomNumber];
+                    break;
+                case 18: //Extra2 cards
+                    holdNameRPC = ExtraList2[count_RandomNumber];
                     break;
             }
         }
@@ -582,8 +647,14 @@ public class ShopCards : MonoBehaviourPun   //
         Action4.transform.GetChild(0).gameObject.SetActive(false);
         Action5.transform.localScale = vec_Normal;
         Action5.transform.GetChild(0).gameObject.SetActive(false);
+        Action6.transform.localScale = vec_Normal;
+        Action6.transform.GetChild(0).gameObject.SetActive(false);
+        Action7.transform.localScale = vec_Normal;
+        Action7.transform.GetChild(0).gameObject.SetActive(false);
         Extra1.transform.localScale = vec_Normal;
         Extra1.transform.GetChild(0).gameObject.SetActive(false);
+        Extra2.transform.localScale = vec_Normal;
+        Extra2.transform.GetChild(0).gameObject.SetActive(false);
     }
 
     public void OnScrollValueChanged()

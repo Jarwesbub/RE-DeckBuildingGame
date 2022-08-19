@@ -8,3 +8,4 @@ sup_grenade2
 sup_grenade2
 sup_grenade3
 sup_grenade3
+bg_rp7night

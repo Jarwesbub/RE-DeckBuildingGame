@@ -15,8 +15,6 @@ public class GameUIControl : MonoBehaviourPun
     [SerializeField] string playerName;
     public int playerID;
 
-    UnityEvent roundChangeEvent = new UnityEvent();
-
     void Awake()
     {
         OtherCharacterCard.SetActive(true);
