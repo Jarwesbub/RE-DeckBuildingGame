@@ -2,13 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-using Photon.Realtime;
+using TMPro;
+//using Photon.Realtime;
 
-public class SpawnCards : MonoBehaviourPunCallbacks
+public class SpawnCards : MonoBehaviourPun
 {
     public int handCards, cardCount;
-    public GameObject PNCardPrefab, PlayerDeck, CharacterCardPrefab;
+    public GameObject PNCardPrefab, CharacterCardPrefab;
     private GameObject HandCardsParent, MainCanvas;
+    [SerializeField] private TMP_Text deckCountTxt, discardpileCountTxt;
     public List<string> sDeck;
     public List<string> sHandCards;
     public List<string> sDiscardPileCards;
@@ -29,6 +31,13 @@ public class SpawnCards : MonoBehaviourPunCallbacks
 
         HandCardsParent = GameObject.FindWithTag("HandCardsParent");
         MainCanvas = GameObject.FindWithTag("MainCanvas");
+
+        GameObject parentDeckCounter;
+        parentDeckCounter = GameObject.FindWithTag("DeckCardsCounter");
+        deckCountTxt = parentDeckCounter.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>();
+        discardpileCountTxt = parentDeckCounter.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>();
+        SetDeckCountText();
+
         posX = startPosX; posY = startPosY;
         ShuffleDeck(false);
     }
@@ -69,6 +78,7 @@ public class SpawnCards : MonoBehaviourPunCallbacks
             card.GetComponent<SpriteFromAtlas>().SetHandCardSpriteVisibility(true);
 
             sDeck.Remove(sDeck[0]);
+            
         }
         if(sDeck.Count==0)
         {
@@ -82,6 +92,7 @@ public class SpawnCards : MonoBehaviourPunCallbacks
             ShuffleDeck(true);
             Debug.Log("Shuffling Deck !");
         }
+        SetDeckCountText();
     }
     private void ShuffleDeck(bool sendShuffleInfo)
     {
@@ -96,6 +107,12 @@ public class SpawnCards : MonoBehaviourPunCallbacks
         if(sendShuffleInfo)
             MainCanvas.GetComponent<GameControl>().DeckIsShuffled();
     }
+    private void SetDeckCountText()
+    {
+         deckCountTxt.text = "Deck: " + sDeck.Count;
+         discardpileCountTxt.text = "Discardpile: " + sDiscardPileCards.Count;
+    }
+
 
     private void GetHandCardSpriteData()
     {
@@ -118,6 +135,7 @@ public class SpawnCards : MonoBehaviourPunCallbacks
         }
         handCards = 0;
         posX = startPosX; posY = startPosY;
+        SetDeckCountText();
     }
     public void DeleteHandCardsCompletely(string name) //When using deleteplatform!
     {

@@ -5,6 +5,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI; //DEBUGGING
 using TMPro;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class GameControl : MonoBehaviourPunCallbacks
 {
@@ -14,12 +15,13 @@ public class GameControl : MonoBehaviourPunCallbacks
     public GameObject EndTurnMenuObject, ShopMenuObject, MansionMenuObject;
     private bool shopMenuOpen, mansionOpen;
     public int currentPlayerID, currentRound;
+
     //public Text currentPlayer; //DEBUGGING
     public TMP_Text currentPlayerTxt,drawHandCards_tmp, currentRoundTxt;
     //[SerializeField] private List<string> playerNamesList;
     //private string currentPlayerName;
     public bool onButtonLock; // Adds more time for clients to create MansionDeck - 500 action limit/second! -
-    bool isMaster, isMyView;
+    bool isMaster;
     private Player currentPlayer;
     [SerializeField] private int myPlayerID, whoIsPlaying, playerCount; //IN USE
     [SerializeField] private int cardCount;
@@ -32,7 +34,6 @@ public class GameControl : MonoBehaviourPunCallbacks
         MansionMenuObject.SetActive(true);
         view = GetComponent<PhotonView>();
         isMaster = PhotonNetwork.IsMasterClient;
-        isMyView = view.IsMine;
         myPlayerID = PhotonNetwork.LocalPlayer.ActorNumber;
         currentPlayerID = 1; //HOST
         ShopMenuObject.SetActive(true);     
@@ -52,13 +53,14 @@ public class GameControl : MonoBehaviourPunCallbacks
         string hostName = currentPlayer.NickName;
         if (isMaster)
         {
-            UIGameControl.GetComponent<GameUIControl>().UIHostStartGame();
+            UIGameControl.GetComponent<GameUIControl>().UIHostStartGame(true);
             //currentPlayerName = PhotonNetwork.NickName;
             //ShowCurrentPlayer(currentPlayerName);
         }
         else
         {
-            UIGameControl.GetComponent<GameUIControl>().UIOtherTurnStart(hostName);
+            UIGameControl.GetComponent<GameUIControl>().UIHostStartGame(false);
+            //UIGameControl.GetComponent<GameUIControl>().UIOtherTurnStart(hostName, 1);
         }
         drawHandCardCount = 5;
         isExtraHandCard = false;
@@ -108,10 +110,15 @@ public class GameControl : MonoBehaviourPunCallbacks
     public void OnClickEndMyTurn() //End turn-, Exit to main menu- and Quit game buttons
     {
         if (!onButtonLock)
-        if (view.IsMine)
         {
-            SendCardsToDiscardPile();
-            TransferOwnership();
+            ShopMenuObject.SetActive(false); //If player leaves
+            MansionMenuObject.SetActive(false); //If player leaves
+
+            if (view.IsMine)
+            {
+                SendCardsToDiscardPile();
+                TransferOwnership();
+            }
         }
     }
     public void PlayerLeftRoom(Player player)
@@ -145,10 +152,65 @@ public class GameControl : MonoBehaviourPunCallbacks
                 if (_player == null)
                     _player = PhotonNetwork.PlayerList[0]; //HOST
 
+                //view.TransferOwnership(_player);
+            //view.RPC("Pun_TransferOwnership", RpcTarget.AllBuffered, _player);
+
+            currentPlayerID = _player.ActorNumber;
+            
+            if (view.IsMine)
+            {
                 view.TransferOwnership(_player);
-                view.RPC("Pun_TransferOwnership", RpcTarget.AllBuffered, _player);
+                Hashtable hash = new Hashtable();
+                hash.Add("currentPlayerID", currentPlayerID);
+                PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+
+                
+            }
         }
     }
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
+    {
+        int id = (int)changedProps["currentPlayerID"];
+        //if(/*!view.IsMine && */targetPlayer == view.Owner)
+        //if(id!=currentPlayerID)
+        {
+            Player player = PhotonNetwork.CurrentRoom.GetPlayer(id);
+            SetNextPlayer(player);
+        }
+    }
+    private void SetNextPlayer(Player player)
+    {
+        currentPlayer = player;
+        currentPlayerID = player.ActorNumber;
+        string currentPlayerName = player.NickName;
+        playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
+
+        Debug.Log("View transfered to: " + player);
+        //currentPlayerName = playerNamesList[currentPlayerID - 1];
+        ShowCurrentPlayer(currentPlayerName);
+
+        Debug.Log("Current player: " + currentPlayerID + " myID = " + myPlayerID);
+        if (currentPlayerID == myPlayerID)
+            UIGameControl.GetComponent<GameUIControl>().UIMyTurnStart();
+        else
+            UIGameControl.GetComponent<GameUIControl>().UIOtherTurnStart(currentPlayerName, currentPlayerID);
+
+        //UIGameControl.GetComponent<GameUIControl>().UIPlayerNextTurnStart(currentPlayerName, currentPlayerID);
+        GetComponent<ShopCards>().UpdateAndResetBuysCount(true);
+        GetComponent<MansionCards>().MansionExploreAdd(false);
+
+        if (playerCount > 1)
+        {   //BUG Index out of range error when HOST ends turn and loads spritedata from "unenabled object" (Development build only)
+            //OtherCharacterControl.GetComponent<CharacterControl>().SetOtherCharacterSprite(currentPlayerID);
+        }
+        if (currentPlayerID == 1)
+            RoundChanges();
+
+        drawHandCardCount = 5; isExtraHandCard = false;
+        drawHandCards_tmp.text = "Draw " + drawHandCardCount + " cards";
+    }
+
+    /*
     [PunRPC]
     private void Pun_TransferOwnership(Player player)
     {
@@ -169,6 +231,7 @@ public class GameControl : MonoBehaviourPunCallbacks
 
         //UIGameControl.GetComponent<GameUIControl>().UIPlayerNextTurnStart(currentPlayerName, currentPlayerID);
         GetComponent<ShopCards>().UpdateAndResetBuysCount(true);
+        GetComponent<MansionCards>().MansionExploreAdd(false);
 
         if (playerCount > 1)
         {   //BUG Index out of range error when HOST ends turn and loads spritedata from "unenabled object" (Development build only)
@@ -176,10 +239,11 @@ public class GameControl : MonoBehaviourPunCallbacks
         }
         if (currentPlayerID == 1)
             RoundChanges();
+
         drawHandCardCount = 5; isExtraHandCard = false;
         drawHandCards_tmp.text = "Draw " + drawHandCardCount + " cards";
     }
-    
+    */
     public void ShowCurrentPlayer(string name)//
     {
         currentPlayerTxt.text = "Now Playing: " +name;
@@ -189,8 +253,8 @@ public class GameControl : MonoBehaviourPunCallbacks
     {
         currentRound++;
         currentRoundTxt.text = "Round: " + currentRound;
-    }
 
+    }
 
     public void OnClickShopMenuButton()
     {

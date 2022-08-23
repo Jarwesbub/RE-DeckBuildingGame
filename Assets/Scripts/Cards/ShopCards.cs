@@ -83,7 +83,7 @@ public class ShopCards : MonoBehaviourPun   //
         ActionList6 = AddAllCardsToList(Action6, Action6ListPrefab);    //15
         ActionList7 = AddAllCardsToList(Action7, Action7ListPrefab);    //16
         ExtraList1 = AddAllCardsToList(Extra1, Extra1ListPrefab);     //17
-        ExtraList2 = AddAllCardsToList(Extra2, Extra1ListPrefab);     //18
+        ExtraList2 = AddAllCardsToList(Extra2, Extra2ListPrefab);     //18
     }
     /// When adding/deleting new SHOP_buttons remember to add changes in text file arrays! (FirstBootTextFile.cs and OverwriteTextFileList.cs)
     /// Before game start remember to delete everything in "Game_data" -folder" (all txt files are overwritten if "CharactersList_AllCounted" is missing)
@@ -453,16 +453,37 @@ public class ShopCards : MonoBehaviourPun   //
             BuyShopCard(Extra2, count_Values[18], name, 18); //18 = Extra2;
         }
     }
+
     public void UpdateAndResetBuysCount(bool reset) //Buys counter on the top left corner in SHOP
     {
         if (reset)
-            buysCount=0;
+        {
+            buysCount = 0;
+            //EXTRA2 RANDOM CARD ->
+            if (view.IsMine)
+            {
+                StartCoroutine(ExtraRandomCard());
+            }
+        }
         else
             buysCount++;
 
             BuysCounttxt.text = "Buys (B) = " + buysCount;
-    }
 
+    }
+    IEnumerator ExtraRandomCard()
+    {
+        int count = ExtraList2.Length;
+        int newValue = Random.Range(0, count);
+        yield return new WaitForSeconds(1f);
+        view.RPC("SetNewExtra2RandomCard", RpcTarget.AllBuffered, ExtraList2[newValue]);
+    }
+    [PunRPC]//EXTRA2 RANDOM CARD ->
+    private void SetNewExtra2RandomCard(string name)
+    {
+        Extra2.GetComponent<SpriteFromAtlas>().ChangeCardSprite(name);
+
+    }
 
 
 

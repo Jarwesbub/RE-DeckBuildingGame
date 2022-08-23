@@ -22,6 +22,8 @@ public class Drag : MonoBehaviour
     private Vector2 deleteCardPosMin = new Vector2 (6.6f,0.3f), deleteCardPosMax = new Vector2(8.6f, 1.0f);
     //[SerializeField] //DEBUG
     private float minX = -8.5f, maxX = 8.5f, minY = -4.5f, maxY = 4.5f, pnLimitY = -0.5f;
+    private float normalScale = 0.7f, zoomedScale = 1.1f, megaScale = 1.6f; //OLD: normal = 0.7f, zoomed = 1.3f;
+    bool zoomMegaScale, megaScaleActive;
 
     void Awake()
     {
@@ -48,7 +50,25 @@ public class Drag : MonoBehaviour
         lastPos = transform.position;
         cardPosition = transform.position;
     }
-
+    public void PointerClick()
+    {
+        Debug.Log("Mouse pressed!");
+        if (zoomMegaScale)
+        {
+            if (!megaScaleActive)
+            {
+                transform.localScale = new Vector3(megaScale, megaScale, 1); //Mega Zoom
+                megaScaleActive = true;
+            }
+            else
+            {
+                transform.localScale = new Vector3(zoomedScale, zoomedScale, 1);
+                megaScaleActive = false;
+            }
+        }
+        else
+            megaScaleActive = false;
+    }
     [PunRPC]
     public void DragHandler(BaseEventData data)
     {
@@ -62,17 +82,23 @@ public class Drag : MonoBehaviour
             out position);
 
         transform.position = canvas.transform.TransformPoint(position);
-        transform.localScale = new Vector3(0.7f, 0.7f, 0.7f);
-        
+        transform.localScale = new Vector3(normalScale, normalScale, 1);
+        zoomMegaScale = false;
     }
+
     public void PointerEnter()
     {
-        transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
+        //transform.localScale = new Vector3(1.3f, 1.3f, 1.3f); //OLD
+        transform.localScale = new Vector3(zoomedScale, zoomedScale, 1);
         transform.SetAsLastSibling();
+        zoomMegaScale = true;
+        
     }
     public void PointerExit()
     {
-        transform.localScale = new Vector3(0.7f, 0.7f, 0.7f);
+        transform.localScale = new Vector3(normalScale, normalScale, 1); //
+        zoomMegaScale = false;
+        megaScaleActive = false;
     }
     public void DragEnd()
     {
@@ -88,6 +114,7 @@ public class Drag : MonoBehaviour
         if(!isOnDeletePlatform)
             lastPos = transform.position;
 
+        zoomMegaScale = true;
         view.RPC("RPC_PointerExit", RpcTarget.AllBuffered);
     }
 

@@ -21,11 +21,9 @@ public class SpriteFromAtlas : MonoBehaviour
         //SetHandCardSpriteVisibility(isVisible);
     }
 
-
-
-
     void Start()
     {
+        /*
         if(!isCharacterCard && isHandCard) //Player hand card
         {
             //string getSprite = SpawnCardsPrefab.GetComponent<SpawnCards>().currentCard; //Get card sprite name!
@@ -40,8 +38,27 @@ public class SpriteFromAtlas : MonoBehaviour
                 if (image.sprite != null)
                     break;
             }
+        }*/
+        if (!isCharacterCard && isHandCard) //Player hand card
+        {
+            spriteName = GetComponent<HandCard>().currentCard;
+            GetCurrentSpriteFromAtlas(spriteName);
         }
     }
+    private void GetCurrentSpriteFromAtlas(string name)
+    {
+            int count = atlas.Count;
+
+            for (int i = 0; i < count; i++)
+            {
+                image.sprite = atlas[i].GetSprite(name);
+                currentAtlas = i;
+                if (image.sprite != null)
+                    break;
+            }
+        //spriteName = name;
+    }
+
     public void CharacterCardStart()
     {
         if (isCharacterCard)
@@ -93,6 +110,9 @@ public class SpriteFromAtlas : MonoBehaviour
         }
         else
             image.color = new Color(0, 0, 0, 255);
+
+        if (image.sprite == null)
+            GetCurrentSpriteFromAtlas(spriteName);
     }
 
     public void SetMansionCardSprite(string name) //MANSION DECK

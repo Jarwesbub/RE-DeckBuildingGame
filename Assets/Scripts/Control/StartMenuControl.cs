@@ -6,13 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class StartMenuControl : MonoBehaviour
 {
-    public InputField AppDataPath;
-
-    private void Start()
+    public void OnClickShowCustomdataPath()
     {
-        //string appdatapath = Application.dataPath;
         string appdatapath = Application.persistentDataPath;
-        AppDataPath.text = appdatapath + "/Custom_data/";
+
+        //EditorUtility.RevealInFinder(appdatapath+ "/Custom_data/");
+        System.Diagnostics.Process.Start(appdatapath + "/Custom_data/");
     }
 
     public void OnClickStartGame()

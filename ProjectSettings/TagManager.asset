@@ -44,6 +44,7 @@ TagManager:
   - DeleteCardPlatform
   - LM_HandCardGridContent
   - LeftMenu_Control
+  - DeckCardsCounter
   layers:
   - Default
   - TransparentFX

@@ -11,21 +11,21 @@ public class CharacterControl : MonoBehaviourPun
     //public GameObject[] PlayerInfoList;
     //public List<Sprite> CharacterSprites;
     [SerializeField] private List<string> SpriteNames;
-    private int playerCount, roomPlayerCount;
-    float normalScale = 1.25f;
+    private int roomPlayerCount;
+    float normalScale = 1.25f, zoomedScale = 2.45f;
     private bool isZoomed;
-    private PhotonView view;
+    //private PhotonView view;
     [SerializeField] private bool isLocalPlayer;
     [SerializeField] private int playerID, otherPlayerID;
 
     void Awake()
     {
         PIMaster = GameObject.FindGameObjectWithTag("PlayerInfoMaster");
-        view = GetComponent<PhotonView>();
+        //view = GetComponent<PhotonView>();
         playerID = PhotonNetwork.LocalPlayer.ActorNumber;
         gameObject.tag = "Player" + playerID.ToString();
         gameObject.SetActive(false);
-        otherPlayerID = 1;
+        otherPlayerID = 1; //Host starts!
     }
 
     void Start()
@@ -47,15 +47,16 @@ public class CharacterControl : MonoBehaviourPun
         {
             string name = SpriteNames[1]; //Host always starts the game so set his sprite!
             ChangeSpriteByName(name);
+            //gameObject.SetActive(false);
         }
 
-        GetComponent<SpriteFromAtlas>().CharacterCardStart();
+        GetComponent<SpriteFromAtlas>().CharacterCardStart(); //Set "Original" or "Custom" Character cards
 
 
     }
-    private void GetAllSpritesFromPIMaster()
+    public void GetAllSpritesFromPIMaster()
     {
-        if (SpriteNames.Count < playerCount)
+        if (SpriteNames.Count < roomPlayerCount)
             SpriteNames.Clear();
 
         int count = PIMaster.transform.childCount;
@@ -66,7 +67,7 @@ public class CharacterControl : MonoBehaviourPun
             SpriteNames.Add(characterName);
 
         }
-
+;
     }
 
     private void SetLocalCharacterSprite()
@@ -78,14 +79,14 @@ public class CharacterControl : MonoBehaviourPun
     public void SetOtherCharacterSprite(int playerID)
     {//BUG Index out of range error when HOST ends turn and loads spritedata from "unenabled object" (Development build only)
         otherPlayerID = playerID;
-
-        if (otherPlayerID > view.ViewID)
-            otherPlayerID -= 1;
-
+        /*
+        if (otherPlayerID > PhotonNetwork.LocalPlayer.ActorNumber)
+            otherPlayerID -= 1;*/
         int value = otherPlayerID - 1;
         string name = SpriteNames[value];
-        Debug.Log("OtherCharacterSprite name = " + name);
+        //Debug.Log("OtherCharacterSprite name = " + name);
         ChangeSpriteByName(name);
+
     }
 
     public void ChangeSpriteByName(string name)
@@ -102,7 +103,7 @@ public class CharacterControl : MonoBehaviourPun
         }
         else
         {
-            transform.localScale = new Vector2(2.2f, 2.2f);
+            transform.localScale = new Vector2(zoomedScale, zoomedScale);
             isZoomed = true;
         }
     }

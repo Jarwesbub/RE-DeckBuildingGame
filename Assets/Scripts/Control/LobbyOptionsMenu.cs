@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using UnityEditor;
 
 public class LobbyOptionsMenu : MonoBehaviourPun
 {
@@ -20,6 +21,12 @@ public class LobbyOptionsMenu : MonoBehaviourPun
         else
             characterTypeDropDown.SetActive(false);
 
+    }
+    public void OnClickShowCustomdataPath()
+    {
+        string appdatapath = Application.persistentDataPath;
+        //EditorUtility.RevealInFinder(appdatapath + "/Custom_data/");
+        System.Diagnostics.Process.Start(appdatapath + "/Custom_data/");
     }
 
     public void OnClickStartGetLobbyOptions()

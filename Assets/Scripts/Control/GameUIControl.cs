@@ -10,8 +10,8 @@ public class GameUIControl : MonoBehaviourPun
     public GameObject PlayerTurnUI, MainCanvas; //Shows current player's deck and buttons
     public TMP_Text whoIsPlaying;
     public bool isLocalPlayerDead;
-    public GameObject LocalCharacterCard, OtherCharacterCard;
-    public GameObject ShopMenuButton;
+    public GameObject LocalCharacterCard, OtherCharacterCard, OtherHPInfo;
+    public GameObject ShopMenuButton, DeckCountCardsTMPs;
     [SerializeField] string playerName;
     public int playerID;
 
@@ -21,6 +21,8 @@ public class GameUIControl : MonoBehaviourPun
         playerID =PhotonNetwork.LocalPlayer.ActorNumber;
         isLocalPlayerDead = false;
         whoIsPlaying.text = "";
+        DeckCountCardsTMPs.SetActive(false);
+        playerName = PhotonNetwork.CurrentRoom.GetPlayer(1).NickName;
     }
     /*
     private void Start()
@@ -37,15 +39,33 @@ public class GameUIControl : MonoBehaviourPun
             StartCoroutine(ShowOtherTurnInUI());
         }
     }*/
-    public void UIHostStartGame()
+    public void UIHostStartGame(bool isHost)
     {
-        PlayerTurnUI.SetActive(true);
-        LocalCharacterCard.SetActive(true);
-        OtherCharacterCard.SetActive(true);
-        ShopMenuButton.SetActive(true);
-        MainCanvas.GetComponent<GameControl>().ShowLocalPlayerHP();
-        StartCoroutine(ShowMyTurnInUI());
-
+        if (isHost)
+        {
+            PlayerTurnUI.SetActive(true);
+            LocalCharacterCard.SetActive(true);
+            OtherCharacterCard.SetActive(true);
+            OtherHPInfo.SetActive(false);
+            ShopMenuButton.SetActive(true);
+            DeckCountCardsTMPs.SetActive(true);
+            MainCanvas.GetComponent<GameControl>().ShowLocalPlayerHP();
+            StartCoroutine(ShowMyTurnInUI());
+            OtherCharacterCard.GetComponent<CharacterControl>().GetAllSpritesFromPIMaster();
+        }
+        else
+        {
+            LocalCharacterCard.SetActive(true);
+            PlayerTurnUI.SetActive(false);
+            OtherCharacterCard.SetActive(true);
+            OtherHPInfo.SetActive(true);
+            ShopMenuButton.SetActive(false);
+            DeckCountCardsTMPs.SetActive(false);
+            OtherCharacterCard.GetComponent<CharacterControl>().GetAllSpritesFromPIMaster();
+            OtherCharacterCard.GetComponent<CharacterControl>().SetOtherCharacterSprite(1);
+            
+            StartCoroutine(ShowOtherTurnInUI());
+        }
     }
 
 
@@ -56,7 +76,9 @@ public class GameUIControl : MonoBehaviourPun
             PlayerTurnUI.SetActive(true);
             LocalCharacterCard.SetActive(true);
             OtherCharacterCard.SetActive(false);
+            OtherHPInfo.SetActive(false);
             ShopMenuButton.SetActive(true);
+            DeckCountCardsTMPs.SetActive(true);
             MainCanvas.GetComponent<GameControl>().ShowLocalPlayerHP();
             StartCoroutine(ShowMyTurnInUI());
 
@@ -69,48 +91,18 @@ public class GameUIControl : MonoBehaviourPun
         }
 
     }
-    public void UIOtherTurnStart(string name)
+    public void UIOtherTurnStart(string name, int otherID)
     {
         playerName = name;
         LocalCharacterCard.SetActive(true);
         PlayerTurnUI.SetActive(false);
         OtherCharacterCard.SetActive(true);
+        OtherHPInfo.SetActive(true);
         ShopMenuButton.SetActive(false);
-
+        DeckCountCardsTMPs.SetActive(false);
+        OtherCharacterCard.GetComponent<CharacterControl>().SetOtherCharacterSprite(otherID);
         StartCoroutine(ShowOtherTurnInUI());
     }
-
-    /*
-    public void UIPlayerNextTurnStart(string name, int id) //OLD
-    {
-        playerName = name;
-        if (playerID == id)
-        {
-            Debug.Log("GameUIControl player = " + name);
-            if (!isLocalPlayerDead)
-            {
-                PlayerTurnUI.SetActive(true);
-                LocalCharacterCard.SetActive(true);
-                OtherCharacterCard.SetActive(false);
-                ShopMenuButton.SetActive(true);
-                MainCanvas.GetComponent<GameControl>().ShowLocalPlayerHP();
-            }
-            else
-            {
-                MainCanvas.GetComponent<GameControl>().ShowLocalPlayerHP();
-                StartCoroutine(PlayerIsDead());
-            }
-        }
-        else
-        {
-            LocalCharacterCard.SetActive(true);
-            PlayerTurnUI.SetActive(false);
-            OtherCharacterCard.SetActive(true);
-            ShopMenuButton.SetActive(false);
-
-            StartCoroutine(ShowOtherTurnInUI());
-        }
-    }*/
 
     public void PlayerLeftRoomUI(string name)
     {
@@ -121,14 +113,15 @@ public class GameUIControl : MonoBehaviourPun
     IEnumerator ShowMyTurnInUI()
     {
         whoIsPlaying.text = "Your turn!";
-
+        OtherCharacterCard.SetActive(false);
+        OtherHPInfo.SetActive(false);
         yield return new WaitForSeconds(2f);
         whoIsPlaying.text = "";
     }
     IEnumerator ShowOtherTurnInUI()
     {
         whoIsPlaying.text = playerName + "'s turn!";
-
+        
         yield return new WaitForSeconds(2f);
         whoIsPlaying.text = "";
     }
