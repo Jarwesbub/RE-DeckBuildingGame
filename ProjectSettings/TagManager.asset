@@ -45,6 +45,8 @@ TagManager:
   - LM_HandCardGridContent
   - LeftMenu_Control
   - DeckCardsCounter
+  - EditMansionControl
+  - UICardShowcase
   layers:
   - Default
   - TransparentFX

@@ -19,7 +19,7 @@ public class MansionCards : MonoBehaviourPun
     public List<string> mansionDeck;
     private string[] mansionDeckStringList;
     private string mansionTxt;
-    private bool activeOtherActionBtn, doorKnobPressed, isBottomCard;
+    private bool activeOtherActionBtn, doorKnobLock, isBottomCard;
     private int clickMansionDoorValue;
 
     private void Awake()
@@ -33,7 +33,7 @@ public class MansionCards : MonoBehaviourPun
         mansionActionTMP.text = mansionTxt;
         MansionExploreCount = 0;
         exploreCountTMP.text = "Explores this turn: " + 0;
-
+        
         MansionDoor.SetActive(true);
         MansionDoor_btnUI.SetActive(false);
         activeOtherActionBtn = false;
@@ -108,6 +108,7 @@ public class MansionCards : MonoBehaviourPun
         ToggleOtherActions.SetActive(false);
         OtherActionButtons.SetActive(false);
         isBottomCard = false;
+        doorKnobLock = false;
     }
 
     public void DoorAnimationEnds()
@@ -145,17 +146,18 @@ public class MansionCards : MonoBehaviourPun
 
     public void ClickEnterMansion(int clickValue)
     {
-        if (view.IsMine && !doorKnobPressed)
+        if (view.IsMine && !doorKnobLock)
         {      
             if (clickValue == 1) //Mouse1 button
             {
+                doorKnobLock = true;
                 isBottomCard = false;
                 view.RPC("RPC_ClickEnterMansion", RpcTarget.AllBuffered, 0); //Normal
 
             }
             else if (clickValue == 2) //Mouse2 button
             {
-                doorKnobPressed = true;
+                doorKnobLock = true;
                 isBottomCard = true;
                 clickMansionDoorValue = clickValue;
                 MansionDoor_btnUI.SetActive(true);
@@ -166,7 +168,7 @@ public class MansionCards : MonoBehaviourPun
     }
     public void OnClickChooseBottomCard(bool chooseBottomCard)
     {
-        
+
         if (chooseBottomCard) //Choose bottom card
         {
             int value = MansionDeckCount-1;          
@@ -175,7 +177,7 @@ public class MansionCards : MonoBehaviourPun
 
         clickMansionDoorValue = 0;
         MansionDoor_btnUI.SetActive(false);
-        doorKnobPressed = false;
+        //doorKnobPressed = false;
     }
     [PunRPC]
     void RPC_ClickEnterMansion(int value)

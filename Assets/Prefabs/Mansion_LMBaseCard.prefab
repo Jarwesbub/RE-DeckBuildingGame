@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2564409225766672907}
   - component: {fileID: 2564409225766672904}
   m_Layer: 5
-  m_Name: LM_MansionHandCard
+  m_Name: Mansion_LMBaseCard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

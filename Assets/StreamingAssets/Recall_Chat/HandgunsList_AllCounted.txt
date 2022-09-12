@@ -1,5 +1,3 @@
-hg_m9
-hg_m9
 hg_m93r
 hg_m93r
 hg_magnum1
@@ -12,7 +10,6 @@ hg_pistol3
 hg_pistol3
 hg_polizei
 hg_polizei
-hg_punisher
 hg_samuraiedge
 hg_samuraiedge
 hg_usp

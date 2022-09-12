@@ -2,28 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using UnityEngine.SceneManagement;
 
 public class LobbyControl : MonoBehaviour
 {
-    public GameObject NameEntry, JoinLobby, SaveMaster;
+    public GameObject NameEntry, Lobby, SaveMaster;
+    public GameObject CreateRoom, JoinRoom, BackButton;
     public InputField setNickName;
     public Text errorMessage;
+    public TMP_Text infoText;
+    public int currentMenu; //0 = Name Entry, 1 = Create/Join lobby, 2 = Create Room, 3 = Join Room
 
     void Start()
     {
+        BackButton.SetActive(false);
         NameEntry.SetActive(true);
-        JoinLobby.SetActive(false);
-
+        Lobby.SetActive(false);
+        CreateRoom.SetActive(false);
+        JoinRoom.SetActive(false);
+        currentMenu = 0;
         string name = SaveMaster.GetComponent<SaveMaster>().GetNickName();
         if (name != null)
             setNickName.text = name;
 
+        infoText.text = "Give your online nickname.";
     }
 
 
 
-    public void GoToLobby()
+    public void OnClickGoToLobby()
     {
+        currentMenu = 0;
         errorMessage.text = "";
         string name = setNickName.text;
 
@@ -43,9 +53,43 @@ public class LobbyControl : MonoBehaviour
         else
         {
             SaveMaster.GetComponent<SaveMaster>().SetNickName(name);
-
+            infoText.text = "Host or join online game.";
+            currentMenu = 1;
             NameEntry.SetActive(false);
-            JoinLobby.SetActive(true);
+            Lobby.SetActive(true);
+            CreateRoom.SetActive(false);
+            JoinRoom.SetActive(false);
+            BackButton.SetActive(true);
+        }
+    }
+    public void OnClickMenuCreateRoom()
+    {
+        currentMenu = 2;
+        infoText.text = "Create password for other players to join your game.";
+        CreateRoom.SetActive(true);
+        JoinRoom.SetActive(false);
+        Lobby.SetActive(false);
+    }
+    public void OnClickMenuJoinRoom()
+    {
+        currentMenu = 3;
+        infoText.text = "Join online game by given password.";
+        CreateRoom.SetActive(false);
+        JoinRoom.SetActive(true);
+        Lobby.SetActive(false);
+    }
+
+    public void OnClickMenuBack()
+    {
+        if (currentMenu <= 1)
+            SceneManager.LoadScene("Lobby");
+        else if (currentMenu >= 2)
+        {
+            NameEntry.SetActive(false);
+            Lobby.SetActive(true);
+            CreateRoom.SetActive(false);
+            JoinRoom.SetActive(false);
+            currentMenu = 1;
         }
     }
 }

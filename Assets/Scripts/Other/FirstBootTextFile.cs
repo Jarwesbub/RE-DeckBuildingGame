@@ -45,7 +45,7 @@ public class FirstBootTextFile : MonoBehaviour
             shop_cards[9] = "CharacterCustomlist"; shop_cards[10] = "AR_SG_List_AllCounted"; shop_cards[11] = "GrenadeList_AllCounted";
             shop_cards[12] = "HandgunsList_AllCounted"; shop_cards[13] = "HPItemsList_AllCounted"; shop_cards[14] = "KnifeList_AllCounted";
             shop_cards[15] = "RifleList_AllCounted"; shop_cards[16] = "ShotgunList_AllCounted"; shop_cards[17] = "StartingDeckList";
-            shop_cards[18] = "MansionCards1_AllCounted"; shop_cards[19] = "Extra1List_AllCounted"; shop_cards[20] = "Extra2List_AllCounted";
+            shop_cards[18] = "MainMansionCards"; shop_cards[19] = "Extra1List_AllCounted"; shop_cards[20] = "Extra2List_AllCounted";
 
 
             foreach (string textFile in shop_cards)

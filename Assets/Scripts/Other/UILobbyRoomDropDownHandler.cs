@@ -3,11 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UICharacterDropDownHandler : MonoBehaviour
+public class UILobbyRoomDropDownHandler : MonoBehaviour
 {
-    int value;
+    private int value;
 
     void Start()
+    {
+        CharacterType();
+
+    }
+
+    private void CharacterType()
     {
         if (PlayerPrefs.HasKey("CharacterType")) //0 = Original; 1 = Custom
             value = PlayerPrefs.GetInt("CharacterType");
@@ -30,13 +36,12 @@ public class UICharacterDropDownHandler : MonoBehaviour
 
         dropdown.value = value;
         dropdown.onValueChanged.AddListener(delegate { DropDownItemSelected(dropdown); });
-    }
 
+    }
 
     private void DropDownItemSelected(Dropdown dropdown)
     {
         int index = dropdown.value;
         PlayerPrefs.SetInt("CharacterType", index);
-
     }
 }

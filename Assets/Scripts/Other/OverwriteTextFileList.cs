@@ -10,6 +10,7 @@ public class OverwriteTextFileList : MonoBehaviourPun
     private bool isMaster,buttonIsPressed;
     PhotonView view;
     public GameObject LoadingTextObj;
+    private int mansionType; //0 = not assigned; 1-4 = MansionCards 1-4
     //private string[] Shop_Cards;
 
     private void Start()
@@ -17,7 +18,6 @@ public class OverwriteTextFileList : MonoBehaviourPun
         isMaster = PhotonNetwork.IsMasterClient;
         buttonIsPressed = false;
         view = GetComponent<PhotonView>();
-        Debug.Log("isMaster=" + isMaster);
     }
 
     public void OnClickOverwriteNewFiles() //
@@ -32,7 +32,7 @@ public class OverwriteTextFileList : MonoBehaviourPun
             shop_cards[9] = "CharacterCustomlist"; shop_cards[10] = "AR_SG_List_AllCounted"; shop_cards[11] = "GrenadeList_AllCounted";
             shop_cards[12] = "HandgunsList_AllCounted"; shop_cards[13] = "HPItemsList_AllCounted"; shop_cards[14] = "KnifeList_AllCounted";
             shop_cards[15] = "RifleList_AllCounted"; shop_cards[16] = "ShotgunList_AllCounted"; shop_cards[17] = "StartingDeckList";
-            shop_cards[18] = "MansionCards1_AllCounted"; shop_cards[19] = "Extra1List_AllCounted"; shop_cards[20] = "Extra2List_AllCounted";
+            shop_cards[18] = "MainMansionCards"; shop_cards[19] = "Extra1List_AllCounted"; shop_cards[20] = "Extra2List_AllCounted";
 
             view.RPC("Pun_OverwriteNewFiles", RpcTarget.AllBuffered, (object)shop_cards);
             //Pun_OverwriteNewFiles(shop_cards);

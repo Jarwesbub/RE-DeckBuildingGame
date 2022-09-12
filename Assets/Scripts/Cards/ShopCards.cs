@@ -23,8 +23,8 @@ public class ShopCards : MonoBehaviourPun   //
     [SerializeField] private List<GameObject> activeCardObjectList; //List of all objects. Can be accessed by list number! (used in [PunRPC])
     
     PhotonView view;
-    public int buysCount; //Reset to 0 from GameControl.cs
-    private bool isZoomed; //Tells if current card in bigger or normal size
+    public int buysCount; //Reset to 0 from "GameControl.cs" when player turn changes
+    private bool isZoomed; //Tells if current card is in bigger- or normal size
     Vector3 vec_Normal = new Vector3(1, 1, 1);
     Vector3 vec_Zoom = new Vector3(1.5f, 1.5f, 1); //OLD = 1.8f
     [SerializeField] private bool waitRPC;  //Shows if "wait time" is active while sending data in network
@@ -102,10 +102,10 @@ public class ShopCards : MonoBehaviourPun   //
             cardList[i] = card;
         }
         count_Values.Add(listCount);
-        buttonObject.GetComponent<SpriteFromAtlas>().ChangeCardSprite(cardList[0]);
-
+        int max = listCount - 1;
+        int rand = Random.Range(0, max);
+        buttonObject.GetComponent<SpriteFromAtlas>().ChangeCardSprite(cardList[rand]);
         activeCardObjectList.Add(buttonObject); //List of gameobjects in order for PunRPC (same order as count_Values list)
-
         return cardList;
     }
 
