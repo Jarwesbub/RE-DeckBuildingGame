@@ -11,15 +11,16 @@ public class EditMansionControl : MonoBehaviour
     public GameObject MansionDropDownHandler, MansionBaseCardPrefab, MansionGridContent;
     public GameObject UI_CurrentDeck, UI_AddCards, currentDeck_btn, addCards_btn;
     public GameObject UI_EasyTier, UI_NormalTier, UI_HardTier, easy_btn, normal_btn, hard_btn;
-    public GameObject AddCardsPrefab, AllMansionCardsObj;
+    public GameObject AddCardsPrefab;
     public Text dropdownText;
-    public TMP_Text currentDeckName, loadSaveInfo;
+    public TMP_Text mainTitleText, loadSaveInfo, consoleTxt;
     public int mansionValue;
-    private bool isButtonPressed, mansionCardsLoaded;
+    private bool isButtonLock, mansionCardsLoaded;
     private Image img;
 
-    [SerializeField] private string textFileName;
-    [SerializeField] private List<string> TextList;
+    [SerializeField] private string currentCustomDeck;
+    [SerializeField] private List<string> CustomDeckCardsList;
+    [SerializeField] private string[] LowTierCardsList, MidTierCardsList, HighTierCardsList;
     public int textListCount;
     [SerializeField] private Color32 colorON;
 
@@ -57,42 +58,75 @@ public class EditMansionControl : MonoBehaviour
     }
     private void Start()
     {
+        consoleTxt.text = "";
         loadSaveInfo.text = "Load your Custom deck first";
         dropdownText.text = "";
         img = GetComponent<Image>();
         OnClickChooseCurrentDeck();
-        SetEnemyTierCards();
+        CreateEnemyTierCards();
+        OnClickSelectEnemyTier(0);
+        StartCoroutine(ShowInConsole("Mansion deck builder loaded"));
     }
     public void OnClickChooseCurrentDeck()
     {
+        mainTitleText.text = "Mansion Deck Builder";
         UI_CurrentDeck.SetActive(true);
         UI_AddCards.SetActive(false);
-
-        //Color color = colorON;
         currentDeck_btn.GetComponent<Image>().color = colorON;
         addCards_btn.GetComponent<Image>().color = Color.black;
     }
     public void OnClickChooseAddCards()
     {
-        UI_CurrentDeck.SetActive(false);
-        UI_AddCards.SetActive(true);
-
-        //Color color = colorON;
-        currentDeck_btn.GetComponent<Image>().color = Color.black;
-        addCards_btn.GetComponent<Image>().color = colorON;
+        if(mansionCardsLoaded)
+        {
+            mainTitleText.text = "Add Enemy Cards";
+            UI_CurrentDeck.SetActive(false);
+            UI_AddCards.SetActive(true);
+            currentDeck_btn.GetComponent<Image>().color = Color.black;
+            addCards_btn.GetComponent<Image>().color = colorON;
+        }
+        else
+        {
+            StartCoroutine(ShowInConsole("Load your Custom Deck first!"));
+        }
     }
-    private void SetEnemyTierCards()
+    private void CreateEnemyTierCards() //START
     {
-        GameObject gridContent = UI_EasyTier.transform.GetChild(0).GetChild(0).gameObject;
-        
+        string readLowTierFile = Application.streamingAssetsPath + "/Recall_Chat/MansionEnemies_LowTierList.txt";
+        LowTierCardsList = File.ReadAllLines(readLowTierFile).ToArray();
+
+        string readMidTierFile = Application.streamingAssetsPath + "/Recall_Chat/MansionEnemies_MidTierList.txt";
+        MidTierCardsList = File.ReadAllLines(readMidTierFile).ToArray();
+
+        string readHighTierFile = Application.streamingAssetsPath + "/Recall_Chat/MansionEnemies_HighTierList.txt";
+        HighTierCardsList = File.ReadAllLines(readHighTierFile).ToArray();
+
+        CreateMansionCards(UI_EasyTier, LowTierCardsList);
+        CreateMansionCards(UI_NormalTier, MidTierCardsList);
+        CreateMansionCards(UI_HardTier, HighTierCardsList);
+
 
     }
+    private void CreateMansionCards(GameObject UI_TierObj,string[] array) //START
+    {
+        GameObject gridContent = UI_TierObj.transform.GetChild(0).GetChild(0).gameObject;
 
+        foreach (string s in array)
+        {
+            GetComponent<SpriteFromAtlas>().SetMansionCardSprite(s);
+
+            GameObject card = Instantiate(AddCardsPrefab);
+            card.GetComponent<Image>().sprite = img.sprite;
+            card.transform.SetParent(gridContent.transform);
+            card.transform.localScale = new Vector3(1f, 1f, 1f);
+        }
+
+    }
 
 
     public void OnClickSelectEnemyTier(int value) //0 = easy, 1 = normal, 2 = hard
     {
-        if (!isButtonPressed && mansionCardsLoaded)
+        if (!isButtonLock && mansionCardsLoaded)
         {
             if (value == 0) //EASY
             {
@@ -127,50 +161,76 @@ public class EditMansionControl : MonoBehaviour
         }
             
     }
+    public void OnClickClearCustomMansion()
+    {
+        if (!isButtonLock)
+        {
+            CustomDeckCardsList.Clear();
 
+            foreach (Transform child in MansionGridContent.transform)
+            {
+                Destroy(child.gameObject);
+            }
+
+            if(mansionValue != 0)
+                StartCoroutine(ShowInConsole("Custom Deck " + mansionValue + " was cleared!"));
+        }
+    }
     public void OnClickLoadCustomMansion()
     {
-        if (!isButtonPressed)
+        if (!isButtonLock)
         {
-            isButtonPressed = true;
+            isButtonLock = true;
             mansionValue = PlayerPrefs.GetInt("MansionType") +1;
             string file = "MansionCards"+mansionValue;
             LoadTextFileByName(file);
             
             StartCoroutine(LoadAndSave(true)); //Load
+            
         }
     }
-    public void OnClickSaveCustomMansion()
-    {
-        if (!isButtonPressed)
-        {
-            isButtonPressed = true;
-
-            StartCoroutine(LoadAndSave(false)); //Save
-        }
-    }
-    public void OnUIDeleteCard(int childIndex)
-    {
-        Debug.Log(childIndex + " got deleted!");
-        TextList.Remove(TextList[childIndex]);
-
-    }
-    public void OnUIÁddCard(string name)
-    {
-        TextList.Add(name);
-        Debug.Log(name + " added!");
-    }
-
     private void LoadTextFileByName(string name)
     {
         string readFromFilePath = Application.persistentDataPath + "/Custom_data/" + name + ".txt";
         List<string> fileLines = File.ReadAllLines(readFromFilePath).ToList();
-        TextList = fileLines;
-        textListCount = TextList.Count;
-        textFileName = name;
+        CustomDeckCardsList = fileLines;
+        textListCount = CustomDeckCardsList.Count;
+        currentCustomDeck = name;
         Debug.Log("File loaded: " + name+".txt");
     }
+    public void OnClickSaveCustomMansion()
+    {
+        if (!isButtonLock)
+        {
+            isButtonLock = true;
 
+            string writeToFilePath = Application.persistentDataPath + "/Custom_data/" + currentCustomDeck + ".txt";
+            File.WriteAllLines(writeToFilePath, CustomDeckCardsList);
+            
+            StartCoroutine(LoadAndSave(false)); //Save
+            
+        }
+    }
+
+    public void OnUIDeleteCard(int childIndex)
+    {
+        Debug.Log(childIndex + " got deleted!");
+        CustomDeckCardsList.Remove(CustomDeckCardsList[childIndex]);
+        StartCoroutine(ShowInConsole("Card was deleted from the Custom Deck "+mansionValue));
+
+    }
+    public void OnUIAddCard(string name)
+    {
+        CustomDeckCardsList.Add(name);
+        GetComponent<SpriteFromAtlas>().SetMansionCardSprite(name);
+
+        GameObject card = Instantiate(MansionBaseCardPrefab);
+        card.GetComponent<Image>().sprite = img.sprite;
+        card.transform.SetParent(MansionGridContent.transform);
+        card.transform.localScale = new Vector3(1f, 1f, 1f);
+        StartCoroutine(ShowInConsole("'" +name+ "'" + " was added to Custom Deck " + mansionValue));
+        Debug.Log(name + " added!");
+    }
     private void InstantiateToHandler()
     {
         foreach(Transform child in MansionGridContent.transform)
@@ -178,7 +238,7 @@ public class EditMansionControl : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        foreach(string s in TextList)
+        foreach(string s in CustomDeckCardsList)
         {
             GetComponent<SpriteFromAtlas>().SetMansionCardSprite(s);
 
@@ -200,17 +260,25 @@ public class EditMansionControl : MonoBehaviour
             yield return new WaitForSeconds(1f);
             InstantiateToHandler();
             mansionCardsLoaded = true;
-            currentDeckName.text = "Custom Deck " + mansionValue;
+            //currentDeckName.text = "Custom Deck " + mansionValue;
             loadSaveInfo.text = "";
-            isButtonPressed = false;
+            isButtonLock = false;
+            StartCoroutine(ShowInConsole("Custom Deck " + mansionValue + " loaded succesfully!"));
         }
         else //Save
         {
             loadSaveInfo.text = "Saving...";
             yield return new WaitForSeconds(1f);
             loadSaveInfo.text = "";
-            isButtonPressed = false;
-
+            isButtonLock = false;
+            StartCoroutine(ShowInConsole("Custom Deck " + mansionValue + " saved succesfully!"));
         }
+    }
+
+    private IEnumerator ShowInConsole(string s)
+    {
+        consoleTxt.text = s;
+        yield return new WaitForSeconds(4f);
+        consoleTxt.text = "";
     }
 }

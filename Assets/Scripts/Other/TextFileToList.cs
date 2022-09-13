@@ -8,6 +8,7 @@ using Photon.Pun;
 
 public class TextFileToList : MonoBehaviourPun
 {
+    [SerializeField] private bool loadMansionDeck;
     [SerializeField] private bool useManualTextLoad;
     [SerializeField] private bool shuffleTextList; //Not in actual use rn
     [SerializeField] private string textFileName;
@@ -20,7 +21,16 @@ public class TextFileToList : MonoBehaviourPun
     void Awake()
     {
         view = GetComponent<PhotonView>();
-        if(!useManualTextLoad)
+
+        if (loadMansionDeck)
+        {
+            int value = GameStats.MansionDeckValue;
+            value++;
+            textFileName = "MansionCards" + value;
+            Debug.Log("Mansion loaded from text file: " + textFileName);
+        }
+
+        if (!useManualTextLoad)
         {
             //string readFromFilePath = Application.streamingAssetsPath + "/Recall_Chat/" + textFileName + ".txt";
             //string[] fileLines = File.ReadAllLines(readFromFilePath).ToArray();
@@ -31,7 +41,6 @@ public class TextFileToList : MonoBehaviourPun
             if (shuffleTextList)
                 ShuffleTextList();
         }
-
 
     }
 

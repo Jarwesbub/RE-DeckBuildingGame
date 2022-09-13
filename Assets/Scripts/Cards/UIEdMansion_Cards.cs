@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+//using System;
 
 public class UIEdMansion_Cards: MonoBehaviour
 {
@@ -32,7 +33,9 @@ public class UIEdMansion_Cards: MonoBehaviour
     public void OnClickAddCard()
     {
         string name = img.sprite.name;
-        EditMansionControl.GetComponent<EditMansionControl>().OnUIÁddCard(name);
+        name = name.Replace("(Clone)", "");
+        Debug.Log(name+" ADDED!");
+        EditMansionControl.GetComponent<EditMansionControl>().OnUIAddCard(name);
     }
 
     public void OnClickChangeCardShowcaseImage()

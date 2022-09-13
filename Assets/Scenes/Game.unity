@@ -13520,6 +13520,10 @@ PrefabInstance:
       propertyPath: textFileName
       value: MainMansionCards
       objectReference: {fileID: 0}
+    - target: {fileID: 3750306072369686115, guid: 5176d69aea5cb7348ab846ffed11c31f, type: 3}
+      propertyPath: loadMansionDeck
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3750306072369686116, guid: 5176d69aea5cb7348ab846ffed11c31f, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -16525,6 +16529,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ac94c7373805564fb5c7b2dad2fa423, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  loadMansionDeck: 0
   useManualTextLoad: 0
   shuffleTextList: 0
   textFileName: StartingDeckList

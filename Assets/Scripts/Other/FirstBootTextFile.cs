@@ -71,6 +71,20 @@ public class FirstBootTextFile : MonoBehaviour
                     File.WriteAllLines(writeToFilePath, fileLines);
                 }
 
+                for (int i = 1; i <= 4; i++) //Create "MansionCards1-4.txt"
+                {
+                    string readFromStreamingAss = Application.streamingAssetsPath + "/Recall_Chat/MansionCards" + i + ".txt";
+                    string[] fileLines = File.ReadAllLines(readFromStreamingAss).ToArray();
+
+                    string writeToGameFolder = Application.persistentDataPath + "/Game_data/MansionCards" + i + ".txt";
+                    File.WriteAllLines(writeToGameFolder, fileLines);
+
+                    string writeToCustomFolder = Application.persistentDataPath + "/Custom_data/MansionCards" + i + ".txt";
+                    File.WriteAllLines(writeToCustomFolder, fileLines);
+                }
+
+                GameStats.MansionDeckCount = 4;
+
                 Debug.Log("Write_data -text files created!");
 
 
