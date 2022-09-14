@@ -51,7 +51,7 @@ public class GameUIControl : MonoBehaviourPun
             DeckCountCardsTMPs.SetActive(true);
             MainCanvas.GetComponent<GameControl>().ShowLocalPlayerHP();
             StartCoroutine(ShowMyTurnInUI());
-            OtherCharacterCard.GetComponent<CharacterControl>().GetAllSpritesFromPIMaster();
+            OtherCharacterCard.GetComponent<CharacterControl>().SetAllCharacterSprites();
         }
         else
         {
@@ -61,7 +61,7 @@ public class GameUIControl : MonoBehaviourPun
             OtherHPInfo.SetActive(true);
             ShopMenuButton.SetActive(false);
             DeckCountCardsTMPs.SetActive(false);
-            OtherCharacterCard.GetComponent<CharacterControl>().GetAllSpritesFromPIMaster();
+            OtherCharacterCard.GetComponent<CharacterControl>().SetAllCharacterSprites();
             OtherCharacterCard.GetComponent<CharacterControl>().SetOtherCharacterSprite(1);
             
             StartCoroutine(ShowOtherTurnInUI());

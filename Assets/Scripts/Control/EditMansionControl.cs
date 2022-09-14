@@ -11,7 +11,7 @@ public class EditMansionControl : MonoBehaviour
     public GameObject MansionDropDownHandler, MansionBaseCardPrefab, MansionGridContent;
     public GameObject UI_CurrentDeck, UI_AddCards, currentDeck_btn, addCards_btn;
     public GameObject UI_EasyTier, UI_NormalTier, UI_HardTier, easy_btn, normal_btn, hard_btn;
-    public GameObject AddCardsPrefab;
+    public GameObject AddCardsPrefab, ShowCaseCard1, ShowCaseCard2;
     public Text dropdownText;
     public TMP_Text mainTitleText, loadSaveInfo, consoleTxt;
     public int mansionValue;
@@ -53,18 +53,30 @@ public class EditMansionControl : MonoBehaviour
             }
         }
         MansionDropDownHandler.GetComponent<UIEdMansionDropDownHandler>().customCount = value;
-
-        Debug.Log("MansionCards count = " + value);
+        //Debug.Log("MansionCards count = " + value);
     }
     private void Start()
     {
-        consoleTxt.text = "";
+        consoleTxt.text = ""; dropdownText.text = "";
         loadSaveInfo.text = "Load your Custom deck first";
-        dropdownText.text = "";
         img = GetComponent<Image>();
         OnClickChooseCurrentDeck();
         CreateEnemyTierCards();
-        OnClickSelectEnemyTier(0);
+
+        UI_EasyTier.SetActive(false); UI_NormalTier.SetActive(false); UI_HardTier.SetActive(false);
+        easy_btn.GetComponent<Image>().color = Color.black;
+        normal_btn.GetComponent<Image>().color = Color.black;
+        hard_btn.GetComponent<Image>().color = Color.black;
+
+
+        int length = LowTierCardsList.Length - 1; int rand = Random.Range(0, length); string s = LowTierCardsList[rand];
+        GetComponent<SpriteFromAtlas>().SetMansionCardSprite(s);
+        ShowCaseCard1.GetComponent<Image>().sprite = img.sprite;
+
+        length = HighTierCardsList.Length - 1; rand = Random.Range(0, length); s = HighTierCardsList[rand];
+        GetComponent<SpriteFromAtlas>().SetMansionCardSprite(s);
+        ShowCaseCard2.GetComponent<Image>().sprite = img.sprite;
+
         StartCoroutine(ShowInConsole("Mansion deck builder loaded"));
     }
     public void OnClickChooseCurrentDeck()
@@ -246,7 +258,6 @@ public class EditMansionControl : MonoBehaviour
             card.GetComponent<Image>().sprite = img.sprite;
             card.transform.SetParent(MansionGridContent.transform);
             card.transform.localScale = new Vector3(1f, 1f, 1f);
-
 
         }
     }

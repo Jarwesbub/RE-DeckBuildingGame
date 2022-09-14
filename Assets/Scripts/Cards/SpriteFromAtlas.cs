@@ -115,7 +115,7 @@ public class SpriteFromAtlas : MonoBehaviour
             GetCurrentSpriteFromAtlas(spriteName);
     }
 
-    public void SetMansionCardSprite(string name) //MANSION DECK
+    public void SetMansionCardSprite(string name) //MANSION DECK and EditMansion.cs
     {
         if (isMansionCard)
         {

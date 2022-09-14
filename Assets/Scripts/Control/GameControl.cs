@@ -132,7 +132,7 @@ public class GameControl : MonoBehaviourPunCallbacks
     {
         if (!shopMenuOpen && !mansionOpen)
         {
-            GetComponent<MansionCards>().SetMansionAnimation(); //RESET MANSION
+            GetComponent<MansionControl>().SetMansionAnimation(); //RESET MANSION
             MainSpawnCards.GetComponent<SpawnCards>().PutHandCardsToDiscardPile();
         }
         
@@ -197,7 +197,7 @@ public class GameControl : MonoBehaviourPunCallbacks
 
         //UIGameControl.GetComponent<GameUIControl>().UIPlayerNextTurnStart(currentPlayerName, currentPlayerID);
         GetComponent<ShopCards>().UpdateAndResetBuysCount(true);
-        GetComponent<MansionCards>().MansionExploreAdd(false);
+        GetComponent<MansionControl>().MansionExploreAdd(false);
 
         if (playerCount > 1)
         {   //BUG Index out of range error when HOST ends turn and loads spritedata from "unenabled object" (Development build only)
@@ -323,7 +323,7 @@ public class GameControl : MonoBehaviourPunCallbacks
     }
     public void OnClickResetMansion()
     {
-        GetComponent<MansionCards>().SetMansionAnimation();
+        GetComponent<MansionControl>().SetMansionAnimation();
     }
 
 

@@ -31,7 +31,8 @@ public class CharacterControl : MonoBehaviourPun
     void Start()
     {
         roomPlayerCount = PhotonNetwork.CurrentRoom.PlayerCount;
-        GetAllSpritesFromPIMaster();
+        //GetAllSpritesFromPIMaster(); //OFF TEST
+        SetAllCharacterSprites();
 
         if (isLocalPlayer)
         {
@@ -54,7 +55,9 @@ public class CharacterControl : MonoBehaviourPun
 
 
     }
-    public void GetAllSpritesFromPIMaster()
+
+    /*
+    public void GetAllSpritesFromPIMaster() //OLD TRASH CODE
     {
         if (SpriteNames.Count < roomPlayerCount)
             SpriteNames.Clear();
@@ -67,7 +70,23 @@ public class CharacterControl : MonoBehaviourPun
             SpriteNames.Add(characterName);
 
         }
-;
+
+
+    }
+    */
+    public void SetAllCharacterSprites()
+    {
+        if (SpriteNames.Count < roomPlayerCount)
+            SpriteNames.Clear();
+
+        foreach (DictionaryEntry info in GameStats.playerInfos)
+        {
+            int id = (int)info.Key;
+            string card = (string)info.Value;
+            SpriteNames.Add(card);
+            Debug.Log("GameStats.playerInfos: Key = " + id + " Value = " + card);
+        }
+
     }
 
     private void SetLocalCharacterSprite()

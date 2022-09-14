@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 //using System.Linq;
 
-public class MansionCards : MonoBehaviourPun
+public class MansionControl : MonoBehaviourPun
 {
     public GameObject MansionCard, MansionDoor, MansionCardPrefab, MansionGridContent, MansionHandCardPrefab;
     public GameObject LeftMenuControl, MansionDoor_btnUI;
@@ -147,22 +147,28 @@ public class MansionCards : MonoBehaviourPun
     public void ClickEnterMansion(int clickValue)
     {
         if (view.IsMine && !doorKnobLock)
-        {      
-            if (clickValue == 1) //Mouse1 button
+        {
+            if (MansionDeckCount > 0)
             {
-                doorKnobLock = true;
-                isBottomCard = false;
-                view.RPC("RPC_ClickEnterMansion", RpcTarget.AllBuffered, 0); //Normal
+                if (clickValue == 1) //Mouse1 button
+                {
+                    doorKnobLock = true;
+                    isBottomCard = false;
+                    view.RPC("RPC_ClickEnterMansion", RpcTarget.AllBuffered, 0); //Normal
 
+                }
+                else if (clickValue == 2) //Mouse2 button
+                {
+                    doorKnobLock = true;
+                    isBottomCard = true;
+                    clickMansionDoorValue = clickValue;
+                    MansionDoor_btnUI.SetActive(true);
+                }
             }
-            else if (clickValue == 2) //Mouse2 button
+            else
             {
-                doorKnobLock = true;
-                isBottomCard = true;
-                clickMansionDoorValue = clickValue;
-                MansionDoor_btnUI.SetActive(true);
+                StartCoroutine(MansionDoorOpening("MANSION EMPTY!"));
             }
-            
 
         }
     }

@@ -58,8 +58,8 @@ public class LobbyOptionsMenu : MonoBehaviourPun
         {
             CharacterCardList.GetComponent<TextFileToList>().LoadTextFileByName("CharacterCustomlist");
         }
-        if (mansionValue == 0)
-            mansionValue = 1;
+        //if (mansionValue == 0) //Muoks 14.09.2022!
+          //  mansionValue = 1;
 
         GameStats.MansionDeckValue = mansionValue;
         //GameStats.CharacterDeckValue = charValue;

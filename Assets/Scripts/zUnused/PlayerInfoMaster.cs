@@ -69,13 +69,13 @@ public class PlayerInfoMaster : MonoBehaviourPun
         ChildIDList.Add(playerID);
         playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
         childCount = ChildList.Count;
-        //if (view.IsMine)
-            if (playerCount == childCount)
-                ChangeChildOrder();
-            //view.RPC("ChangeChildOrder", RpcTarget.AllBuffered);
+
+            //if (playerCount == childCount) //Was ON in earlier build version
+                //ChangeChildOrder();
+
 
     }
-    //[PunRPC]
+    /*
     private void ChangeChildOrder()
     {
         //playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
@@ -109,5 +109,5 @@ public class PlayerInfoMaster : MonoBehaviourPun
             LobbyRoomOpen = GameObject.FindWithTag("LobbyRoomControl");
         LobbyRoomOpen.GetComponent<LobbyRoomOpen>().PlayerInfoOrderReady();
     }
-
+    */
 }

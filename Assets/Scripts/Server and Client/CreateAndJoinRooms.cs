@@ -11,7 +11,7 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
 {
     public InputField createInput;
     public InputField joinInput;
-    private GameObject PlayerInfoMaster;
+    //private GameObject PlayerInfoMaster;
     public GameObject RoomInfoListPrefab, MainCanvas;
     public GameObject PlayerInfoPrefab;
     public GameObject LobbyRoomControlPrefab;
@@ -22,7 +22,7 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
 
     void Awake()
     {
-        PlayerInfoMaster = GameObject.FindWithTag("PlayerInfoMaster");
+        //PlayerInfoMaster = GameObject.FindWithTag("PlayerInfoMaster");
         view = GetComponent<PhotonView>();
         currentScene = SceneManager.GetActiveScene().name;
         RoomInfoListPrefab = GameObject.FindWithTag("RoomInfoList"); //FIND SINGLETON
@@ -44,7 +44,7 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
         }
         else if (currentScene == "LobbyRoom")
         {
-            PlayerInfoMaster.GetComponent<PlayerInfoMaster>().LobbyRoomIsLoaded();
+            //PlayerInfoMaster.GetComponent<PlayerInfoMaster>().LobbyRoomIsLoaded();
             PhotonNetwork.CurrentRoom.IsOpen = true;
 
         }

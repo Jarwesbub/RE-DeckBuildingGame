@@ -11,7 +11,7 @@ public class HPContol : MonoBehaviour
     public GameObject GameUIControl, localCharacterCard, OtherCharacterCard;
     public TMP_Text localHpTxt, otherHpTxt, localMaxHpTxt, otherMaxHpTxt;
     public TMP_Text hpPlus, hpMinus;
-    private GameObject PlayerInfoMaster;
+    //private GameObject PlayerInfoMaster;
     public Slider slider;
     public int playerID, myMaxHP, myFullHP;
     private int myHPDiff;
@@ -23,7 +23,7 @@ public class HPContol : MonoBehaviour
     void Start()
     {
         playerID = PhotonNetwork.LocalPlayer.ActorNumber;
-        PlayerInfoMaster = GameObject.FindWithTag("PlayerInfoMaster");
+        //PlayerInfoMaster = GameObject.FindWithTag("PlayerInfoMaster");
         MakeCharacterCardLists();
         int get = playerID - 1;
 
@@ -42,6 +42,16 @@ public class HPContol : MonoBehaviour
 
     private void MakeCharacterCardLists()
     {
+        foreach (DictionaryEntry info in GameStats.playerInfos)
+        {
+            //int id = (int)info.Key;
+            string cardName = (string)info.Value;
+            int number = Int32.Parse(cardName.Substring(3, 3)); //Row 3 -> next 3 letters
+            CharacterNumberList.Add(number);
+
+        }
+
+        /* OLD DELETE
         int count = PlayerInfoMaster.transform.childCount;
         for (int i = 0; i < count; i++)
         {
@@ -55,7 +65,7 @@ public class HPContol : MonoBehaviour
 
             CharacterHPList.Add(hp);
         }
-
+        */
     }
 
     private int GetCharacterHPInfo(int v)

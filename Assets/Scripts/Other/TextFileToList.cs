@@ -58,7 +58,7 @@ public class TextFileToList : MonoBehaviourPun
         textFileName = name;
     }
 
-    public string GetRandomizedCharacterName()
+    public string GetRandomLineFromTextFile()
     {
         int count = TextList.Length;
         int value = Random.Range(0, count);

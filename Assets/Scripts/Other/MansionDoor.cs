@@ -13,7 +13,7 @@ public class MansionDoor : MonoBehaviour
     }
     private void OnEnable()
     {
-        MainCanvas.GetComponent<MansionCards>().MansionDoorReset();
+        MainCanvas.GetComponent<MansionControl>().MansionDoorReset();
         anim.Play("closedDoor_anim");
 
     }
@@ -31,7 +31,7 @@ public class MansionDoor : MonoBehaviour
     }
     public void SetDoorInActive() //Controlled in animation
     {
-        MainCanvas.GetComponent<MansionCards>().DoorAnimationEnds();
+        MainCanvas.GetComponent<MansionControl>().DoorAnimationEnds();
         gameObject.SetActive(false);
         
     }

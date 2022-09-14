@@ -20,6 +20,6 @@ public class ClickableObject : MonoBehaviour, IPointerClickHandler
             OnClickButton = 0;
 
         if(isMansionButton)
-            MainCanvas.GetComponent<MansionCards>().ClickEnterMansion(OnClickButton);
+            MainCanvas.GetComponent<MansionControl>().ClickEnterMansion(OnClickButton);
     }
 }
