@@ -5,13 +5,12 @@ using System.IO;
 using System.Linq;
 using Photon.Pun;
 
+//Attach this script to object that contains "LobbyRoomOpen.cs" -script
+
 public class OverwriteTextFileList : MonoBehaviourPun
 {
     private bool isMaster,buttonIsPressed;
     PhotonView view;
-    public GameObject LoadingTextObj;
-    private int mansionType; //0 = not assigned; 1-4 = MansionCards 1-4
-    //private string[] Shop_Cards;
 
     private void Start()
     {
@@ -45,26 +44,20 @@ public class OverwriteTextFileList : MonoBehaviourPun
     [PunRPC]
     public void Pun_OverwriteNewFiles(string[] shop_cards) //Overwrite from client's Custom_data folder to Game_data folder
     {
-        LoadingTextObj.SetActive(true);
-        //Shop_Cards = shop_cards;
+
         foreach (string textFile in shop_cards)
         {
             string readFromFilePath = Application.persistentDataPath + "/Custom_data/" + textFile + ".txt";
             string[] fileLines = File.ReadAllLines(readFromFilePath).ToArray();
 
-            string writeToFilePath = Application.persistentDataPath + "/Game_data/" + textFile + ".txt";
+            //string writeToFilePath = Application.persistentDataPath + "/Game_data/" + textFile + ".txt";
+            string writeToFilePath = Application.streamingAssetsPath + "/Game_data/" + textFile + ".txt";
             File.WriteAllLines(writeToFilePath, fileLines);
 
         }
 
-        StartCoroutine(WaitTime());
-        Debug.Log("Overwriting done from Client");
-    }
+        GetComponent<LobbyRoomOpen>().TextFilesAreLoadedToOthers();
 
-    IEnumerator WaitTime()
-    {
-        yield return new WaitForSeconds(1f);
-        GetComponent<LobbyRoomOpen>().ReadyForGameScene();
     }
     
 }

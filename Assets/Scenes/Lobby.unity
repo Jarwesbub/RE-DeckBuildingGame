@@ -516,8 +516,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 498507178}
-        m_TargetAssemblyTypeName: CreateAndJoinRooms, Assembly-CSharp
+      - m_Target: {fileID: 1886042373}
+        m_TargetAssemblyTypeName: CreateAndJoinMenus, Assembly-CSharp
         m_MethodName: OnClickJoinRoom
         m_Mode: 1
         m_Arguments:
@@ -646,86 +646,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 416915271}
   m_CullTransparentMesh: 1
---- !u!1001 &498507177
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 5134886316638887782, guid: 5f1828171935c4541ac5317667a03d3a, type: 3}
-      propertyPath: sceneViewId
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7605594972966530326, guid: 5f1828171935c4541ac5317667a03d3a, type: 3}
-      propertyPath: m_RootOrder
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7605594972966530326, guid: 5f1828171935c4541ac5317667a03d3a, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7605594972966530326, guid: 5f1828171935c4541ac5317667a03d3a, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 5.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7605594972966530326, guid: 5f1828171935c4541ac5317667a03d3a, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7605594972966530326, guid: 5f1828171935c4541ac5317667a03d3a, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7605594972966530326, guid: 5f1828171935c4541ac5317667a03d3a, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7605594972966530326, guid: 5f1828171935c4541ac5317667a03d3a, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7605594972966530326, guid: 5f1828171935c4541ac5317667a03d3a, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7605594972966530326, guid: 5f1828171935c4541ac5317667a03d3a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7605594972966530326, guid: 5f1828171935c4541ac5317667a03d3a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7605594972966530326, guid: 5f1828171935c4541ac5317667a03d3a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7605594972966530327, guid: 5f1828171935c4541ac5317667a03d3a, type: 3}
-      propertyPath: joinInput
-      value: 
-      objectReference: {fileID: 746133229}
-    - target: {fileID: 7605594972966530327, guid: 5f1828171935c4541ac5317667a03d3a, type: 3}
-      propertyPath: createInput
-      value: 
-      objectReference: {fileID: 1935194081}
-    - target: {fileID: 7605594972966530344, guid: 5f1828171935c4541ac5317667a03d3a, type: 3}
-      propertyPath: m_Name
-      value: CreateAndJoinRooms
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 5f1828171935c4541ac5317667a03d3a, type: 3}
---- !u!114 &498507178 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7605594972966530327, guid: 5f1828171935c4541ac5317667a03d3a, type: 3}
-  m_PrefabInstance: {fileID: 498507177}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10ef6448262fc5e47a5739a7ba8d640f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &508106521
 GameObject:
   m_ObjectHideFlags: 0
@@ -1302,6 +1222,65 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 746133227}
   m_CullTransparentMesh: 1
+--- !u!1 &813343465
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 813343467}
+  - component: {fileID: 813343466}
+  - component: {fileID: 813343469}
+  m_Layer: 0
+  m_Name: PhotonRoomMaster
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!114 &813343466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 813343465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecf452a0104915a40b8e3ff2a88281a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MainCanvas: {fileID: 1296964266}
+--- !u!4 &813343467
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 813343465}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &813343469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 813343465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b155d0825351aed479a09ff815cb04c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerListPrefab: {fileID: 0}
 --- !u!1 &989761833
 GameObject:
   m_ObjectHideFlags: 0
@@ -1809,7 +1788,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1296964266
 GameObject:
@@ -1912,7 +1891,7 @@ RectTransform:
   - {fileID: 176404441}
   - {fileID: 603044416}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2414,7 +2393,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1590607829
 GameObject:
@@ -3114,8 +3093,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 498507178}
-        m_TargetAssemblyTypeName: CreateAndJoinRooms, Assembly-CSharp
+      - m_Target: {fileID: 1886042373}
+        m_TargetAssemblyTypeName: CreateAndJoinMenus, Assembly-CSharp
         m_MethodName: OnClickCreateRoom
         m_Mode: 1
         m_Arguments:
@@ -3173,6 +3152,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1886042371}
+  - component: {fileID: 1886042373}
   - component: {fileID: 1886042372}
   m_Layer: 0
   m_Name: LobbyControl
@@ -3194,7 +3174,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1886042372
 MonoBehaviour:
@@ -3218,6 +3198,21 @@ MonoBehaviour:
   errorMessage: {fileID: 654387386}
   infoText: {fileID: 103978276}
   currentMenu: 0
+--- !u!114 &1886042373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1886042370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10ef6448262fc5e47a5739a7ba8d640f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PhotonRoomMaster: {fileID: 813343465}
+  createInput: {fileID: 1935194081}
+  joinInput: {fileID: 746133229}
 --- !u!1 &1886753575
 GameObject:
   m_ObjectHideFlags: 0

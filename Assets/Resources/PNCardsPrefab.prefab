@@ -244,7 +244,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MainCanvas: {fileID: 0}
-  DeleteCardPlatform: {fileID: 0}
+  UIControl: {fileID: 0}
   cardPosition: {x: 0, y: 0}
   lastPos: {x: 0, y: 0}
   showCardScale: 0

@@ -13,14 +13,13 @@ public class FirstBootTextFile : MonoBehaviour
     }
     void CheckIfFoldersExist()
     {
-        //string read_dataPath = Application.persistentDataPath + "/Read_data/";
-        string overwrite_dataPath = Application.persistentDataPath + "/Game_data/";
+        //string overwrite_dataPath = Application.persistentDataPath + "/Game_data/";
+        string overwrite_dataPath = Application.streamingAssetsPath + "/Game_data/";
         if (!Directory.Exists(overwrite_dataPath))
         {
             Directory.CreateDirectory(overwrite_dataPath);
         }
 
-        //string readCustom_dataPath = Application.persistentDataPath + "/Write_data/";
         string readCustom_dataPath = Application.persistentDataPath + "/Custom_data/";
         if (!Directory.Exists(readCustom_dataPath))
         {
@@ -28,10 +27,11 @@ public class FirstBootTextFile : MonoBehaviour
         }
     }
 
-    void CheckTextDataFolders() //"Read_data" and "Write_data" -folders //When the game is started for first time
+    void CheckTextDataFolders() //
     {
         string checkIfEmpty = "CharacterList";
-        string readFromFilePath = Application.persistentDataPath + "/Game_data/" + checkIfEmpty + ".txt";
+        //string readFromFilePath = Application.persistentDataPath + "/Game_data/" + checkIfEmpty + ".txt";
+        string readFromFilePath = Application.streamingAssetsPath + "/Game_data/" + checkIfEmpty + ".txt";
         if (System.IO.File.Exists(readFromFilePath))
         {
             Debug.Log("Character list exists");
@@ -50,21 +50,24 @@ public class FirstBootTextFile : MonoBehaviour
 
             foreach (string textFile in shop_cards)
             {
-                string readFromStreamingAss = Application.streamingAssetsPath + "/Recall_Chat/" + textFile + ".txt";
+                //string readFromStreamingAss = Application.streamingAssetsPath + "/Recall_Chat/" + textFile + ".txt";
+                string readFromStreamingAss = Application.streamingAssetsPath + "/Base_Data/" + textFile + ".txt";
                 string[] fileLines = File.ReadAllLines(readFromStreamingAss).ToArray();
 
-                string overwriteToFilePath = Application.persistentDataPath + "/Game_data/" + textFile + ".txt";
+                //string overwriteToFilePath = Application.persistentDataPath + "/Game_data/" + textFile + ".txt";
+                string overwriteToFilePath = Application.streamingAssetsPath + "/Game_data/" + textFile + ".txt";
                 File.WriteAllLines(overwriteToFilePath, fileLines);
             }
 
-            string readFromWrite_data = Application.streamingAssetsPath + "/Recall_Chat/" + checkIfEmpty + ".txt";
-
+            //string readFromWrite_data = Application.streamingAssetsPath + "/Recall_Chat/" + checkIfEmpty + ".txt";
+            string readFromWrite_data = Application.streamingAssetsPath + "/Base_Data/" + checkIfEmpty + ".txt";
 
             if (System.IO.File.Exists(readFromWrite_data))
             {
                 foreach (string textFile in shop_cards)
                 {
-                    string readFromStreamingAss = Application.streamingAssetsPath + "/Recall_Chat/" + textFile + ".txt";
+                    //string readFromStreamingAss = Application.streamingAssetsPath + "/Recall_Chat/" + textFile + ".txt";
+                    string readFromStreamingAss = Application.streamingAssetsPath + "/Base_Data/" + textFile + ".txt";
                     string[] fileLines = File.ReadAllLines(readFromStreamingAss).ToArray();
 
                     string writeToFilePath = Application.persistentDataPath + "/Custom_data/" + textFile + ".txt";
@@ -73,10 +76,12 @@ public class FirstBootTextFile : MonoBehaviour
 
                 for (int i = 1; i <= 4; i++) //Create "MansionCards1-4.txt"
                 {
-                    string readFromStreamingAss = Application.streamingAssetsPath + "/Recall_Chat/MansionCards" + i + ".txt";
+                    //string readFromStreamingAss = Application.streamingAssetsPath + "/Recall_Chat/MansionCards" + i + ".txt";
+                    string readFromStreamingAss = Application.streamingAssetsPath + "/Base_Data/MansionCards" + i + ".txt";
                     string[] fileLines = File.ReadAllLines(readFromStreamingAss).ToArray();
 
-                    string writeToGameFolder = Application.persistentDataPath + "/Game_data/MansionCards" + i + ".txt";
+                    //string writeToGameFolder = Application.persistentDataPath + "/Game_data/MansionCards" + i + ".txt";
+                    string writeToGameFolder = Application.streamingAssetsPath + "/Game_data/MansionCards" + i + ".txt";
                     File.WriteAllLines(writeToGameFolder, fileLines);
 
                     string writeToCustomFolder = Application.persistentDataPath + "/Custom_data/MansionCards" + i + ".txt";

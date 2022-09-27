@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Photon.Pun;
-using UnityEngine.Events;
 
-public class GameUIControl : MonoBehaviourPun
+public class GameUIControl : MonoBehaviour
 {
     public GameObject PlayerTurnUI, MainCanvas; //Shows current player's deck and buttons
     public TMP_Text whoIsPlaying;
@@ -51,7 +50,7 @@ public class GameUIControl : MonoBehaviourPun
             DeckCountCardsTMPs.SetActive(true);
             MainCanvas.GetComponent<GameControl>().ShowLocalPlayerHP();
             StartCoroutine(ShowMyTurnInUI());
-            OtherCharacterCard.GetComponent<CharacterControl>().SetAllCharacterSprites();
+            //OtherCharacterCard.GetComponent<CharacterControl>().CreateAllCharacterSprites();
         }
         else
         {
@@ -61,7 +60,7 @@ public class GameUIControl : MonoBehaviourPun
             OtherHPInfo.SetActive(true);
             ShopMenuButton.SetActive(false);
             DeckCountCardsTMPs.SetActive(false);
-            OtherCharacterCard.GetComponent<CharacterControl>().SetAllCharacterSprites();
+            //OtherCharacterCard.GetComponent<CharacterControl>().CreateAllCharacterSprites();
             OtherCharacterCard.GetComponent<CharacterControl>().SetOtherCharacterSprite(1);
             
             StartCoroutine(ShowOtherTurnInUI());

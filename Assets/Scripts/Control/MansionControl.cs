@@ -9,18 +9,20 @@ using TMPro;
 public class MansionControl : MonoBehaviourPun
 {
     public GameObject MansionCard, MansionDoor, MansionCardPrefab, MansionGridContent, MansionHandCardPrefab;
-    public GameObject LeftMenuControl, MansionDoor_btnUI;
+    public GameObject LeftMenuControl, MansionDoor_btnUI, BossEncounterObj;
     private Image image;
     PhotonView view;
     public GameObject MansionActionButtons, OtherActionButtons, ToggleOtherActions;
-    public TMP_Text mansionActionTMP, mansionDeckCountTMP, exploreCountTMP;
+    public TMP_Text mansionActionTMP, mansionDeckCountTMP, exploreCountTMP, bossCountTMP;
     public int MansionDeckCount, MansionExploreCount;
-    [SerializeField] private string enemyName;
+    [SerializeField] private string enemyName, currentPlayerName;
     public List<string> mansionDeck;
     private string[] mansionDeckStringList;
+    private string currentMansionCard;
     private string mansionTxt;
-    private bool activeOtherActionBtn, doorKnobLock, isBottomCard;
-    private int clickMansionDoorValue;
+    private bool activeOtherActionBtn, doorKnobLock, isBottomCard, isBossEncounter;
+    private int clickMansionDoorValue, mansionBossCount;
+    [SerializeField] private Color inactiveColor;
 
     private void Awake()
     {
@@ -33,7 +35,8 @@ public class MansionControl : MonoBehaviourPun
         mansionActionTMP.text = mansionTxt;
         MansionExploreCount = 0;
         exploreCountTMP.text = "Explores this turn: " + 0;
-        
+        mansionBossCount = 0; isBossEncounter = false;
+        BossEncounterObj.SetActive(false);
         MansionDoor.SetActive(true);
         MansionDoor_btnUI.SetActive(false);
         activeOtherActionBtn = false;
@@ -41,7 +44,8 @@ public class MansionControl : MonoBehaviourPun
         OtherActionButtons.SetActive(false);
         ToggleOtherActions.SetActive(false);
 
-        SetMansionAnimation();
+        currentPlayerName = PhotonNetwork.MasterClient.NickName;
+        ResetMansionAnimation();
 
         if (PhotonNetwork.IsMasterClient)
         {
@@ -49,6 +53,42 @@ public class MansionControl : MonoBehaviourPun
             ShuffleMansionDeck();
             StartCoroutine(AddDelay_SendMansionDeckToClients());
         }
+
+    }
+    private void UpdateMansionBossCount()
+    {
+        bossCountTMP.text = "Boss count: " + mansionBossCount;
+    }
+    private void MansionBossIsBeaten(bool isBeaten)
+    {
+        if (isBeaten)
+        {
+            mansionBossCount--;
+            UpdateMansionBossCount();
+
+            if (mansionBossCount > 0)
+                BossEncounterObj.SetActive(false);
+            else
+                BossEncounterObj.GetComponent<MansionBossEncounter>().AllBossesDefeated();
+        }
+        else
+        {
+            BossEncounterObj.SetActive(false);
+        }
+
+        isBossEncounter = false;
+    }
+    private bool CheckIfMansionCardIsBoss(string s)
+    {
+        if (s == "2_ma-010_premier_uroboros_aheri1" || s == "2_ma-029_alliance_albert_wesker1" ||
+        s == "2_ma-041_outbreak_tyrant_t-002_infection_mod" || s == "2_ma-054_nightmare_osmund_saddler")
+        {
+            Debug.Log("IsBossCard = "+s);
+            return true;
+
+        }
+        else
+            return false;
 
     }
 
@@ -73,8 +113,7 @@ public class MansionControl : MonoBehaviourPun
         yield return new WaitForSeconds(1f);
         GetComponent<GameControl>().onButtonLock = false;
     }
-    [PunRPC]
-    public void RPC_SendMansionDeck(string[] deck)
+    [PunRPC] public void RPC_SendMansionDeck(string[] deck)
     {
         foreach(string m in deck)
         {
@@ -85,9 +124,15 @@ public class MansionControl : MonoBehaviourPun
         foreach(string s in deck)
         {
             mansionDeck.Add(s);
+
+            //Check if card is BOSS -card
+            if (s == "2_ma-010_premier_uroboros_aheri1" || s == "2_ma-029_alliance_albert_wesker1" ||
+                s == "2_ma-041_outbreak_tyrant_t-002_infection_mod" || s == "2_ma-054_nightmare_osmund_saddler")
+                mansionBossCount++;
         }
         MansionDeckCount = mansionDeck.Count;
         mansionDeckCountTMP.text = "Mansion card count: " + MansionDeckCount;
+        UpdateMansionBossCount();
     }
 
     private void ShuffleMansionDeck() //
@@ -116,30 +161,29 @@ public class MansionControl : MonoBehaviourPun
         if (view.IsMine)
         {
             MansionActionButtons.SetActive(true);
-            MansionExploreAdd(true);
+            MansionExploreCount++;
+            exploreCountTMP.text = "Explores this turn: " + MansionExploreCount;
         }
     }
-    public void MansionExploreAdd(bool add)
+    [PunRPC] void RPC_SetMansionAnimation()
     {
-        if(add)
-            MansionExploreCount++;
-        else
-            MansionExploreCount = 0;
+        MansionDoor.SetActive(true);
 
+    }
+
+    public void MansionSetForNextPlayer(string name)
+    {
+        currentPlayerName = name;
+        MansionExploreCount = 0;
         exploreCountTMP.text = "Explores this turn: " + MansionExploreCount;
     }
 
-    public void SetMansionAnimation()
+    public void ResetMansionAnimation() //
     {
-        if(view.IsMine)
+        if (view.IsMine)
+        {
             view.RPC("RPC_SetMansionAnimation", RpcTarget.AllBuffered);
-
-    }
-    [PunRPC]
-    void RPC_SetMansionAnimation()
-    {
-        MansionDoor.SetActive(true);
-        //MansionMainButton.SetActive(false);
+        }
     }
 
     ////////////////////
@@ -154,7 +198,10 @@ public class MansionControl : MonoBehaviourPun
                 {
                     doorKnobLock = true;
                     isBottomCard = false;
-                    view.RPC("RPC_ClickEnterMansion", RpcTarget.AllBuffered, 0); //Normal
+                    currentMansionCard = mansionDeck[0];
+                    GetComponent<StatsControl>().CheckMansionCardStats(view.OwnerActorNr, currentMansionCard);
+                    bool isBossCard = CheckIfMansionCardIsBoss(currentMansionCard);
+                    view.RPC("RPC_ClickEnterMansion", RpcTarget.AllBuffered, 0, isBossCard); //Normal
 
                 }
                 else if (clickValue == 2) //Mouse2 button
@@ -174,26 +221,30 @@ public class MansionControl : MonoBehaviourPun
     }
     public void OnClickChooseBottomCard(bool chooseBottomCard)
     {
-
         if (chooseBottomCard) //Choose bottom card
         {
-            int value = MansionDeckCount-1;          
-            view.RPC("RPC_ClickEnterMansion", RpcTarget.AllBuffered, value); 
+            int value = MansionDeckCount-1;
+            currentMansionCard = mansionDeck[value];
+            GetComponent<StatsControl>().CheckMansionCardStats(view.OwnerActorNr, currentMansionCard);
+            bool isBossCard = CheckIfMansionCardIsBoss(currentMansionCard);
+            view.RPC("RPC_ClickEnterMansion", RpcTarget.AllBuffered, value, isBossCard); 
         }
-
         clickMansionDoorValue = 0;
         MansionDoor_btnUI.SetActive(false);
-        //doorKnobPressed = false;
+
     }
-    [PunRPC]
-    void RPC_ClickEnterMansion(int value)
+    [PunRPC] void RPC_ClickEnterMansion(int value, bool isBossCard)
     {
         if (value!=0)
             StartCoroutine(MansionDoorOpening("Bottom card"));
 
         MansionCard.GetComponent<SpriteFromAtlas>().SetMansionCardSprite(mansionDeck[value]);
         MansionDoor.GetComponent<MansionDoor>().OpenMansionDoor();
-        
+        if (isBossCard)
+        {
+            isBossEncounter = isBossCard;
+            BossEncounterObj.SetActive(true);
+        }
     }
 
     ///////////////////////////
@@ -215,31 +266,31 @@ public class MansionControl : MonoBehaviourPun
     
     public void OnClickDeleteCard() //WIN button
     {
-        int i = GetComponent<GameControl>().currentPlayerID - 1;
-        string nickName = PhotonNetwork.PlayerList[i].NickName;
-
         if (view.IsMine)
         {
             GameObject mansionHandCard = Instantiate(MansionHandCardPrefab);
             mansionHandCard.GetComponent<Image>().sprite = image.sprite;
-            //mansionHandCard.transform.parent = MansionGridContent.transform;
             mansionHandCard.transform.SetParent(MansionGridContent.transform);
             mansionHandCard.transform.localScale = new Vector3(1f, 1f, 1f);
-
-            view.RPC("RPC_DeleteCard", RpcTarget.AllBuffered, isBottomCard);
-            string txt = nickName + " WINS" + "\n" + "\n" + "Player's Mansion deck updated";
-            view.RPC("SetMansionActionText", RpcTarget.AllBuffered, txt);
+            view.RPC("RPC_SendCardToPlayer", RpcTarget.AllBuffered, isBottomCard, view.OwnerActorNr, currentMansionCard);
+            view.RPC("RPC_SetMainTextPlayer", RpcTarget.AllBuffered, currentPlayerName, true);
             MansionActionButtons.SetActive(false); OtherActionButtons.SetActive(true);
             LeftMenuControl.GetComponent<LeftMenuControl>().SetPlus1Text();
+
+            
         }
     }
-    [PunRPC]
-    public void RPC_DeleteCard(bool chooseBottomCard)
+    [PunRPC] public void RPC_SendCardToPlayer(bool chooseBottomCard, int id, string cardName)
     {
         int value = 0;
         if (chooseBottomCard)
             value = MansionDeckCount-1;
-        
+
+        if (isBossEncounter)
+            MansionBossIsBeaten(true);
+
+        //GetComponent<StatsControl>().UpdatePlayerPoints(id, cardName);
+        GetComponent<StatsControl>().PlayerGetsPointsFromCurrentMansionCard();
         mansionDeck.Remove(mansionDeck[value]);
         MansionDeckCount = mansionDeck.Count;
         mansionDeckCountTMP.text = "Mansion card count: " + MansionDeckCount;
@@ -247,56 +298,51 @@ public class MansionControl : MonoBehaviourPun
     ///////////////////////////
     public void OnClickSendCardBottomOfTheDeck() //LOSE btn
     {
-        int i = GetComponent<GameControl>().currentPlayerID - 1;
-        string nickName = PhotonNetwork.PlayerList[i].NickName;
-
         if (view.IsMine)
         {
             view.RPC("RPC_SendCardBottomOfTheDeck", RpcTarget.AllBuffered, isBottomCard);
             clickMansionDoorValue = 0;
-            string txt = nickName + " LOSE" +"\n"+ "\n" + "Player takes damage";
-            view.RPC("SetMansionActionText", RpcTarget.AllBuffered, txt);
+            view.RPC("RPC_SetMainTextPlayer", RpcTarget.AllBuffered, currentPlayerName, false);
             MansionActionButtons.SetActive(false); OtherActionButtons.SetActive(true);
         }
     }
-    [PunRPC]
-    private void RPC_SendCardBottomOfTheDeck(bool chooseBottomCard)
+    [PunRPC] private void RPC_SendCardBottomOfTheDeck(bool chooseBottomCard)
     {
         if(!chooseBottomCard)
         {
             mansionDeck.Add(mansionDeck[0]);
             mansionDeck.Remove(mansionDeck[0]);
         }
+        if (isBossEncounter)
+            MansionBossIsBeaten(false);
     }
     ///////////////////////////
     public void OnClickShuffleDeck() //SHUFFLE btn
     {
         if (view.IsMine)
         {
-            int i = GetComponent<GameControl>().currentPlayerID - 1;
-            string nickName = PhotonNetwork.PlayerList[i].NickName;
             mansionDeckStringList = mansionDeck.ToArray();
-            ShuffleMansionDeck();
-            
+            ShuffleMansionDeck();      
             view.RPC("RPC_SendMansionDeck", RpcTarget.AllBuffered, (object)mansionDeckStringList);
-            string txt = nickName+ " LOSE" + "\n" + "\n" + "Mansion deck shuffled";
-            view.RPC("SetMansionActionText", RpcTarget.AllBuffered, txt);
+            string txt = "Mansion deck <SHUFFLE>";
+            view.RPC("RPC_SetMainTextManually", RpcTarget.AllBuffered, txt);
         }
     }
 
-    [PunRPC]
-    private void SetMansionActionText(string txt)
+    [PunRPC] private void RPC_SetMainTextPlayer(string name, bool wins)
     {
-        mansionTxt = txt;
-        mansionActionTMP.text = mansionTxt;
-        //StartCoroutine(ShowMansionText());
+        StartCoroutine(Main_PlayerWins(name, wins));
     }
-
+    [PunRPC]
+    private void RPC_SetMainTextManually(string txt)
+    {
+        StartCoroutine(Main_OtherText(txt));
+    }
 
     public void OnClickSetMansionTextEmpty()
     {
         string txt = "";
-        view.RPC("SetMansionActionText", RpcTarget.AllBuffered, txt);
+        view.RPC("RPC_SetMainTextManually", RpcTarget.AllBuffered, txt);
 
     }
 
@@ -304,6 +350,31 @@ public class MansionControl : MonoBehaviourPun
     {
         mansionActionTMP.text = doorText;
         yield return new WaitForSeconds(4f);
+        mansionActionTMP.text = "";
+    }
+    IEnumerator Main_OtherText(string txt)
+    {
+        mansionActionTMP.text = txt;
+        yield return new WaitForSeconds(5f);
+        mansionActionTMP.text = "";
+    }
+    IEnumerator Main_PlayerWins(string name, bool wins)
+    {
+        MansionCard.GetComponent<Image>().color = inactiveColor;
+        if (wins)
+        {
+            mansionActionTMP.text = "WIN\n";
+            int points = CurrentMansionCard.GetPoints();
+            mansionActionTMP.text += name + " got "+points+" points";
+        }
+        else
+        {
+            mansionActionTMP.text = "LOSE\n";
+            int dmg = CurrentMansionCard.GetDMG();
+            mansionActionTMP.text += name + " takes "+dmg+" damage";
+        }
+        yield return new WaitForSeconds(5f);
+        
         mansionActionTMP.text = "";
     }
 }

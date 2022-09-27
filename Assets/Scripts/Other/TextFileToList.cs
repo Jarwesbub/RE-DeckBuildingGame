@@ -32,9 +32,8 @@ public class TextFileToList : MonoBehaviourPun
 
         if (!useManualTextLoad)
         {
-            //string readFromFilePath = Application.streamingAssetsPath + "/Recall_Chat/" + textFileName + ".txt";
-            //string[] fileLines = File.ReadAllLines(readFromFilePath).ToArray();
-            string readFromFilePath = Application.persistentDataPath + "/Game_data/" + textFileName + ".txt";
+            //string readFromFilePath = Application.persistentDataPath + "/Game_data/" + textFileName + ".txt";
+            string readFromFilePath = Application.streamingAssetsPath + "/Game_data/" + textFileName + ".txt";
             string[] fileLines = File.ReadAllLines(readFromFilePath).ToArray();
             TextList = fileLines;
             textListCount = TextList.Length;
@@ -51,7 +50,8 @@ public class TextFileToList : MonoBehaviourPun
 
     public void LoadTextFileByName(string name)
     {
-        string readFromFilePath = Application.persistentDataPath + "/Game_data/" + name + ".txt";
+        //string readFromFilePath = Application.persistentDataPath + "/Game_data/" + name + ".txt";
+        string readFromFilePath = Application.streamingAssetsPath + "/Game_data/" + name + ".txt";
         string[] fileLines = File.ReadAllLines(readFromFilePath).ToArray();
         TextList = fileLines;
         textListCount = TextList.Length;

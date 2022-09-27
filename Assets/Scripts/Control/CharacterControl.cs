@@ -7,48 +7,45 @@ using Photon.Realtime;
 
 public class CharacterControl : MonoBehaviourPun
 {
-    public GameObject PIMaster, HPControl;
-    //public GameObject[] PlayerInfoList;
-    //public List<Sprite> CharacterSprites;
+    public GameObject HPControl;
+    [SerializeField] private List<int> PlayerIDs;
     [SerializeField] private List<string> SpriteNames;
     private int roomPlayerCount;
     float normalScale = 1.25f, zoomedScale = 2.45f;
     private bool isZoomed;
-    //private PhotonView view;
     [SerializeField] private bool isLocalPlayer;
     [SerializeField] private int playerID, otherPlayerID;
 
     void Awake()
     {
-        PIMaster = GameObject.FindGameObjectWithTag("PlayerInfoMaster");
-        //view = GetComponent<PhotonView>();
         playerID = PhotonNetwork.LocalPlayer.ActorNumber;
         gameObject.tag = "Player" + playerID.ToString();
         gameObject.SetActive(false);
         otherPlayerID = 1; //Host starts!
+        roomPlayerCount = PhotonNetwork.CurrentRoom.PlayerCount;
+        CreateAllCharacterSprites();
     }
 
     void Start()
     {
-        roomPlayerCount = PhotonNetwork.CurrentRoom.PlayerCount;
-        //GetAllSpritesFromPIMaster(); //OFF TEST
-        SetAllCharacterSprites();
 
         if (isLocalPlayer)
         {
             SetLocalCharacterSprite();
         }
+
         else if (playerID != 1 || roomPlayerCount <= 1) //Is other than HOST
         {
-            string name = SpriteNames[0]; //Host always starts the game so set his sprite!
+            string name = SpriteNames[0]; //Show player 1 character card
             ChangeSpriteByName(name);
             
         }
         else if(roomPlayerCount>1) // Is the HOST -> set second player to OtherCharacterSprite
         {
-            string name = SpriteNames[1]; //Host always starts the game so set his sprite!
+            int id = PhotonNetwork.PlayerList[1].ActorNumber;
+            int index = PlayerIDs.IndexOf(id);
+            string name = SpriteNames[index]; //Host always starts the game so set his sprite!
             ChangeSpriteByName(name);
-            //gameObject.SetActive(false);
         }
 
         GetComponent<SpriteFromAtlas>().CharacterCardStart(); //Set "Original" or "Custom" Character cards
@@ -56,33 +53,20 @@ public class CharacterControl : MonoBehaviourPun
 
     }
 
-    /*
-    public void GetAllSpritesFromPIMaster() //OLD TRASH CODE
+    public void CreateAllCharacterSprites()
     {
-        if (SpriteNames.Count < roomPlayerCount)
-            SpriteNames.Clear();
-
-        int count = PIMaster.transform.childCount;
-        for (int i = 0; i < count; i++)
+        
+        if (SpriteNames.Count!=0)
         {
-            GameObject child = PIMaster.transform.GetChild(i).gameObject;
-            string characterName = child.GetComponent<PlayerInfo>().myCharacterCard;
-            SpriteNames.Add(characterName);
-
-        }
-
-
-    }
-    */
-    public void SetAllCharacterSprites()
-    {
-        if (SpriteNames.Count < roomPlayerCount)
             SpriteNames.Clear();
+            PlayerIDs.Clear();
+        }
 
         foreach (DictionaryEntry info in GameStats.playerInfos)
         {
             int id = (int)info.Key;
             string card = (string)info.Value;
+            PlayerIDs.Add(id);
             SpriteNames.Add(card);
             Debug.Log("GameStats.playerInfos: Key = " + id + " Value = " + card);
         }
@@ -91,19 +75,18 @@ public class CharacterControl : MonoBehaviourPun
 
     private void SetLocalCharacterSprite()
     {
-        string name = SpriteNames[playerID - 1];
+        int index = PlayerIDs.IndexOf(playerID);
+        string name = SpriteNames[index];
+
         ChangeSpriteByName(name);
     }
 
     public void SetOtherCharacterSprite(int playerID)
-    {//BUG Index out of range error when HOST ends turn and loads spritedata from "unenabled object" (Development build only)
+    {
         otherPlayerID = playerID;
-        /*
-        if (otherPlayerID > PhotonNetwork.LocalPlayer.ActorNumber)
-            otherPlayerID -= 1;*/
-        int value = otherPlayerID - 1;
+
+        int value = PlayerIDs.IndexOf(playerID);
         string name = SpriteNames[value];
-        //Debug.Log("OtherCharacterSprite name = " + name);
         ChangeSpriteByName(name);
 
     }

@@ -112,6 +112,18 @@ MonoBehaviour:
   - RPC_ClickEnterMansion
   - PRC_AddPlayerInfos
   - RPC_GoToGameScene
+  - RPC_ShowDeleteInfo
+  - PRC_ShowDeleteCardInfo
+  - RPC_SendCardToPlayer
+  - RPC_UpdatePlayerPoints
+  - RPC_AddNewPlayer
+  - RPC_RemovePlayer
+  - RPC_UpdatePlayerList
+  - RPC_StartBossEncounter
+  - RPC_SetMansionOtherText
+  - RPC_SetMansionPlayerText
+  - RPC_SetMainTextManually
+  - RPC_SetMainTextPlayer
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

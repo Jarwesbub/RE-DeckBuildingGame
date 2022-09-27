@@ -7,8 +7,8 @@ using UnityEditor;
 
 public class LobbyOptionsMenu : MonoBehaviourPun
 {
-    public GameObject CharacterCardList, characterTypeDropDown, CharacterControl, mansionTypeDropDown;
-    private bool gameStarts, isMaster;
+    public GameObject CharacterCardList, characterTypeDropDown, mansionTypeDropDown, OptionsMenu, GameIsStartingTxt;
+    private bool gameStarts, isMaster, optionsMenuOn;
     PhotonView view;
 
     private void Start()
@@ -26,6 +26,7 @@ public class LobbyOptionsMenu : MonoBehaviourPun
             characterTypeDropDown.SetActive(false);
             mansionTypeDropDown.SetActive(false);
         }
+        GameIsStartingTxt.SetActive(false);
     }
     public void OnClickShowCustomdataPath()
     {
@@ -58,11 +59,23 @@ public class LobbyOptionsMenu : MonoBehaviourPun
         {
             CharacterCardList.GetComponent<TextFileToList>().LoadTextFileByName("CharacterCustomlist");
         }
-        //if (mansionValue == 0) //Muoks 14.09.2022!
-          //  mansionValue = 1;
 
         GameStats.MansionDeckValue = mansionValue;
-        //GameStats.CharacterDeckValue = charValue;
+
+        GameIsStartingTxt.SetActive(true);
     }
 
+    public void OnClickOpenOptionsMenu()
+    {
+        if (optionsMenuOn)
+        {
+            OptionsMenu.SetActive(false);
+            optionsMenuOn = false;
+        }
+        else
+        {
+            OptionsMenu.SetActive(true);
+            optionsMenuOn = true;
+        }
+    }
 }

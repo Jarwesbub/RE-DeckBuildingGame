@@ -14,6 +14,8 @@ public class EditMansionControl : MonoBehaviour
     public GameObject AddCardsPrefab, ShowCaseCard1, ShowCaseCard2;
     public Text dropdownText;
     public TMP_Text mainTitleText, loadSaveInfo, consoleTxt;
+    public TMP_Text _cardCount, _lowCount, _midCount, _topCount;
+    [SerializeField] private int cardCount, lowCount, midCount, topCount;
     public int mansionValue;
     private bool isButtonLock, mansionCardsLoaded;
     private Image img;
@@ -52,13 +54,14 @@ public class EditMansionControl : MonoBehaviour
                 
             }
         }
-        MansionDropDownHandler.GetComponent<UIEdMansionDropDownHandler>().customCount = value;
+        MansionDropDownHandler.GetComponent<UIEdMansionLoadDropDownHandler>().customCount = value;
         //Debug.Log("MansionCards count = " + value);
     }
     private void Start()
     {
         consoleTxt.text = ""; dropdownText.text = "";
         loadSaveInfo.text = "Load your Custom deck first";
+        UpdateCardsCount(true);
         img = GetComponent<Image>();
         OnClickChooseCurrentDeck();
         CreateEnemyTierCards();
@@ -79,6 +82,7 @@ public class EditMansionControl : MonoBehaviour
 
         StartCoroutine(ShowInConsole("Mansion deck builder loaded"));
     }
+
     public void OnClickChooseCurrentDeck()
     {
         mainTitleText.text = "Mansion Deck Builder";
@@ -104,13 +108,13 @@ public class EditMansionControl : MonoBehaviour
     }
     private void CreateEnemyTierCards() //START
     {
-        string readLowTierFile = Application.streamingAssetsPath + "/Recall_Chat/MansionEnemies_LowTierList.txt";
+        string readLowTierFile = Application.streamingAssetsPath + "/Base_Data/MansionEnemies_LowTierList.txt";
         LowTierCardsList = File.ReadAllLines(readLowTierFile).ToArray();
 
-        string readMidTierFile = Application.streamingAssetsPath + "/Recall_Chat/MansionEnemies_MidTierList.txt";
+        string readMidTierFile = Application.streamingAssetsPath + "/Base_Data/MansionEnemies_MidTierList.txt";
         MidTierCardsList = File.ReadAllLines(readMidTierFile).ToArray();
 
-        string readHighTierFile = Application.streamingAssetsPath + "/Recall_Chat/MansionEnemies_HighTierList.txt";
+        string readHighTierFile = Application.streamingAssetsPath + "/Base_Data/MansionEnemies_HighTierList.txt";
         HighTierCardsList = File.ReadAllLines(readHighTierFile).ToArray();
 
         CreateMansionCards(UI_EasyTier, LowTierCardsList);
@@ -134,7 +138,6 @@ public class EditMansionControl : MonoBehaviour
         }
 
     }
-
 
     public void OnClickSelectEnemyTier(int value) //0 = easy, 1 = normal, 2 = hard
     {
@@ -170,6 +173,7 @@ public class EditMansionControl : MonoBehaviour
                 normal_btn.GetComponent<Image>().color = Color.black;
                 hard_btn.GetComponent<Image>().color = colorON;
             }
+
         }
             
     }
@@ -183,8 +187,9 @@ public class EditMansionControl : MonoBehaviour
             {
                 Destroy(child.gameObject);
             }
+            UpdateCardsCount(true); //reset = true
 
-            if(mansionValue != 0)
+            if (mansionValue != 0)
                 StartCoroutine(ShowInConsole("Custom Deck " + mansionValue + " was cleared!"));
         }
     }
@@ -195,8 +200,26 @@ public class EditMansionControl : MonoBehaviour
             isButtonLock = true;
             mansionValue = PlayerPrefs.GetInt("MansionType") +1;
             string file = "MansionCards"+mansionValue;
+
             LoadTextFileByName(file);
-            
+
+            cardCount = CustomDeckCardsList.Count;
+            lowCount = 0; midCount = 0; topCount = 0;
+            foreach (string s in CustomDeckCardsList)
+            {
+                char c = s[0];
+
+                if (c == '0')//Card tiers 0-2 (low-mid-top)
+                    lowCount++;
+                else if (c == '1')
+                    midCount++;
+                else
+                    topCount++;
+
+                Debug.Log("Char value = " + c);
+            }
+            UpdateCardsCount(false);
+
             StartCoroutine(LoadAndSave(true)); //Load
             
         }
@@ -208,8 +231,9 @@ public class EditMansionControl : MonoBehaviour
         CustomDeckCardsList = fileLines;
         textListCount = CustomDeckCardsList.Count;
         currentCustomDeck = name;
-        Debug.Log("File loaded: " + name+".txt");
+        Debug.Log("File loaded: " + name + ".txt");
     }
+    
     public void OnClickSaveCustomMansion()
     {
         if (!isButtonLock)
@@ -217,6 +241,7 @@ public class EditMansionControl : MonoBehaviour
             isButtonLock = true;
 
             string writeToFilePath = Application.persistentDataPath + "/Custom_data/" + currentCustomDeck + ".txt";
+            CustomDeckCardsList.Sort();
             File.WriteAllLines(writeToFilePath, CustomDeckCardsList);
             
             StartCoroutine(LoadAndSave(false)); //Save
@@ -226,8 +251,10 @@ public class EditMansionControl : MonoBehaviour
 
     public void OnUIDeleteCard(int childIndex)
     {
-        Debug.Log(childIndex + " got deleted!");
-        CustomDeckCardsList.Remove(CustomDeckCardsList[childIndex]);
+        string name = CustomDeckCardsList[childIndex];
+        Debug.Log(name + " got deleted!");
+        CustomDeckCardsList.Remove(name);
+        UpdateCardTierCountByName(name, false);
         StartCoroutine(ShowInConsole("Card was deleted from the Custom Deck "+mansionValue));
 
     }
@@ -242,7 +269,38 @@ public class EditMansionControl : MonoBehaviour
         card.transform.localScale = new Vector3(1f, 1f, 1f);
         StartCoroutine(ShowInConsole("'" +name+ "'" + " was added to Custom Deck " + mansionValue));
         Debug.Log(name + " added!");
+        UpdateCardTierCountByName(name, true);
     }
+    private void UpdateCardTierCountByName(string name, bool add)
+    {
+        char c = name[0];
+        int val = -1;
+        if (add)
+            val = 1;
+
+        if (c == '0')//Card tiers 0-2 (low-mid-top)
+            lowCount += val;
+        else if (c == '1')
+            midCount += val;
+        else
+            topCount += val;
+
+        UpdateCardsCount(false); //reset = false
+    }
+    private void UpdateCardsCount(bool reset)
+    {
+        if (reset)
+        {
+            cardCount = 0; lowCount = 0; midCount = 0; topCount = 0;
+        }
+        cardCount = CustomDeckCardsList.Count;
+
+        _cardCount.text = "Cards count: " + cardCount;
+        _lowCount.text = "Low: " + lowCount;
+        _midCount.text = "Mid: " + midCount;
+        _topCount.text = "Top: " + topCount;
+    }
+
     private void InstantiateToHandler()
     {
         foreach(Transform child in MansionGridContent.transform)

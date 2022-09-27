@@ -28,7 +28,7 @@ public class GameControl : MonoBehaviourPunCallbacks
     private int drawHandCardCount;
     private bool isExtraHandCard;
 
-    // Start is called before the first frame update
+
     void Awake()
     {
         MansionMenuObject.SetActive(true);
@@ -38,8 +38,6 @@ public class GameControl : MonoBehaviourPunCallbacks
         currentPlayerID = 1; //HOST
         ShopMenuObject.SetActive(true);     
         EndTurnMenuObject.SetActive(true);
-        //if(MainSpawnCards == null)
-        //MainSpawnCards = PhotonNetwork.Instantiate(SpawnCardsPrefab.name, new Vector3(0f,0f,0f), Quaternion.identity); //OLD
         MainSpawnCards = Instantiate(SpawnCardsPrefab, new Vector3(0f, 0f, 0f), Quaternion.identity); //NEW
         
         shopMenuOpen = false;
@@ -51,17 +49,10 @@ public class GameControl : MonoBehaviourPunCallbacks
     {
         currentPlayer = PhotonNetwork.PlayerList[0];
         string hostName = currentPlayer.NickName;
-        if (isMaster)
-        {
-            UIGameControl.GetComponent<GameUIControl>().UIHostStartGame(true);
-            //currentPlayerName = PhotonNetwork.NickName;
-            //ShowCurrentPlayer(currentPlayerName);
-        }
-        else
-        {
-            UIGameControl.GetComponent<GameUIControl>().UIHostStartGame(false);
-            //UIGameControl.GetComponent<GameUIControl>().UIOtherTurnStart(hostName, 1);
-        }
+        GameStats.currentPlayerID = currentPlayerID;
+
+        UIGameControl.GetComponent<GameUIControl>().UIHostStartGame(isMaster); //true = is host, false = is not host
+
         drawHandCardCount = 5;
         isExtraHandCard = false;
         ShowCurrentPlayer(hostName);
@@ -132,7 +123,7 @@ public class GameControl : MonoBehaviourPunCallbacks
     {
         if (!shopMenuOpen && !mansionOpen)
         {
-            GetComponent<MansionControl>().SetMansionAnimation(); //RESET MANSION
+            GetComponent<MansionControl>().ResetMansionAnimation(); //RESET MANSION
             MainSpawnCards.GetComponent<SpawnCards>().PutHandCardsToDiscardPile();
         }
         
@@ -151,9 +142,6 @@ public class GameControl : MonoBehaviourPunCallbacks
 
                 if (_player == null)
                     _player = PhotonNetwork.PlayerList[0]; //HOST
-
-                //view.TransferOwnership(_player);
-            //view.RPC("Pun_TransferOwnership", RpcTarget.AllBuffered, _player);
 
             currentPlayerID = _player.ActorNumber;
             
@@ -182,68 +170,32 @@ public class GameControl : MonoBehaviourPunCallbacks
     {
         currentPlayer = player;
         currentPlayerID = player.ActorNumber;
-        string currentPlayerName = player.NickName;
+        GameStats.currentPlayerID = currentPlayerID; //TESTING
+        string name = player.NickName;
         playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
 
         Debug.Log("View transfered to: " + player);
-        //currentPlayerName = playerNamesList[currentPlayerID - 1];
-        ShowCurrentPlayer(currentPlayerName);
+        ShowCurrentPlayer(name);
 
         Debug.Log("Current player: " + currentPlayerID + " myID = " + myPlayerID);
         if (currentPlayerID == myPlayerID)
             UIGameControl.GetComponent<GameUIControl>().UIMyTurnStart();
         else
-            UIGameControl.GetComponent<GameUIControl>().UIOtherTurnStart(currentPlayerName, currentPlayerID);
+            UIGameControl.GetComponent<GameUIControl>().UIOtherTurnStart(name, currentPlayerID);
 
-        //UIGameControl.GetComponent<GameUIControl>().UIPlayerNextTurnStart(currentPlayerName, currentPlayerID);
         GetComponent<ShopCards>().UpdateAndResetBuysCount(true);
-        GetComponent<MansionControl>().MansionExploreAdd(false);
-
+        GetComponent<MansionControl>().MansionSetForNextPlayer(name);
+        /*
         if (playerCount > 1)
         {   //BUG Index out of range error when HOST ends turn and loads spritedata from "unenabled object" (Development build only)
             //OtherCharacterControl.GetComponent<CharacterControl>().SetOtherCharacterSprite(currentPlayerID);
-        }
+        }*/
         if (currentPlayerID == 1)
             RoundChanges();
 
         drawHandCardCount = 5; isExtraHandCard = false;
         drawHandCards_tmp.text = "Draw " + drawHandCardCount + " cards";
     }
-
-    /*
-    [PunRPC]
-    private void Pun_TransferOwnership(Player player)
-    {
-        currentPlayer = player;
-        currentPlayerID = player.ActorNumber;
-        string currentPlayerName = player.NickName;
-        playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
-
-        Debug.Log("View transfered to: "+player);
-        //currentPlayerName = playerNamesList[currentPlayerID - 1];
-        ShowCurrentPlayer(currentPlayerName);
-
-        Debug.Log("Current player: " + currentPlayerID + " myID = " + myPlayerID);
-        if (currentPlayerID == myPlayerID)
-            UIGameControl.GetComponent<GameUIControl>().UIMyTurnStart();
-        else
-            UIGameControl.GetComponent<GameUIControl>().UIOtherTurnStart(currentPlayerName);
-
-        //UIGameControl.GetComponent<GameUIControl>().UIPlayerNextTurnStart(currentPlayerName, currentPlayerID);
-        GetComponent<ShopCards>().UpdateAndResetBuysCount(true);
-        GetComponent<MansionCards>().MansionExploreAdd(false);
-
-        if (playerCount > 1)
-        {   //BUG Index out of range error when HOST ends turn and loads spritedata from "unenabled object" (Development build only)
-            OtherCharacterControl.GetComponent<CharacterControl>().SetOtherCharacterSprite(currentPlayerID);
-        }
-        if (currentPlayerID == 1)
-            RoundChanges();
-
-        drawHandCardCount = 5; isExtraHandCard = false;
-        drawHandCards_tmp.text = "Draw " + drawHandCardCount + " cards";
-    }
-    */
     public void ShowCurrentPlayer(string name)//
     {
         currentPlayerTxt.text = "Now Playing: " +name;
@@ -276,7 +228,6 @@ public class GameControl : MonoBehaviourPunCallbacks
             view.RPC("RPC_OnClickShopMenuButton", RpcTarget.AllBuffered, shopMenuOpen);
         }
     }
-
 
     [PunRPC]
     public void RPC_OnClickShopMenuButton(bool isGettingIn)
@@ -323,7 +274,7 @@ public class GameControl : MonoBehaviourPunCallbacks
     }
     public void OnClickResetMansion()
     {
-        GetComponent<MansionControl>().SetMansionAnimation();
+        GetComponent<MansionControl>().ResetMansionAnimation();
     }
 
 
@@ -345,9 +296,20 @@ public class GameControl : MonoBehaviourPunCallbacks
 
     }
 
+    public void ShowDeleteCardInfo()
+    {
+        view.RPC("PRC_ShowDeleteCardInfo", RpcTarget.AllBuffered);
+    }
+    [PunRPC] void PRC_ShowDeleteCardInfo()
+    {
+        UIGameControl.GetComponent<DeleteCardsControl>().ShowDeletedCardInfo();
+    }
+
+
+    /*
     private void OnDestroy()
     {
         if (view.IsMine)
             PhotonNetwork.Destroy(view);
-    }
+    }*/
 }
