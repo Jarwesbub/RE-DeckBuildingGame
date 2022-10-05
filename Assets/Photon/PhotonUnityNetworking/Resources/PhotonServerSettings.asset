@@ -124,6 +124,8 @@ MonoBehaviour:
   - RPC_SetMansionPlayerText
   - RPC_SetMainTextManually
   - RPC_SetMainTextPlayer
+  - RPC_KickAllPlayers
+  - Pun_SendFirstRoundCardSprites
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

@@ -8,13 +8,9 @@ public static class GameStats
     public static int MansionDeckValue { get; set; }
     public static int MansionDeckCount { get; set; }
     public static int CharacterDeckValue { get; set; } //0 = Normal, 1 = Custom
-    //public static bool HostIsConnected { get; set; }
-
-    //public static int myPlayerID { get; set; }
 
     public static int currentPlayerID { get; set; }
 
-    //public static string myCharacterCard { get; set; }
     public static Hashtable playerInfos { get; set; }
 
 }

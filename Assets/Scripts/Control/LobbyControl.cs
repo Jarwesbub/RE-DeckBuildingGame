@@ -4,19 +4,21 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using Photon.Pun;
 
 public class LobbyControl : MonoBehaviour
 {
     public GameObject NameEntry, Lobby, SaveMaster;
-    public GameObject CreateRoom, JoinRoom, BackButton;
+    public GameObject CreateRoom, JoinRoom, Back_btn;
     public InputField setNickName;
     public Text errorMessage;
     public TMP_Text infoText;
     public int currentMenu; //0 = Name Entry, 1 = Create/Join lobby, 2 = Create Room, 3 = Join Room
+    private int maxNameLength = 16;
 
     void Start()
     {
-        BackButton.SetActive(false);
+        Back_btn.SetActive(false);
         NameEntry.SetActive(true);
         Lobby.SetActive(false);
         CreateRoom.SetActive(false);
@@ -42,7 +44,7 @@ public class LobbyControl : MonoBehaviour
             errorMessage.text = "Enter name!";
 
         }
-        else if (name.Length >= 16)
+        else if (name.Length >= maxNameLength)
         {
             errorMessage.text = "Name too long!";
         }
@@ -59,7 +61,7 @@ public class LobbyControl : MonoBehaviour
             Lobby.SetActive(true);
             CreateRoom.SetActive(false);
             JoinRoom.SetActive(false);
-            BackButton.SetActive(true);
+            Back_btn.SetActive(true);
         }
     }
     public void OnClickMenuCreateRoom()
@@ -91,5 +93,11 @@ public class LobbyControl : MonoBehaviour
             JoinRoom.SetActive(false);
             currentMenu = 1;
         }
+    }
+
+    public void OnClickBackToMainMenu()
+    {
+        PhotonNetwork.Disconnect();
+        //SceneManager.LoadScene("StartMenu");
     }
 }

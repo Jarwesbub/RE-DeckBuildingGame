@@ -67,7 +67,7 @@ public class PlayerListTMP : MonoBehaviourPun
             {
                 foreach (int listID in JoinedPlayerIDList)
                 {
-                    Debug.Log("JoinedPlayerIDList listID= " + listID);
+                    //Debug.Log("JoinedPlayerIDList listID= " + listID);
                     if (listID != id)
                     {
                         string _name = PhotonNetwork.CurrentRoom.GetPlayer(listID).NickName;

@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using Photon.Pun;
 using UnityEditor;
 
 public class LobbyOptionsMenu : MonoBehaviourPun
 {
-    public GameObject CharacterCardList, characterTypeDropDown, mansionTypeDropDown, OptionsMenu, GameIsStartingTxt;
+    public GameObject CharacterCardList, characterTypeDropDown, mansionTypeDropDown, OptionsMenu;
+    public TMP_Text mainInfoText;
     private bool gameStarts, isMaster, optionsMenuOn;
     PhotonView view;
 
@@ -26,7 +28,7 @@ public class LobbyOptionsMenu : MonoBehaviourPun
             characterTypeDropDown.SetActive(false);
             mansionTypeDropDown.SetActive(false);
         }
-        GameIsStartingTxt.SetActive(false);
+        mainInfoText.text = "";
     }
     public void OnClickShowCustomdataPath()
     {
@@ -62,7 +64,7 @@ public class LobbyOptionsMenu : MonoBehaviourPun
 
         GameStats.MansionDeckValue = mansionValue;
 
-        GameIsStartingTxt.SetActive(true);
+        SetMainInfoText("Game is starting...");
     }
 
     public void OnClickOpenOptionsMenu()
@@ -77,5 +79,10 @@ public class LobbyOptionsMenu : MonoBehaviourPun
             OptionsMenu.SetActive(true);
             optionsMenuOn = true;
         }
+    }
+
+    public void SetMainInfoText(string txt)
+    {
+        mainInfoText.text = txt;
     }
 }

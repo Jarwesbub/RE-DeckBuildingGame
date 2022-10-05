@@ -23,21 +23,6 @@ public class GameUIControl : MonoBehaviour
         DeckCountCardsTMPs.SetActive(false);
         playerName = PhotonNetwork.CurrentRoom.GetPlayer(1).NickName;
     }
-    /*
-    private void Start()
-    {
-        if (playerID == 1)
-        {
-            UIMyTurnStart();
-            StartCoroutine(ShowMyTurnInUI());
-        }
-        else
-        {       
-            string name = PhotonNetwork.PlayerList[0].NickName;
-            UIOtherTurnStart(name);
-            StartCoroutine(ShowOtherTurnInUI());
-        }
-    }*/
     public void UIHostStartGame(bool isHost)
     {
         if (isHost)
@@ -50,7 +35,6 @@ public class GameUIControl : MonoBehaviour
             DeckCountCardsTMPs.SetActive(true);
             MainCanvas.GetComponent<GameControl>().ShowLocalPlayerHP();
             StartCoroutine(ShowMyTurnInUI());
-            //OtherCharacterCard.GetComponent<CharacterControl>().CreateAllCharacterSprites();
         }
         else
         {
@@ -60,7 +44,6 @@ public class GameUIControl : MonoBehaviour
             OtherHPInfo.SetActive(true);
             ShopMenuButton.SetActive(false);
             DeckCountCardsTMPs.SetActive(false);
-            //OtherCharacterCard.GetComponent<CharacterControl>().CreateAllCharacterSprites();
             OtherCharacterCard.GetComponent<CharacterControl>().SetOtherCharacterSprite(1);
             
             StartCoroutine(ShowOtherTurnInUI());
@@ -139,7 +122,6 @@ public class GameUIControl : MonoBehaviour
         whoIsPlaying.text = "YOU ARE DEAD!";
         yield return new WaitForSeconds(2f);
         MainCanvas.GetComponent<GameControl>().OnClickEndMyTurn();
-        //MainCanvas.GetComponent<GameControl>().TransferOwnership();
 
     }
 }

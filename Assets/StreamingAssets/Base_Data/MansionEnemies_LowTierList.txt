@@ -12,7 +12,6 @@
 0-ma-035_alliance_los_illuminados_monk1
 0-ma-044_outbreak_grave_zombie
 0-ma-045_outbreak_wasp
-0-ma-047_outbreak_reinforced_zombie
 0-ma-051_outbreak_zombie_cop
 0-ma-052_outbreak_eliminator
 0-ma-059_nightmare_militia_flail
@@ -23,14 +22,8 @@
 0-ma-066_nightmare_ivy
 0-ma-073_mercenaries_town_majini
 0-ma-074_mercenaries_town_majini_shovel
-0-ma-076_mercenaries_base_majini_gun_skill_mod
 0-ma-077_mercenaries_chicken
-0-ma-083_mercenaries_los_ganados_male
-0-ma-084_mercenaries_los_ganados_female
 0-ma-087_mercenaries_venomous_snake
-0-ma-088_mercenaries_tribal_majini_bow
-0-ma-089_mercenaries_tribal_majini_oil_pot
 0-ma-093_mercenaries_los_ganados_handscythe
 0-ma-095_mercenaries_los_ganados
-0-ma-096_mercenaries_los_illuminados_bow
 0-ma-097_mercenaries_militia_bow

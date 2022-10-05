@@ -20,11 +20,11 @@ public class ShopCards : MonoBehaviourPun   //
     public GameObject LeftMenuControl;
     public GameObject ShopScrollBar, Shop_Items;
     private float scrollBarValue;
-    [SerializeField] private List<GameObject> activeCardObjectList; //List of all objects. Can be accessed by list number! (used in [PunRPC])
+    [SerializeField] private List<GameObject> buttonList; //List of all objects. Can be accessed by list number! (used in [PunRPC])
     
     PhotonView view;
     public int buysCount; //Reset to 0 from "GameControl.cs" when player turn changes
-    private bool isZoomed; //Tells if current card is in bigger- or normal size
+    private bool isZoomed, isMaster; //Tells if current card is in bigger- or normal size
     Vector3 vec_Normal = new Vector3(1, 1, 1);
     Vector3 vec_Zoom = new Vector3(1.5f, 1.5f, 1); //OLD = 1.8f
     [SerializeField] private bool waitRPC;  //Shows if "wait time" is active while sending data in network
@@ -35,6 +35,7 @@ public class ShopCards : MonoBehaviourPun   //
     public string[] HandgunList,KnifeList,GrenadeList,HPList, ShotgunList,AR_SG_List,RifleList; //List of all card names by type
     public string[] ActionList1, ActionList2, ActionList3, ActionList4, ActionList5, ActionList6, ActionList7;           //List of all card names by type
     public string[] ExtraList1, ExtraList2;
+    private List<string> firstLoadShopCardNames;
     private int count_RandomNumber; //Random number for the next card
 
     private void Start()
@@ -42,6 +43,7 @@ public class ShopCards : MonoBehaviourPun   //
         //currentPlayerID = 1; //MasterClient
         view = GetComponent<PhotonView>();
         SpawnCards = GameObject.FindWithTag("Respawn");
+        isMaster = PhotonNetwork.IsMasterClient;
         //myPlayerID = view.OwnerActorNr;
 
         waitRPC = false;
@@ -49,8 +51,9 @@ public class ShopCards : MonoBehaviourPun   //
         Sold.text = "";
         buysCount = 0;
         BuysCounttxt.text = "Buys (B) = "+buysCount;
+        firstLoadShopCardNames = new List<string>();
         SetCountValuesList();
-        
+
     }
 
     private void SetCountValuesList()
@@ -61,39 +64,43 @@ public class ShopCards : MonoBehaviourPun   //
             string ammo = AmmoCountListPrefab.GetComponent<TextFileToList>().GetStringFromTextByNumber(i);
             ammoList[i] = int.Parse(ammo);
             count_Values.Add(ammoList[i]);
-            Debug.Log("ammoList count" + i);
+            firstLoadShopCardNames.Add(ammo);
+            //Debug.Log("ammoList count" + i);
         }
 
-        activeCardObjectList.Add(Ammo10); // 0 //GameObject numbered in a list (used in PUN_BuyCard(...) "[PunRPC] function")
-        activeCardObjectList.Add(Ammo20); // 1
-        activeCardObjectList.Add(Ammo30); // 2
+        buttonList.Add(Ammo10); // 0 //GameObject numbered in a list (used in PUN_BuyCard(...) "[PunRPC] function")
+        buttonList.Add(Ammo20); // 1
+        buttonList.Add(Ammo30); // 2
+        //firstLoadShopCardNames = new string[20]; //No ammo cards
+        HandgunList = CreateCardList(Handgun, HandgunListPrefab);    //3
+        KnifeList = CreateCardList(Knife, KnifeListPrefab);          //4
+        GrenadeList = CreateCardList(Grenade, GrenadeListPrefab);    //5
+        HPList = CreateCardList(HP, HPListPrefab);                   //6
+        ShotgunList = CreateCardList(Shotgun, ShotgunListPrefab);    //7
+        AR_SG_List = CreateCardList(AR_SG, AR_SG_ListPrefab);        //8
+        RifleList = CreateCardList(Rifle, RiflesListPrefab);         //9
+        ActionList1 = CreateCardList(Action1, Action1ListPrefab);    //10
+        ActionList2 = CreateCardList(Action2, Action2ListPrefab);    //11
+        ActionList3 = CreateCardList(Action3, Action3ListPrefab);    //12
+        ActionList4 = CreateCardList(Action4, Action4ListPrefab);    //13
+        ActionList5 = CreateCardList(Action5, Action5ListPrefab);    //14
+        ActionList6 = CreateCardList(Action6, Action6ListPrefab);    //15
+        ActionList7 = CreateCardList(Action7, Action7ListPrefab);    //16
+        ExtraList1 = CreateCardList(Extra1, Extra1ListPrefab);     //17
+        ExtraList2 = CreateCardList(Extra2, Extra2ListPrefab);     //18
 
-        HandgunList = AddAllCardsToList(Handgun, HandgunListPrefab);    //3
-        KnifeList = AddAllCardsToList(Knife, KnifeListPrefab);          //4
-        GrenadeList = AddAllCardsToList(Grenade, GrenadeListPrefab);    //5
-        HPList = AddAllCardsToList(HP, HPListPrefab);                   //6
-        ShotgunList = AddAllCardsToList(Shotgun, ShotgunListPrefab);    //7
-        AR_SG_List = AddAllCardsToList(AR_SG, AR_SG_ListPrefab);        //8
-        RifleList = AddAllCardsToList(Rifle, RiflesListPrefab);         //9
-        ActionList1 = AddAllCardsToList(Action1, Action1ListPrefab);    //10
-        ActionList2 = AddAllCardsToList(Action2, Action2ListPrefab);    //11
-        ActionList3 = AddAllCardsToList(Action3, Action3ListPrefab);    //12
-        ActionList4 = AddAllCardsToList(Action4, Action4ListPrefab);    //13
-        ActionList5 = AddAllCardsToList(Action5, Action5ListPrefab);    //14
-        ActionList6 = AddAllCardsToList(Action6, Action6ListPrefab);    //15
-        ActionList7 = AddAllCardsToList(Action7, Action7ListPrefab);    //16
-        ExtraList1 = AddAllCardsToList(Extra1, Extra1ListPrefab);     //17
-        ExtraList2 = AddAllCardsToList(Extra2, Extra2ListPrefab);     //18
+        if (isMaster)
+            StartCoroutine(HostSendRandomCardSprites());
+
     }
     /// When adding/deleting new SHOP_buttons remember to add changes in text file arrays! (FirstBootTextFile.cs and OverwriteTextFileList.cs)
     /// Before game start remember to delete everything in "Game_data" -folder" (all txt files are overwritten if "CharactersList_AllCounted" is missing)
     /// </summary>
     /// <returns></returns>
 
-
-    private string[] AddAllCardsToList(GameObject buttonObject, GameObject allCountedPrefab) //Takes all the .text files and sends them to objects SpriteFromAtlas.cs
+    private string[] CreateCardList(GameObject buttonObject, GameObject allCountedPrefab) //Takes all the .text files and sends them to objects SpriteFromAtlas.cs
     {                                                                                        //Returns finished string value
-        int listCount = allCountedPrefab.GetComponent<TextFileToList>().textListCount;
+        int listCount = allCountedPrefab.GetComponent<TextFileToList>().GetTextListCount();
 
         string[] cardList = new string[listCount];
         for (int i = 0; i < listCount; i++)
@@ -102,12 +109,40 @@ public class ShopCards : MonoBehaviourPun   //
             cardList[i] = card;
         }
         count_Values.Add(listCount);
-        int max = listCount - 1;
-        int rand = Random.Range(0, max);
-        buttonObject.GetComponent<SpriteFromAtlas>().ChangeCardSprite(cardList[rand]);
-        activeCardObjectList.Add(buttonObject); //List of gameobjects in order for PunRPC (same order as count_Values list)
+
+        if (isMaster) //Host creates sprite name for shop card
+        {
+            int max = listCount - 1;
+            int randomNumber = Random.Range(0, max);
+            //int index = buttonList.Count;
+            string card = allCountedPrefab.GetComponent<TextFileToList>().GetStringFromTextByNumber(randomNumber);
+            firstLoadShopCardNames.Add(card);
+            //buttonObject.GetComponent<SpriteFromAtlas>().ChangeCardSprite(cardList[rand]);
+        }
+        buttonList.Add(buttonObject); //List of gameobjects in order for PunRPC (same order as count_Values list)
         return cardList;
     }
+
+    IEnumerator HostSendRandomCardSprites()
+    {
+        yield return new WaitForSeconds(1f);
+        view.RPC("Pun_SendFirstRoundCardSprites", RpcTarget.AllBuffered, (object)firstLoadShopCardNames.ToArray());
+    }
+
+    [PunRPC] void Pun_SendFirstRoundCardSprites(string[] array)
+    {
+        int i = 0;
+        int count = buttonList.Count;
+        foreach (string s in array)
+        {
+            if (i > 2 && s != null) //Skip Ammo cards
+                buttonList[i].GetComponent<SpriteFromAtlas>().ChangeCardSprite(s);
+            i++;
+        }
+
+    }
+
+
 
     ///////////////////////////////////////
     public void OnClickAmmo10() //Stretch button image bigger and show "Buy" button
@@ -540,7 +575,7 @@ public class ShopCards : MonoBehaviourPun   //
     {
         currentCardObject = count_Value;
         count_Values[currentCardObject] = cardCount;
-        Sold.transform.position = activeCardObjectList[currentCardObject].transform.position;
+        Sold.transform.position = buttonList[currentCardObject].transform.position;
         Sold.text = "Card bought!"+"\n"+" ("+cardCount.ToString()+" pcs left)";
 
         UpdateAndResetBuysCount(false); //Update don't reset
@@ -626,11 +661,11 @@ public class ShopCards : MonoBehaviourPun   //
         yield return new WaitForSeconds(2f);
         if (holdNameRPC != "")
         {
-            activeCardObjectList[currentCardObject].GetComponent<SpriteFromAtlas>().ChangeCardSprite(holdNameRPC);
+            buttonList[currentCardObject].GetComponent<SpriteFromAtlas>().ChangeCardSprite(holdNameRPC);
         }
         isZoomed = false;
-        activeCardObjectList[currentCardObject].transform.localScale = vec_Normal;
-        activeCardObjectList[currentCardObject].transform.GetChild(0).gameObject.SetActive(false);
+        buttonList[currentCardObject].transform.localScale = vec_Normal;
+        buttonList[currentCardObject].transform.GetChild(0).gameObject.SetActive(false);
         Sold.text = "";
         waitRPC = false;
         rect.enabled = true;

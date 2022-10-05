@@ -18,9 +18,9 @@ public class SpawnCards : MonoBehaviourPun
     float startPosX = -3f, startPosY = -1.8f;
     float posX, posY;
 
-    void Awake()
+    void OnEnable()
     {
-        int count = GetComponent<TextFileToList>().textListCount;
+        int count = GetComponent<TextFileToList>().GetTextListCount();
 
         for (int i = 0; i < count; i++)
         {

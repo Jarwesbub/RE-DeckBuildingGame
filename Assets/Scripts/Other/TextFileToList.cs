@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using System.IO;
 using System.Linq;
 using Photon.Pun;
@@ -14,13 +13,10 @@ public class TextFileToList : MonoBehaviourPun
     [SerializeField] private string textFileName;
     [SerializeField] private string[] TextList;
     public List<string> RandomList;
-    public int textListCount;
-
-    PhotonView view;
+    private int textListCount;
 
     void Awake()
     {
-        view = GetComponent<PhotonView>();
 
         if (loadMansionDeck)
         {
@@ -57,7 +53,10 @@ public class TextFileToList : MonoBehaviourPun
         textListCount = TextList.Length;
         textFileName = name;
     }
-
+    public int GetTextListCount()
+    {
+        return TextList.Length;
+    }
     public string GetRandomLineFromTextFile()
     {
         int count = TextList.Length;

@@ -13,7 +13,7 @@ public class LM_GetStarterHandCards : MonoBehaviour
 
     void Start()
     {
-        int count = GetComponent<TextFileToList>().textListCount;
+        int count = GetComponent<TextFileToList>().GetTextListCount();
 
         for (int i = 0; i < count; i++)
         {

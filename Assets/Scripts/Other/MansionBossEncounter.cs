@@ -10,7 +10,7 @@ public class MansionBossEncounter : MonoBehaviour
 
     private void OnEnable()
     {
-        
+        //WIP
     }
     private void Start()
     {

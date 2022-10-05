@@ -25,7 +25,6 @@ public class StatsControl : MonoBehaviour
         int cardNumber = Int32.Parse(cardName.Substring(5, 3)); //Row 5 -> next 3 letters
 
         GetMansionCardValue(cardTier, cardNumber);
-        //GameStats.mansionCards.Add(playerID, cardName);
 
     }
     private int GetMansionCardValue(int tier, int cardNumber)
@@ -45,7 +44,7 @@ public class StatsControl : MonoBehaviour
     {
         //Low tier
         // 1 Decoration //1-5,22,23,27,28,44,47,51,59,60,62,63,73,74,83,84,87-89,95,97
-        // 2 Decoration //11,33,45,52,64,66,76,93,96,
+        // 2 Decoration //11,33,45,52,64,66,76,93
         // 3 Decoration //35,77
 
         //003 = If defeated: Choose a PLAYER who doesn't use ACTIONS in their next turn
@@ -164,9 +163,6 @@ public class StatsControl : MonoBehaviour
                 break;
             case 95:
                 hp = 20; dmg = 20; deco = 1;
-                break;
-            case 96:
-                hp = 30; dmg = 10; deco = 2;
                 break;
             case 97:
                 hp = 20; dmg = 20; deco = 1;

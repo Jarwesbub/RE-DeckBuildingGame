@@ -10,8 +10,6 @@ public class EndScreenScript : MonoBehaviour
     public TMP_Text winnerMainTMP;
     public GameObject Shop_btn, Mansion_btn, endTurn_btn;
 
-
-    // Start is called before the first frame update
     void OnEnable()
     {
         Child = transform.GetChild(0).gameObject;

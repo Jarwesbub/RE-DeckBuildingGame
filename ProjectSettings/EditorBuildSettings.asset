@@ -9,6 +9,12 @@ EditorBuildSettings:
     path: Assets/Scenes/StartMenu.unity
     guid: 2c12f6aefc7159c419780b63f801bcd4
   - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 6d1dbd7dc28b1af469744962d5794513
+  - enabled: 1
+    path: Assets/Scenes/EditMansion.unity
+    guid: d1b706785067e2b4197f2b9be06c16ae
+  - enabled: 1
     path: Assets/Scenes/Loading.unity
     guid: 5d9051fa5cfbfaf44af1313401da3d5f
   - enabled: 1
@@ -20,7 +26,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Game.unity
     guid: 0e3450db62c5b1347b47bae6db7aa180
-  - enabled: 1
-    path: Assets/Scenes/EditMansion.unity
-    guid: d1b706785067e2b4197f2b9be06c16ae
   m_configObjects: {}

@@ -80,7 +80,6 @@ public class PhotonRoomMaster : MonoBehaviourPunCallbacks
             GetComponent<PlayerListControl>().NewPlayerJoined(newPlayer.ActorNumber); //bool = playerLeft, int = id
 
     }
-
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         if (isGameScene)
@@ -92,10 +91,17 @@ public class PhotonRoomMaster : MonoBehaviourPunCallbacks
     public override void OnDisconnected(DisconnectCause cause)
     {
         base.OnDisconnected(cause);
-        SceneManager.LoadScene("StartMenu");
+        SceneManager.LoadScene("MainMenu");
+        
 
     }
-
+    
+    public override void OnLeftRoom()
+    {
+        base.OnLeftRoom();
+        SceneManager.LoadScene("Lobby");
+    }
+    
     public void OnClickReturnToLobby() //Works only if new players are not joining
     {
         if (isMaster/* && view.IsMine*/)

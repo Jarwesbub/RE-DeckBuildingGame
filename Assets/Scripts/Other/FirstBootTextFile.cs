@@ -6,97 +6,98 @@ using System.Linq;
 
 public class FirstBootTextFile : MonoBehaviour
 {
+    private GameObject MainCanvas;
+    private string[] textFilesList;
+
     private void Start()
     {
-        CheckIfFoldersExist();
-        CheckTextDataFolders();
-    }
-    void CheckIfFoldersExist()
-    {
-        //string overwrite_dataPath = Application.persistentDataPath + "/Game_data/";
-        string overwrite_dataPath = Application.streamingAssetsPath + "/Game_data/";
-        if (!Directory.Exists(overwrite_dataPath))
-        {
-            Directory.CreateDirectory(overwrite_dataPath);
-        }
+        if(MainCanvas==null)
+            MainCanvas = GameObject.FindWithTag("MainCanvas");
 
-        string readCustom_dataPath = Application.persistentDataPath + "/Custom_data/";
-        if (!Directory.Exists(readCustom_dataPath))
-        {
-            Directory.CreateDirectory(readCustom_dataPath);
-        }
-    }
+        string gameDataFilePath = Application.streamingAssetsPath + "/Game_data/";
+        CreateFolder(gameDataFilePath);
 
-    void CheckTextDataFolders() //
-    {
-        string checkIfEmpty = "CharacterList";
-        //string readFromFilePath = Application.persistentDataPath + "/Game_data/" + checkIfEmpty + ".txt";
-        string readFromFilePath = Application.streamingAssetsPath + "/Game_data/" + checkIfEmpty + ".txt";
-        if (System.IO.File.Exists(readFromFilePath))
+        string customDataFilePath = Application.persistentDataPath + "/Custom_data/";
+        CreateFolder(customDataFilePath);
+
+        gameDataFilePath += "CharacterList.txt";
+        customDataFilePath += "MansionCards1.txt";
+
+        bool createNewGameData = !System.IO.File.Exists(gameDataFilePath);
+        bool createNewCustomData = !System.IO.File.Exists(customDataFilePath);
+
+        if (createNewGameData || createNewCustomData)
         {
-            Debug.Log("Character list exists");
+            CreateTextFilesList();
+
+            if (createNewCustomData) CreateGameData();
+
+            if (createNewCustomData) CreateCustomData();
         }
         else
+            Debug.Log("Data files exists!");
+
+        MainCanvas.GetComponent<StartMenu>().FirstBootTextFileIsReady(); //Disables button lock!
+    }
+    void CreateFolder(string folderName)
+    {
+        if (!Directory.Exists(folderName))
+            Directory.CreateDirectory(folderName);
+    }
+
+    void CreateTextFilesList()
+    {
+        textFilesList = new string[21]; //Add+1
+        textFilesList[0] = "AmmoCountList"; textFilesList[1] = "ActionCardsList1_AllCounted"; textFilesList[2] = "ActionCardsList2_AllCounted";
+        textFilesList[3] = "ActionCardsList3_AllCounted"; textFilesList[4] = "ActionCardsList4_AllCounted"; textFilesList[5] = "ActionCardsList5_AllCounted";
+        textFilesList[6] = "ActionCardsList6_AllCounted"; textFilesList[7] = "ActionCardsList7_AllCounted"; textFilesList[8] = "CharacterList";
+        textFilesList[9] = "CharacterCustomlist"; textFilesList[10] = "AR_SG_List_AllCounted"; textFilesList[11] = "GrenadeList_AllCounted";
+        textFilesList[12] = "HandgunsList_AllCounted"; textFilesList[13] = "HPItemsList_AllCounted"; textFilesList[14] = "KnifeList_AllCounted";
+        textFilesList[15] = "RifleList_AllCounted"; textFilesList[16] = "ShotgunList_AllCounted"; textFilesList[17] = "StartingDeckList";
+        textFilesList[18] = "MainMansionCards"; textFilesList[19] = "Extra1List_AllCounted"; textFilesList[20] = "Extra2List_AllCounted";
+    }
+
+    void CreateGameData()
+    {
+        foreach (string textFile in textFilesList)
         {
-            string[] shop_cards = new string[21]; //Add+1
-            shop_cards[0] = "AmmoCountList"; shop_cards[1] = "ActionCardsList1_AllCounted"; shop_cards[2] = "ActionCardsList2_AllCounted";
-            shop_cards[3] = "ActionCardsList3_AllCounted"; shop_cards[4] = "ActionCardsList4_AllCounted"; shop_cards[5] = "ActionCardsList5_AllCounted";
-            shop_cards[6] = "ActionCardsList6_AllCounted"; shop_cards[7] = "ActionCardsList7_AllCounted"; shop_cards[8] = "CharacterList";
-            shop_cards[9] = "CharacterCustomlist"; shop_cards[10] = "AR_SG_List_AllCounted"; shop_cards[11] = "GrenadeList_AllCounted";
-            shop_cards[12] = "HandgunsList_AllCounted"; shop_cards[13] = "HPItemsList_AllCounted"; shop_cards[14] = "KnifeList_AllCounted";
-            shop_cards[15] = "RifleList_AllCounted"; shop_cards[16] = "ShotgunList_AllCounted"; shop_cards[17] = "StartingDeckList";
-            shop_cards[18] = "MainMansionCards"; shop_cards[19] = "Extra1List_AllCounted"; shop_cards[20] = "Extra2List_AllCounted";
+            string readFromStreamingAss = Application.streamingAssetsPath + "/Base_Data/" + textFile + ".txt";
+            string[] fileLines = File.ReadAllLines(readFromStreamingAss).ToArray();
 
-
-            foreach (string textFile in shop_cards)
-            {
-                //string readFromStreamingAss = Application.streamingAssetsPath + "/Recall_Chat/" + textFile + ".txt";
-                string readFromStreamingAss = Application.streamingAssetsPath + "/Base_Data/" + textFile + ".txt";
-                string[] fileLines = File.ReadAllLines(readFromStreamingAss).ToArray();
-
-                //string overwriteToFilePath = Application.persistentDataPath + "/Game_data/" + textFile + ".txt";
-                string overwriteToFilePath = Application.streamingAssetsPath + "/Game_data/" + textFile + ".txt";
-                File.WriteAllLines(overwriteToFilePath, fileLines);
-            }
-
-            //string readFromWrite_data = Application.streamingAssetsPath + "/Recall_Chat/" + checkIfEmpty + ".txt";
-            string readFromWrite_data = Application.streamingAssetsPath + "/Base_Data/" + checkIfEmpty + ".txt";
-
-            if (System.IO.File.Exists(readFromWrite_data))
-            {
-                foreach (string textFile in shop_cards)
-                {
-                    //string readFromStreamingAss = Application.streamingAssetsPath + "/Recall_Chat/" + textFile + ".txt";
-                    string readFromStreamingAss = Application.streamingAssetsPath + "/Base_Data/" + textFile + ".txt";
-                    string[] fileLines = File.ReadAllLines(readFromStreamingAss).ToArray();
-
-                    string writeToFilePath = Application.persistentDataPath + "/Custom_data/" + textFile + ".txt";
-                    File.WriteAllLines(writeToFilePath, fileLines);
-                }
-
-                for (int i = 1; i <= 4; i++) //Create "MansionCards1-4.txt"
-                {
-                    //string readFromStreamingAss = Application.streamingAssetsPath + "/Recall_Chat/MansionCards" + i + ".txt";
-                    string readFromStreamingAss = Application.streamingAssetsPath + "/Base_Data/MansionCards" + i + ".txt";
-                    string[] fileLines = File.ReadAllLines(readFromStreamingAss).ToArray();
-
-                    //string writeToGameFolder = Application.persistentDataPath + "/Game_data/MansionCards" + i + ".txt";
-                    string writeToGameFolder = Application.streamingAssetsPath + "/Game_data/MansionCards" + i + ".txt";
-                    File.WriteAllLines(writeToGameFolder, fileLines);
-
-                    string writeToCustomFolder = Application.persistentDataPath + "/Custom_data/MansionCards" + i + ".txt";
-                    File.WriteAllLines(writeToCustomFolder, fileLines);
-                }
-
-                GameStats.MansionDeckCount = 4;
-
-                Debug.Log("Write_data -text files created!");
-
-
-            }
-
+            string overwriteToFilePath = Application.streamingAssetsPath + "/Game_data/" + textFile + ".txt";
+            File.WriteAllLines(overwriteToFilePath, fileLines);
         }
-        
+        Debug.Log("Game_data files created!");
+    }
+
+
+    void CreateCustomData() //
+    {
+        int mansionCardsCount = 4;
+
+        foreach (string textFile in textFilesList)
+        {
+            string readFromStreamingAss = Application.streamingAssetsPath + "/Base_Data/" + textFile + ".txt";
+            string[] fileLines = File.ReadAllLines(readFromStreamingAss).ToArray();
+
+            string writeToFilePath = Application.persistentDataPath + "/Custom_data/" + textFile + ".txt";
+            File.WriteAllLines(writeToFilePath, fileLines);
+        }
+
+        for (int i = 1; i <= mansionCardsCount; i++) //Create "MansionCards1-4.txt"
+        {
+            string readFromStreamingAss = Application.streamingAssetsPath + "/Base_Data/MansionCards" + i + ".txt";
+            string[] fileLines = File.ReadAllLines(readFromStreamingAss).ToArray();
+
+            string writeToGameFolder = Application.streamingAssetsPath + "/Game_data/MansionCards" + i + ".txt";
+            File.WriteAllLines(writeToGameFolder, fileLines);
+
+            string writeToCustomFolder = Application.persistentDataPath + "/Custom_data/MansionCards" + i + ".txt";
+            File.WriteAllLines(writeToCustomFolder, fileLines);
+        }
+        GameStats.MansionDeckCount = mansionCardsCount;
+
+        Debug.Log("Custom_data files created!");
 
     }
 

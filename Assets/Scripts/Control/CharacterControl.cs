@@ -28,12 +28,10 @@ public class CharacterControl : MonoBehaviourPun
 
     void Start()
     {
-
         if (isLocalPlayer)
         {
             SetLocalCharacterSprite();
         }
-
         else if (playerID != 1 || roomPlayerCount <= 1) //Is other than HOST
         {
             string name = SpriteNames[0]; //Show player 1 character card
@@ -47,15 +45,12 @@ public class CharacterControl : MonoBehaviourPun
             string name = SpriteNames[index]; //Host always starts the game so set his sprite!
             ChangeSpriteByName(name);
         }
-
         GetComponent<SpriteFromAtlas>().CharacterCardStart(); //Set "Original" or "Custom" Character cards
-
 
     }
 
     public void CreateAllCharacterSprites()
-    {
-        
+    {      
         if (SpriteNames.Count!=0)
         {
             SpriteNames.Clear();
