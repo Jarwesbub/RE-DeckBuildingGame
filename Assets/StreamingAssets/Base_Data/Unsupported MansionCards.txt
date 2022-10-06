@@ -28,14 +28,16 @@ TOP TIER
 2_ma-082_mercenaries_jj
 2_ma-091_mercenaries_crocodile
 
+ITEMS
+3_it-002_premier_yellow_herb1
+3_ma-012_premier_rocket_launcher_case1
+3_ma-013_premier_gatling_gun_case1
+3_ma-018_premier_time_bonus_01
+3_ma-019_premier_time_bonus_02
+3_ma-020_premier_time_bonus_03
+3_ma-021_premier_combo_bonus1
+3_ma-039_alliance_collapsing_floor_traps1
+3_ma-040_alliance_laser_targeting_device1
+3_ma-072_nightmare_prl_412
 
-
-
-
-
-
-
-
-
-
-
+(If changes are made -> remember to add in tier- and MainMansioNCards text files)

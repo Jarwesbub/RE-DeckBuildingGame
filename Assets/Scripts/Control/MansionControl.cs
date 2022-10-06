@@ -375,8 +375,10 @@ public class MansionControl : MonoBehaviourPun
         if (wins)
         {
             mansionActionTMP.text = "WIN\n";
-            //int points = CurrentMansionCard.GetPoints();
-            mansionActionTMP.text += name + " got "+points+" points";
+            if(points>0)
+                mansionActionTMP.text += name + " got "+points+" points";
+            else
+                mansionActionTMP.text += name + " didn't get any points";
         }
         else
         {

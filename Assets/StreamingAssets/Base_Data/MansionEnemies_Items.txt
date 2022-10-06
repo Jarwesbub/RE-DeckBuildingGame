@@ -1,7 +1,3 @@
-0-ma-001_premier_majini1
-0-ma-023_alliance_infected_bat1
-1_ma-058_nightmare_colmillos
-2_ma-032_alliance_iron_maiden1
 3_ma-038_alliance_explosive_barrel1
 3_ma-054_outbreak_kevlar_jacket
 3_ma-055_outbreak_antivirus_infection_mod

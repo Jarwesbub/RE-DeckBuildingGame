@@ -11,7 +11,7 @@ public class EditMansionControl : MonoBehaviour
     public GameObject MansionDropDownHandler, MansionBaseCardPrefab, MansionGridContent;
     public GameObject UI_CurrentDeck, UI_AddCards, currentDeck_btn, addCards_btn;
     public GameObject UI_EasyTier, UI_NormalTier, UI_HardTier, easy_btn, normal_btn, hard_btn;
-    public GameObject AddCardsPrefab, ShowCaseCard1, ShowCaseCard2;
+    public GameObject UI_Items, items_btn, AddCardsPrefab, ShowCaseCard1, ShowCaseCard2;
     public Text dropdownText;
     public TMP_Text mainTitleText, loadSaveInfo, consoleTxt;
     public TMP_Text _cardCount, _lowCount, _midCount, _topCount;
@@ -22,7 +22,7 @@ public class EditMansionControl : MonoBehaviour
 
     [SerializeField] private string currentCustomDeck;
     [SerializeField] private List<string> CustomDeckCardsList;
-    [SerializeField] private string[] LowTierCardsList, MidTierCardsList, HighTierCardsList;
+    [SerializeField] private string[] LowTierCardsList, MidTierCardsList, HighTierCardsList, ItemCardsList;
     public int textListCount;
     [SerializeField] private Color32 colorON;
 
@@ -67,11 +67,13 @@ public class EditMansionControl : MonoBehaviour
         CreateEnemyTierCards();
 
         UI_EasyTier.SetActive(false); UI_NormalTier.SetActive(false); UI_HardTier.SetActive(false);
+        UI_Items.SetActive(false);
         easy_btn.GetComponent<Image>().color = Color.black;
         normal_btn.GetComponent<Image>().color = Color.black;
         hard_btn.GetComponent<Image>().color = Color.black;
+        items_btn.GetComponent<Image>().color = Color.black;
 
-
+        //Choose random card for the showcase image
         int length = LowTierCardsList.Length - 1; int rand = Random.Range(0, length); string s = LowTierCardsList[rand];
         GetComponent<SpriteFromAtlas>().SetMansionCardSprite(s);
         ShowCaseCard1.GetComponent<Image>().sprite = img.sprite;
@@ -117,10 +119,13 @@ public class EditMansionControl : MonoBehaviour
         string readHighTierFile = Application.streamingAssetsPath + "/Base_Data/MansionEnemies_HighTierList.txt";
         HighTierCardsList = File.ReadAllLines(readHighTierFile).ToArray();
 
+        string readMansionItemsFile = Application.streamingAssetsPath + "/Base_Data/MansionEnemies_Items.txt";
+        ItemCardsList = File.ReadAllLines(readMansionItemsFile).ToArray();
+
         CreateMansionCards(UI_EasyTier, LowTierCardsList);
         CreateMansionCards(UI_NormalTier, MidTierCardsList);
         CreateMansionCards(UI_HardTier, HighTierCardsList);
-
+        CreateMansionCards(UI_Items, ItemCardsList);
 
     }
     private void CreateMansionCards(GameObject UI_TierObj,string[] array) //START
@@ -148,30 +153,48 @@ public class EditMansionControl : MonoBehaviour
                 UI_EasyTier.SetActive(true);
                 UI_NormalTier.SetActive(false);
                 UI_HardTier.SetActive(false);
+                UI_Items.SetActive(false);
 
                 easy_btn.GetComponent<Image>().color = colorON;
                 normal_btn.GetComponent<Image>().color = Color.black;
                 hard_btn.GetComponent<Image>().color = Color.black;
+                items_btn.GetComponent<Image>().color = Color.black;
             }
             else if (value == 1) //NORMAL
             {
                 UI_EasyTier.SetActive(false);
                 UI_NormalTier.SetActive(true);
                 UI_HardTier.SetActive(false);
+                UI_Items.SetActive(false);
 
                 easy_btn.GetComponent<Image>().color = Color.black;
                 normal_btn.GetComponent<Image>().color = colorON;
                 hard_btn.GetComponent<Image>().color = Color.black;
+                items_btn.GetComponent<Image>().color = Color.black;
             }
-            else //2 = HARD
+            else if (value == 2)  //2 = HARD
             {
                 UI_EasyTier.SetActive(false);
                 UI_NormalTier.SetActive(false);
                 UI_HardTier.SetActive(true);
+                UI_Items.SetActive(false);
 
                 easy_btn.GetComponent<Image>().color = Color.black;
                 normal_btn.GetComponent<Image>().color = Color.black;
                 hard_btn.GetComponent<Image>().color = colorON;
+                items_btn.GetComponent<Image>().color = Color.black;
+            }
+            else // 3 = MANSION ITEMS
+            {
+                UI_EasyTier.SetActive(false);
+                UI_NormalTier.SetActive(false);
+                UI_HardTier.SetActive(false);
+                UI_Items.SetActive(true);
+
+                easy_btn.GetComponent<Image>().color = Color.black;
+                normal_btn.GetComponent<Image>().color = Color.black;
+                hard_btn.GetComponent<Image>().color = Color.black;
+                items_btn.GetComponent<Image>().color = colorON;
             }
 
         }

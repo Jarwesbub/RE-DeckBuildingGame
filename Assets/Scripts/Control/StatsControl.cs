@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-
 public class StatsControl : MonoBehaviour
 {
     public GameObject PhotonRoomMaster;
@@ -35,8 +34,10 @@ public class StatsControl : MonoBehaviour
             points = MansionLowTierCards(cardNumber);
         else if (tier==1) //Mid tier
             points = MansionMidTierCards(cardNumber);
-        else // tier==2 //High tier
+        else if (tier==2) //High tier
             points = MansionTopTierCards(cardNumber);
+        else //tier==3 // Item cards
+            points = MansionItemCards(cardNumber);
 
         return points;
     }
@@ -80,6 +81,9 @@ public class StatsControl : MonoBehaviour
             case 11:
                 hp = 20; dmg = 15; deco = 2;
                 break;
+            case 15:
+                hp = 25; dmg = 10; deco = 2;
+                break;
             case 22:
                 hp = 10; dmg = 10; deco = 1;
                 break;
@@ -88,15 +92,6 @@ public class StatsControl : MonoBehaviour
                 break;
             case 27:
                 hp = 20; dmg = 10; deco = 1;
-                break;
-            case 28:
-                hp = 20; dmg = 20; deco = 1;
-                break;
-            case 33:
-                hp = 30; dmg = 20; deco = 2;
-                break;
-            case 35:
-                hp = 15; dmg = 20; deco = 3;
                 break;
             case 44:
                 hp = 10; dmg = 10; deco = 1;
@@ -110,9 +105,6 @@ public class StatsControl : MonoBehaviour
             case 51:
                 hp = 15; dmg = 10; deco = 1;
                 break;
-            case 52:
-                hp = 20; dmg = 20; deco = 2;
-                break;
             case 59:
                 hp = 15; dmg = 10; deco = 1;
                 break;
@@ -125,17 +117,11 @@ public class StatsControl : MonoBehaviour
             case 63:
                 hp = 15; dmg = 10; deco = 1;
                 break;
-            case 64:
-                hp = 20; dmg = 20; deco = 2;
-                break;
             case 66:
                 hp = 20; dmg = 20; deco = 1;
                 break;
             case 73:
                 hp = 10; dmg = 10; deco = 1;
-                break;
-            case 74:
-                hp = 20; dmg = 20; deco = 1;
                 break;
             case 76:
                 hp = 20; dmg = 20; deco = 2;
@@ -161,12 +147,7 @@ public class StatsControl : MonoBehaviour
             case 93:
                 hp = 20; dmg = 10; deco = 2;
                 break;
-            case 95:
-                hp = 20; dmg = 20; deco = 1;
-                break;
-            case 97:
-                hp = 20; dmg = 20; deco = 1;
-                break;
+
         }
 
         CurrentMansionCard.SetCard(hp, dmg, deco, false);
@@ -183,17 +164,11 @@ public class StatsControl : MonoBehaviour
 
         switch (cardNumber)
         {
-            case 6:
-                hp = 40; dmg = 30; deco = 3;
-                break;
             case 8:
                 hp = 40; dmg = 30; deco = 4;
                 break;
             case 9:
                 hp = 30; dmg = 20; deco = 2;
-                break;
-            case 15:
-                hp = 25; dmg = 10; deco = 2;
                 break;
             case 17:
                 hp = 30; dmg = 25; deco = 3;
@@ -201,8 +176,17 @@ public class StatsControl : MonoBehaviour
             case 24:
                 hp = 35; dmg = 20; deco = 3;
                 break;
+            case 28:
+                hp = 20; dmg = 20; deco = 1;
+                break;
             case 30:
                 hp = 25; dmg = 20; deco = 2;
+                break;
+            case 33:
+                hp = 30; dmg = 20; deco = 2;
+                break;
+            case 35:
+                hp = 15; dmg = 20; deco = 3;
                 break;
             case 36:
                 hp = 35; dmg = 40; deco = 4;
@@ -222,17 +206,26 @@ public class StatsControl : MonoBehaviour
             case 50:
                 hp = 30; dmg = 30; deco = 3;
                 break;
+            case 52:
+                hp = 20; dmg = 20; deco = 2;
+                break;
             case 58:
                 hp = 30; dmg = 20; deco = 2;
                 break;
             case 61:
                 hp = 30; dmg = 0; deco = 2;
                 break;
+            case 64:
+                hp = 20; dmg = 20; deco = 2;
+                break;
             case 67:
                 hp = 30; dmg = 10; deco = 2;
                 break;
             case 69:
                 hp = 30; dmg = 10; deco = 1;
+                break;
+            case 74:
+                hp = 20; dmg = 20; deco = 1;
                 break;
             case 81:
                 hp = 30; dmg = 10; deco = 2;
@@ -252,8 +245,14 @@ public class StatsControl : MonoBehaviour
             case 94:
                 hp = 25; dmg = 20; deco = 2;
                 break;
+            case 95:
+                hp = 20; dmg = 20; deco = 1;
+                break;
             case 96:
                 hp = 30; dmg = 10; deco = 2;
+                break;
+            case 97:
+                hp = 20; dmg = 20; deco = 1;
                 break;
             case 98:
                 hp = 30; dmg = 10; deco = 2;
@@ -271,6 +270,9 @@ public class StatsControl : MonoBehaviour
 
         switch (cardNumber)
         {
+            case 6:
+                hp = 40; dmg = 30; deco = 3;
+                break;
             case 7:
                 hp = 60; dmg = 40; deco = 5; //Nemesis T-Type
                 break;
@@ -354,6 +356,69 @@ public class StatsControl : MonoBehaviour
         CurrentMansionCard.SetCard(hp, dmg, deco, isMainBoss);
         Debug.Log("Mansion card - Tier: LOW " + " hp: " + hp + " dmg: " + dmg + " deco: " + deco + " isBoss: "+isMainBoss);
         return deco;
+    }
+
+    private int MansionItemCards(int cardNumber)
+    {
+        switch (cardNumber)
+        {
+            //-empty- = Not in use
+
+            case 2:
+                //
+                break;
+            case 12:
+                //
+                break;
+            case 13:
+                //
+                break;
+            case 18:
+                //
+                break;
+            case 19:
+                //
+                break;
+            case 20:
+                //
+                break;
+            case 21:
+                //
+                break;
+            case 38:
+                // Explosive barrel
+                break;
+            case 39:
+                //
+                break;
+            case 40:
+                //
+                break;
+            case 54:
+                // Kevlar jacket
+                break;
+            case 55:
+                // Antivirus infection
+                break;
+            case 56:
+                // Laser trap
+                break;
+            case 57:
+                // Rock trap
+                break;
+            case 70:
+                // Treasure map
+                break;
+            case 71:
+                // Hidden treasure
+                break;
+            case 72:
+                //
+                break;
+        }
+
+        CurrentMansionCard.SetCard(0, 0, 0, false);
+        return 0;
     }
 
 }

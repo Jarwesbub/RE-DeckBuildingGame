@@ -51,17 +51,11 @@ SpriteAtlas:
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: 00f2416089a51ec4986a92982812bcd6, type: 3}
-  - {fileID: 21300000, guid: e7f3d5805d651ca4eaa894b9a94183cc, type: 3}
-  - {fileID: 21300000, guid: 17b4e6a06e5aeef4397b243b9b3c4ad8, type: 3}
   - {fileID: 21300000, guid: d5a77bd1691ff784a8e9e829aefd3155, type: 3}
   - {fileID: 21300000, guid: 433064028b43b0a46a981a0ddd0ccb51, type: 3}
   - {fileID: 21300000, guid: db669a327f463ff40a0ce0b6620fe8ef, type: 3}
   - {fileID: 21300000, guid: c6ae3e72b60f5164181e11728556d2dd, type: 3}
   - {fileID: 21300000, guid: 92349e9225142de4b9fe3e16e95e0986, type: 3}
-  - {fileID: 21300000, guid: 76b72c43658995145b36d62ce0863e31, type: 3}
-  - {fileID: 21300000, guid: cfddb853e545da944896e636077b4a68, type: 3}
-  - {fileID: 21300000, guid: b1620473890e640468985afa95f8aeb0, type: 3}
-  - {fileID: 21300000, guid: 32db47b32d34fbf459bf97b674dc70e1, type: 3}
   - {fileID: 21300000, guid: d7f41d24b2f8f8c4ea9da07550d686ec, type: 3}
   - {fileID: 21300000, guid: 0de404b45519a5e45a95940571ca06e6, type: 3}
   - {fileID: 21300000, guid: 7a6c3115f31d46f4a81a503f023adbff, type: 3}
@@ -77,28 +71,21 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 4a713fa7162fe974190c8e190a5fb00e, type: 3}
   - {fileID: 21300000, guid: 69152978bc1a27d46a7104d33b7397eb, type: 3}
   - {fileID: 21300000, guid: c62f42a817a2fbc46889e49edf9a0183, type: 3}
-  - {fileID: 21300000, guid: 99e9bf3b2c7a32646affc849e542ad13, type: 3}
   - {fileID: 21300000, guid: c814244bf83d26948b2d90279c372c96, type: 3}
   - {fileID: 21300000, guid: ed9bc85c8c8d4eb4fb4e67eeea133deb, type: 3}
   - {fileID: 21300000, guid: 00e9bc7c40937f54fafdf53885acf013, type: 3}
   - {fileID: 21300000, guid: 4e536e0d28336d64d8ca982adc620432, type: 3}
   - {fileID: 21300000, guid: c9a7370ea1880174ba7829732a8a691f, type: 3}
   - {fileID: 21300000, guid: 1cbe451ed33d8fa4f8ec9c9171d391de, type: 3}
+  - {fileID: 21300000, guid: 334d5fee568c94b47b3f8e68ee24d21f, type: 3}
   - {fileID: 21300000, guid: b271b21fee6929e418b8069a419df4c1, type: 3}
-  - {fileID: 21300000, guid: 604e543f529c97c43abcf86bcdda2169, type: 3}
   m_PackedSpriteNamesToIndex:
   - 0-ma-066_nightmare_ivy
-  - 0-ma-028_alliance_kipepeo_las_plagas1
-  - 0-ma-064_nightmare_zombie_technician
   - 0-ma-073_mercenaries_town_majini
   - 0-ma-005_premier_bui_kichwa1
   - 0-ma-084_mercenaries_los_ganados_female
   - 0-ma-051_outbreak_zombie_cop
   - 0-ma-002_premier_zombie_male1
-  - 0-ma-052_outbreak_eliminator
-  - 0-ma-097_mercenaries_militia_bow
-  - 0-ma-033_alliance_zombie_horde1
-  - 0-ma-095_mercenaries_los_ganados
   - 0-ma-027_alliance_zombie_male1
   - 0-ma-096_mercenaries_los_illuminados_bow
   - 0-ma-044_outbreak_grave_zombie
@@ -114,15 +101,14 @@ SpriteAtlas:
   - 0-ma-063_nightmare_zombie_security_guard
   - 0-ma-093_mercenaries_los_ganados_handscythe
   - 0-ma-045_outbreak_wasp
-  - 0-ma-074_mercenaries_town_majini_shovel
   - 0-ma-077_mercenaries_chicken
   - 0-ma-076_mercenaries_base_majini_gun_skill_mod
   - 0-ma-087_mercenaries_venomous_snake
   - 0-ma-003_premier_zombie_female1
   - 0-ma-047_outbreak_reinforced_zombie
   - 0-ma-004_premier_zombie_butcher1
+  - 0-ma-015_premier_cerberus1
   - 0-ma-060_nightmare_militia_stun_rod
-  - 0-ma-035_alliance_los_illuminados_monk1
   m_RenderDataMap: {}
   m_Tag: Enemies_Weak
   m_IsVariant: 0
