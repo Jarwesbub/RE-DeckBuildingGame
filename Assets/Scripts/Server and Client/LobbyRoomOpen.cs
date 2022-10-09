@@ -30,6 +30,7 @@ public class LobbyRoomOpen : MonoBehaviourPunCallbacks
     }
     public void TextFilesAreLoadedToOthers()
     {
+
         StartCoroutine(TextFileIsReadyDelay());
     }
     IEnumerator TextFileIsReadyDelay()
@@ -43,9 +44,12 @@ public class LobbyRoomOpen : MonoBehaviourPunCallbacks
         if (view.IsMine)
         {
             PhotonNetwork.CurrentRoom.IsOpen = false; //Set room unjoinable before creating character cards
-
             int playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
-            int cardCount = CharacterList.GetComponent<TextFileToList>().GetTextListCount();
+
+            int deckType = PlayerPrefs.GetInt("CharacterType"); // 0 = ORIGINAL , 1 = CUSTOM
+            string[] characterCardsList = CharacterList.GetComponent<AllCharacterCards>().GetCharacterCardsByType(deckType);
+
+            int cardCount = characterCardsList.Length;
             int[] randomNumbers = new int[playerCount];
 
             if (playerCount < cardCount)
@@ -59,9 +63,7 @@ public class LobbyRoomOpen : MonoBehaviourPunCallbacks
                     {
                         number = Random.Range(0, cardCount);
                         randomNumbers[i] = number;
-                        //Debug.Log("Duplicant found!");
-                    };
-                    //Debug.Log("Random character index number is " + number + " Card count = "+cardCount);                  
+                    };               
                 }
             }
             else
@@ -80,7 +82,8 @@ public class LobbyRoomOpen : MonoBehaviourPunCallbacks
             foreach(Player p in PhotonNetwork.PlayerList)
             {
                 int id = p.ActorNumber;
-                string card = CharacterList.GetComponent<TextFileToList>().GetStringFromTextByNumber(randomNumbers[index]);
+                //string card = CharacterList.GetComponent<TextFileToList>().GetStringFromTextByNumber(randomNumbers[index]);
+                string card = characterCardsList[randomNumbers[index]];
                 playerIDs[index] = id;
                 cards[index] = card;
                 index++;
@@ -94,14 +97,6 @@ public class LobbyRoomOpen : MonoBehaviourPunCallbacks
     [PunRPC] private void PRC_AddPlayerInfos(int id, string card)
     {
         GameStats.playerInfos.Add(id, card);
-    }
-
-
-    [PunRPC] public void RPC_OnClickGoToGameScene()
-    {
-        myCharacterCard = CharacterList.GetComponent<TextFileToList>().GetRandomLineFromTextFile();
-        PlayerPrefs.SetString("myCharacterCard", myCharacterCard);
-
     }
 
     [PunRPC] public void RPC_GoToGameScene()

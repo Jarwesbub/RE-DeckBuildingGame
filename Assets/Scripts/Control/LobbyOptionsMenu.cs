@@ -38,8 +38,7 @@ public class LobbyOptionsMenu : MonoBehaviourPun
     }
 
     public void OnClickStartGetLobbyOptions()
-    {
-        
+    {     
         if (!gameStarts && isMaster)
         {
             int characterValue = characterTypeDropDown.GetComponent<Dropdown>().value; //0 = Original; 1 = Custom
@@ -51,8 +50,10 @@ public class LobbyOptionsMenu : MonoBehaviourPun
             gameStarts = true;
         }
     }
+
     [PunRPC] void Pun_StartGetLobbyOptions(int charValue, int mansionValue)
     {
+        /*
         if (charValue==0)
         {
             CharacterCardList.GetComponent<TextFileToList>().LoadTextFileByName("CharacterList");
@@ -60,12 +61,14 @@ public class LobbyOptionsMenu : MonoBehaviourPun
         else //Value == 1
         {
             CharacterCardList.GetComponent<TextFileToList>().LoadTextFileByName("CharacterCustomlist");
-        }
+        }*/
 
         GameStats.MansionDeckValue = mansionValue;
 
         SetMainInfoText("Game is starting...");
     }
+
+
 
     public void OnClickOpenOptionsMenu()
     {

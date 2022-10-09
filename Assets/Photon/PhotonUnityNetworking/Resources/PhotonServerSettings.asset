@@ -126,6 +126,11 @@ MonoBehaviour:
   - RPC_SetMainTextPlayer
   - RPC_KickAllPlayers
   - Pun_SendFirstRoundCardSprites
+  - Pun_OverwriteShopCards
+  - HideCardList
+  - EmptyCardList
+  - PUN_LastCard
+  - Pun_OverwriteGameData
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

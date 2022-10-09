@@ -5,15 +5,18 @@ using UnityEngine.UI;
 
 public class UILobbyRoomDropDownHandler : MonoBehaviour
 {
-    [SerializeField] bool isMansionType;
+    [SerializeField] int dropdownType;
+    [SerializeField] GameObject LobbyRoomControl;
     private int value;
 
     void Start()
     {
-        if (!isMansionType)
-            CharacterType();
-        else
+        if (dropdownType == 0)
             MansionType();
+        else if(dropdownType == 1)
+            ShopType();
+        else
+            CharacterType();
 
     }
     private void MansionType()
@@ -38,7 +41,30 @@ public class UILobbyRoomDropDownHandler : MonoBehaviour
         dropdown.value = value;
         dropdown.onValueChanged.AddListener(delegate { MansionDropDownItemSelected(dropdown); });
     }
+    private void ShopType()
+    {
+        var dropdown = transform.GetComponent<Dropdown>();
+        int cardCount = GameStats.ShopDeckDataCount;
+        dropdown.options.Clear();
+        if (cardCount == 0)
+            cardCount++;
 
+        List<string> items = new List<string>();
+
+        for (int i = 1; i <= cardCount; i++)
+        {
+            items.Add("Custom Shop cards: " + i);
+        }
+
+
+        foreach (var item in items)
+        {
+            dropdown.options.Add(new Dropdown.OptionData() { text = item });
+        }
+
+        dropdown.value = value;
+        dropdown.onValueChanged.AddListener(delegate { MansionDropDownItemSelected(dropdown); });
+    }
     private void CharacterType()
     {
         if (PlayerPrefs.HasKey("CharacterType")) //0 = Original; 1 = Custom
@@ -70,6 +96,12 @@ public class UILobbyRoomDropDownHandler : MonoBehaviour
         int index = dropdown.value;
         PlayerPrefs.SetInt("CharacterType", index);
     }
+    private void ShopDropDownItemSelected(Dropdown dropdown)
+    {
+        int index = dropdown.value;
+        LobbyRoomControl.GetComponent<OverwriteTextFileList>().Shop_CreateDataCards(index+1);
+    }
+
     private void MansionDropDownItemSelected(Dropdown dropdown)
     {
         int index = dropdown.value;

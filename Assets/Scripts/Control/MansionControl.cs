@@ -7,7 +7,7 @@ using TMPro;
 
 public class MansionControl : MonoBehaviourPun
 {
-    public GameObject MansionCard, MansionDoor, MansionCardPrefab, MansionGridContent, MansionHandCardPrefab;
+    public GameObject MansionCard, MansionDoor, MansionCardTextFile, MansionGridContent, MansionHandCardPrefab;
     public GameObject LeftMenuControl, MansionDoor_btnUI, BossEncounterObj;
     public GameObject MansionActionButtons, OtherActionButtons, ToggleOtherActions;
     public TMP_Text mansionActionTMP, mansionDeckCountTMP, exploreCountTMP, bossCountTMP;
@@ -56,12 +56,12 @@ public class MansionControl : MonoBehaviourPun
     }
     private string[] SetMansionCardsFromTextList()
     {
-        int listCount = MansionCardPrefab.GetComponent<TextFileToList>().GetTextListCount();
+        int listCount = MansionCardTextFile.GetComponent<TextFileToList>().GetTextListCount();
 
         string[] cardList = new string[listCount];
         for (int i = 0; i < listCount; i++)
         {
-            string card = MansionCardPrefab.GetComponent<TextFileToList>().GetStringFromTextByNumber(i);
+            string card = MansionCardTextFile.GetComponent<TextFileToList>().GetStringFromTextByNumber(i);
             cardList[i] = card;
         }
 
@@ -212,7 +212,7 @@ public class MansionControl : MonoBehaviourPun
                     doorKnobLock = true;
                     isBottomCard = false;
                     currentMansionCard = mansionDeck[0];
-                    GetComponent<StatsControl>().CheckMansionCardStats(view.OwnerActorNr, currentMansionCard);
+                    GetComponent<StatsMansionCards>().CheckMansionCardStats(view.OwnerActorNr, currentMansionCard);
                     bool isBossCard = CheckIfMansionCardIsBoss(currentMansionCard);
                     view.RPC("RPC_ClickEnterMansion", RpcTarget.AllBuffered, 0, isBossCard); //Normal
 
@@ -237,7 +237,7 @@ public class MansionControl : MonoBehaviourPun
         {
             int value = MansionDeckCount-1;
             currentMansionCard = mansionDeck[value];
-            GetComponent<StatsControl>().CheckMansionCardStats(view.OwnerActorNr, currentMansionCard);
+            GetComponent<StatsMansionCards>().CheckMansionCardStats(view.OwnerActorNr, currentMansionCard);
             bool isBossCard = CheckIfMansionCardIsBoss(currentMansionCard);
             view.RPC("RPC_ClickEnterMansion", RpcTarget.AllBuffered, value, isBossCard); 
         }
@@ -302,7 +302,7 @@ public class MansionControl : MonoBehaviourPun
             MansionBossIsBeaten(true);
 
         //GetComponent<StatsControl>().UpdatePlayerPoints(id, cardName);
-        GetComponent<StatsControl>().PlayerGetsPointsFromCurrentMansionCard();
+        GetComponent<StatsMansionCards>().PlayerGetsPointsFromCurrentMansionCard();
         mansionDeck.Remove(mansionDeck[value]);
         MansionDeckCount = mansionDeck.Count;
         mansionDeckCountTMP.text = "Mansion card count: " + MansionDeckCount;

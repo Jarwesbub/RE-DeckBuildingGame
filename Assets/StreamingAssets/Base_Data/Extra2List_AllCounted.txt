@@ -10,7 +10,6 @@ hg_usp
 hg_brokenbutterfly
 hg_lighninghawk
 arsg_scorpion
-arsg_mp5
 arsg_mp5plus
 arsg_tmp
 arsg_ak
@@ -27,12 +26,9 @@ ras_rifle3
 ras_psg1
 ras_rifle4
 ras_svd
-sup_knife1
-sup_knife2
 sup_knife3
-sup_stunrod
 sup_bow1
 sup_bow2
-sup_grenade1
-sup_flash1
+sup_grenade2
+sup_grenade3
 bg_rp7night

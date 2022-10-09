@@ -20,19 +20,18 @@ public class FirstBootTextFile : MonoBehaviour
         string customDataFilePath = Application.persistentDataPath + "/Custom_data/";
         CreateFolder(customDataFilePath);
 
-        gameDataFilePath += "CharacterList.txt";
+        //gameDataFilePath += "MatchMansionCards.txt";
         customDataFilePath += "MansionCards1.txt";
 
-        bool createNewGameData = !System.IO.File.Exists(gameDataFilePath);
+        //bool createNewGameData = !System.IO.File.Exists(gameDataFilePath);
         bool createNewCustomData = !System.IO.File.Exists(customDataFilePath);
 
-        if (createNewGameData || createNewCustomData)
+        if (/*createNewGameData || */createNewCustomData) //Currently no need to create GameData -> When match starts it's then created
         {
             CreateTextFilesList();
-
-            if (createNewCustomData) CreateGameData();
-
-            if (createNewCustomData) CreateCustomData();
+            CreateCustomData();
+        //if (createNewGameData) CreateGameData();
+        //if (createNewCustomData) CreateCustomData();
         }
         else
             Debug.Log("Data files exists!");
@@ -54,9 +53,10 @@ public class FirstBootTextFile : MonoBehaviour
         textFilesList[9] = "CharacterCustomlist"; textFilesList[10] = "AR_SG_List_AllCounted"; textFilesList[11] = "GrenadeList_AllCounted";
         textFilesList[12] = "HandgunsList_AllCounted"; textFilesList[13] = "HPItemsList_AllCounted"; textFilesList[14] = "KnifeList_AllCounted";
         textFilesList[15] = "RifleList_AllCounted"; textFilesList[16] = "ShotgunList_AllCounted"; textFilesList[17] = "StartingDeckList";
-        textFilesList[18] = "MainMansionCards"; textFilesList[19] = "Extra1List_AllCounted"; textFilesList[20] = "Extra2List_AllCounted";
+        textFilesList[18] = "Extra1List_AllCounted"; textFilesList[19] = "Extra2List_AllCounted"; //textFilesList[20] = "MainMansionCards";
+        textFilesList[20] = "ShopCardsData";
     }
-
+    
     void CreateGameData()
     {
         foreach (string textFile in textFilesList)
@@ -73,7 +73,7 @@ public class FirstBootTextFile : MonoBehaviour
 
     void CreateCustomData() //
     {
-        int mansionCardsCount = 4;
+        int cardsCount = 4;
 
         foreach (string textFile in textFilesList)
         {
@@ -84,21 +84,48 @@ public class FirstBootTextFile : MonoBehaviour
             File.WriteAllLines(writeToFilePath, fileLines);
         }
 
-        for (int i = 1; i <= mansionCardsCount; i++) //Create "MansionCards1-4.txt"
+        //MANSION CARDS
+        string mansionReadTextFiles = Application.streamingAssetsPath + "/Base_Data/MansionCards1.txt";
+        for (int i = 1; i <= cardsCount; i++) //Create "MansionCards1-4.txt"
         {
-            string readFromStreamingAss = Application.streamingAssetsPath + "/Base_Data/MansionCards" + i + ".txt";
-            string[] fileLines = File.ReadAllLines(readFromStreamingAss).ToArray();
-
-            string writeToGameFolder = Application.streamingAssetsPath + "/Game_data/MansionCards" + i + ".txt";
-            File.WriteAllLines(writeToGameFolder, fileLines);
-
-            string writeToCustomFolder = Application.persistentDataPath + "/Custom_data/MansionCards" + i + ".txt";
+            if (i == 1)
+            { 
+            string[] fileLines = File.ReadAllLines(mansionReadTextFiles).ToArray();
+            string writeToCustomFolder = Application.persistentDataPath + "/Custom_data/MansionCards1.txt";
             File.WriteAllLines(writeToCustomFolder, fileLines);
+            }
+            else //Create empty text files
+            {
+                string[] fileLines = new string[0];
+                string writeToCustomFolder = Application.persistentDataPath + "/Custom_data/MansionCards" + i + ".txt";
+                File.WriteAllLines(writeToCustomFolder, fileLines);
+            }
         }
-        GameStats.MansionDeckCount = mansionCardsCount;
+        GameStats.MansionDeckCount = cardsCount;
+
+
+        //SHOP CARDS DATAS
+        string shopReadTextFile = Application.streamingAssetsPath + "/Base_Data/ShopCardsData.txt";
+
+        for (int i = 1; i <= cardsCount; i++) //Create "CustomShopCardsData1-4.txt"
+        {
+            if (i == 1)
+            {
+                string[] fileLines = File.ReadAllLines(shopReadTextFile).ToArray();
+
+                string writeToCustomFolder = Application.persistentDataPath + "/Custom_data/ShopCardsData1.txt";
+                File.WriteAllLines(writeToCustomFolder, fileLines);
+            }
+            else //Create empty text files
+            {
+                string[] fileLines = new string[0];
+                string writeToCustomFolder = Application.persistentDataPath + "/Custom_data/ShopCardsData" + i + ".txt";
+                File.WriteAllLines(writeToCustomFolder, fileLines);
+            }
+        }
+        GameStats.ShopDeckDataCount = cardsCount;
 
         Debug.Log("Custom_data files created!");
-
     }
 
 

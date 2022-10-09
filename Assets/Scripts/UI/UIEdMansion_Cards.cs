@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-//using System;
+
+//This script works in EditMansion and EditShop -scenes
 
 public class UIEdMansion_Cards: MonoBehaviour
 {

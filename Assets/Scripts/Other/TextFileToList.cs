@@ -7,7 +7,7 @@ using Photon.Pun;
 
 public class TextFileToList : MonoBehaviourPun
 {
-    [SerializeField] private bool loadMansionDeck;
+    //[SerializeField] private bool loadMansionDeck;
     [SerializeField] private bool useManualTextLoad;
     [SerializeField] private bool shuffleTextList; //Not in actual use rn
     [SerializeField] private string textFileName;
@@ -17,14 +17,14 @@ public class TextFileToList : MonoBehaviourPun
 
     void Awake()
     {
-
+        /*
         if (loadMansionDeck)
         {
             int value = GameStats.MansionDeckValue;
             value++;
             textFileName = "MansionCards" + value;
             Debug.Log("Mansion loaded from text file: " + textFileName);
-        }
+        }*/
 
         if (!useManualTextLoad)
         {
@@ -53,6 +53,7 @@ public class TextFileToList : MonoBehaviourPun
         textListCount = TextList.Length;
         textFileName = name;
     }
+
     public int GetTextListCount()
     {
         return TextList.Length;
@@ -75,5 +76,10 @@ public class TextFileToList : MonoBehaviourPun
             TextList[i] = TextList[randomIndex];
             TextList[randomIndex] = temp;
         }
+    }
+
+    public string[] GetTextFileContent()
+    {
+        return TextList;
     }
 }

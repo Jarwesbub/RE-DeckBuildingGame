@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 2564409225766672904}
   - component: {fileID: 2837674038822640844}
   m_Layer: 5
-  m_Name: EdMansion_AddCards
+  m_Name: EdMansion_AddCards 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

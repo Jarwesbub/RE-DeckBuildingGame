@@ -1,12 +1,6 @@
-ras_rifle1
-ras_rifle1
-ras_rifle2
-ras_rifle2
-ras_rifle3
-ras_rifle3
-ras_psg1
-ras_psg1
-ras_rifle4
 ras_rifle4
 ras_svd
-ras_svd
+ras_rifle1
+ras_rifle3
+ras_psg1
+ras_rifle2

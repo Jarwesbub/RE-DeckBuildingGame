@@ -8,7 +8,7 @@ using TMPro;
 
 public class EditMansionControl : MonoBehaviour
 {
-    public GameObject MansionDropDownHandler, MansionBaseCardPrefab, MansionGridContent;
+    public GameObject AllMansionCards, MansionDropDownHandler, MansionBaseCardPrefab, MansionGridContent;
     public GameObject UI_CurrentDeck, UI_AddCards, currentDeck_btn, addCards_btn;
     public GameObject UI_EasyTier, UI_NormalTier, UI_HardTier, easy_btn, normal_btn, hard_btn;
     public GameObject UI_Items, items_btn, AddCardsPrefab, ShowCaseCard1, ShowCaseCard2;
@@ -108,7 +108,8 @@ public class EditMansionControl : MonoBehaviour
             StartCoroutine(ShowInConsole("Load your Custom Deck first!"));
         }
     }
-    private void CreateEnemyTierCards() //START
+    /*
+    private void OLD_CreateEnemyTierCards() //START
     {
         string readLowTierFile = Application.streamingAssetsPath + "/Base_Data/MansionEnemies_LowTierList.txt";
         LowTierCardsList = File.ReadAllLines(readLowTierFile).ToArray();
@@ -126,6 +127,20 @@ public class EditMansionControl : MonoBehaviour
         CreateMansionCards(UI_NormalTier, MidTierCardsList);
         CreateMansionCards(UI_HardTier, HighTierCardsList);
         CreateMansionCards(UI_Items, ItemCardsList);
+
+    }*/
+    private void CreateEnemyTierCards() //START
+    {
+        LowTierCardsList = AllMansionCards.GetComponent<AllMansionCards>().GetLowTierMansionCards();
+        MidTierCardsList = AllMansionCards.GetComponent<AllMansionCards>().GetMidTierMansionCards();
+        HighTierCardsList = AllMansionCards.GetComponent<AllMansionCards>().GetTopTierMansionCards();
+        ItemCardsList = AllMansionCards.GetComponent<AllMansionCards>().GetItemMansionCards();
+
+        CreateMansionCards(UI_EasyTier, LowTierCardsList);
+        CreateMansionCards(UI_NormalTier, MidTierCardsList);
+        CreateMansionCards(UI_HardTier, HighTierCardsList);
+        CreateMansionCards(UI_Items, ItemCardsList);
+
 
     }
     private void CreateMansionCards(GameObject UI_TierObj,string[] array) //START
@@ -372,5 +387,6 @@ public class EditMansionControl : MonoBehaviour
         consoleTxt.text = s;
         yield return new WaitForSeconds(4f);
         consoleTxt.text = "";
+       
     }
 }

@@ -20,58 +20,50 @@ public class ShopCards : MonoBehaviourPun   //
     public GameObject LeftMenuControl;
     public GameObject ShopScrollBar, Shop_Items;
     private float scrollBarValue;
-    [SerializeField] private List<GameObject> buttonList; //List of all objects. Can be accessed by list number! (used in [PunRPC])
-    
+    [SerializeField] private List<GameObject> allButtonsList; //List of all objects. Can be accessed by list number! (used in [PunRPC])  
     PhotonView view;
     public int buysCount; //Reset to 0 from "GameControl.cs" when player turn changes
-    private bool isZoomed, isMaster; //Tells if current card is in bigger- or normal size
+    private bool isZoomed; //Tells if current card is in bigger- or normal size
     Vector3 vec_Normal = new Vector3(1, 1, 1);
     Vector3 vec_Zoom = new Vector3(1.5f, 1.5f, 1); //OLD = 1.8f
     [SerializeField] private bool waitRPC;  //Shows if "wait time" is active while sending data in network
-    private string holdNameRPC; //Holds the name of the next card (accessed in coroutine)
+    //private string holdNameRPC; //Holds the name of the next card (accessed in coroutine)
     //public int myPlayerID,currentPlayerID;
-    [SerializeField] private List<int> count_Values; //Max ammount of cards/type -> works in harmony with "activeCardObjectList" (same numbers)
-    private int currentCardObject;
-    public string[] HandgunList,KnifeList,GrenadeList,HPList, ShotgunList,AR_SG_List,RifleList; //List of all card names by type
-    public string[] ActionList1, ActionList2, ActionList3, ActionList4, ActionList5, ActionList6, ActionList7;           //List of all card names by type
-    public string[] ExtraList1, ExtraList2;
-    private List<string> firstLoadShopCardNames;
+    [SerializeField] int[] ammoCounts; //Max ammount of cards/type -> works in harmony with "activeCardObjectList" (same numbers)
+    private int boughtCardListIndex;
+    [SerializeField] List<string> HandgunList,KnifeList,GrenadeList,HPList, ShotgunList,AR_SG_List,RifleList; //List of all card names by type
+    [SerializeField] List<string> ActionList1, ActionList2, ActionList3, ActionList4, ActionList5, ActionList6, ActionList7;           //List of all card names by type
+    [SerializeField] List<string> ExtraList1, ExtraList2;
+    //private List<string> firstLoadShopCardNames;
     private int count_RandomNumber; //Random number for the next card
 
     private void Start()
     {
-        //currentPlayerID = 1; //MasterClient
         view = GetComponent<PhotonView>();
         SpawnCards = GameObject.FindWithTag("Respawn");
-        isMaster = PhotonNetwork.IsMasterClient;
-        //myPlayerID = view.OwnerActorNr;
-
         waitRPC = false;
         isZoomed = false;
         Sold.text = "";
         buysCount = 0;
         BuysCounttxt.text = "Buys (B) = "+buysCount;
-        firstLoadShopCardNames = new List<string>();
         SetCountValuesList();
 
     }
 
     private void SetCountValuesList()
     {
-        int[] ammoList = new int[3]; // Ammo10, -20 and -30 cards
+        ammoCounts = new int[3]; // Ammo10, -20 and -30 cards
         for (int i = 0; i < 3; i++)
         {
             string ammo = AmmoCountListPrefab.GetComponent<TextFileToList>().GetStringFromTextByNumber(i);
-            ammoList[i] = int.Parse(ammo);
-            count_Values.Add(ammoList[i]);
-            firstLoadShopCardNames.Add(ammo);
-            //Debug.Log("ammoList count" + i);
-        }
+            ammoCounts[i] = int.Parse(ammo);
 
-        buttonList.Add(Ammo10); // 0 //GameObject numbered in a list (used in PUN_BuyCard(...) "[PunRPC] function")
-        buttonList.Add(Ammo20); // 1
-        buttonList.Add(Ammo30); // 2
-        //firstLoadShopCardNames = new string[20]; //No ammo cards
+        }
+                                    
+        allButtonsList.Add(Ammo10); // 0 //GameObject numbered in a list (used in PUN_BuyCard(...))
+        allButtonsList.Add(Ammo20); // 1
+        allButtonsList.Add(Ammo30); // 2
+
         HandgunList = CreateCardList(Handgun, HandgunListPrefab);    //3
         KnifeList = CreateCardList(Knife, KnifeListPrefab);          //4
         GrenadeList = CreateCardList(Grenade, GrenadeListPrefab);    //5
@@ -89,60 +81,28 @@ public class ShopCards : MonoBehaviourPun   //
         ExtraList1 = CreateCardList(Extra1, Extra1ListPrefab);     //17
         ExtraList2 = CreateCardList(Extra2, Extra2ListPrefab);     //18
 
-        if (isMaster)
-            StartCoroutine(HostSendRandomCardSprites());
-
     }
     /// When adding/deleting new SHOP_buttons remember to add changes in text file arrays! (FirstBootTextFile.cs and OverwriteTextFileList.cs)
     /// Before game start remember to delete everything in "Game_data" -folder" (all txt files are overwritten if "CharactersList_AllCounted" is missing)
     /// </summary>
     /// <returns></returns>
 
-    private string[] CreateCardList(GameObject buttonObject, GameObject allCountedPrefab) //Takes all the .text files and sends them to objects SpriteFromAtlas.cs
+    private List<string> CreateCardList(GameObject buttonObject, GameObject allCountedPrefab) //Takes all the .text files and sends them to objects SpriteFromAtlas.cs
     {                                                                                        //Returns finished string value
         int listCount = allCountedPrefab.GetComponent<TextFileToList>().GetTextListCount();
 
-        string[] cardList = new string[listCount];
+        List<string> cardList = new();
         for (int i = 0; i < listCount; i++)
         {
             string card = allCountedPrefab.GetComponent<TextFileToList>().GetStringFromTextByNumber(i);
-            cardList[i] = card;
+            //cardList[i] = card;
+            cardList.Add(card);
         }
-        count_Values.Add(listCount);
 
-        if (isMaster) //Host creates sprite name for shop card
-        {
-            int max = listCount - 1;
-            int randomNumber = Random.Range(0, max);
-            //int index = buttonList.Count;
-            string card = allCountedPrefab.GetComponent<TextFileToList>().GetStringFromTextByNumber(randomNumber);
-            firstLoadShopCardNames.Add(card);
-            //buttonObject.GetComponent<SpriteFromAtlas>().ChangeCardSprite(cardList[rand]);
-        }
-        buttonList.Add(buttonObject); //List of gameobjects in order for PunRPC (same order as count_Values list)
+        buttonObject.GetComponent<SpriteFromAtlas>().ChangeCardSprite(cardList[0]); //Set first card in list to SPRITE
+        allButtonsList.Add(buttonObject); //List of gameobjects in order for PunRPC (same order as count_Values list)
         return cardList;
     }
-
-    IEnumerator HostSendRandomCardSprites()
-    {
-        yield return new WaitForSeconds(1f);
-        view.RPC("Pun_SendFirstRoundCardSprites", RpcTarget.AllBuffered, (object)firstLoadShopCardNames.ToArray());
-    }
-
-    [PunRPC] void Pun_SendFirstRoundCardSprites(string[] array)
-    {
-        int i = 0;
-        int count = buttonList.Count;
-        foreach (string s in array)
-        {
-            if (i > 2 && s != null) //Skip Ammo cards
-                buttonList[i].GetComponent<SpriteFromAtlas>().ChangeCardSprite(s);
-            i++;
-        }
-
-    }
-
-
 
     ///////////////////////////////////////
     public void OnClickAmmo10() //Stretch button image bigger and show "Buy" button
@@ -150,7 +110,7 @@ public class ShopCards : MonoBehaviourPun   //
         if (!waitRPC && view.IsMine)
         {
             SetAllCardsToNormalSize();
-            CheckShopCard(Ammo10, count_Values[0]); //0 = Ammo10;
+            CheckShopCard(Ammo10, ammoCounts[0]); //0 = Ammo10;
         }
     }
     public void OnClickAmmo10Buy() //"Buy" button which sends purchased card to local player's discard pile and deletes it in shop
@@ -158,7 +118,7 @@ public class ShopCards : MonoBehaviourPun   //
         if (!waitRPC && view.IsMine)
         {
             Add_LM_HandDeck(Ammo10.GetComponent<Image>().sprite);
-            BuyShopCard(Ammo10, count_Values[0], "ia_ammo10", 0); //0 = Ammo10;
+            BuyShopCard(Ammo10, ammoCounts[0], "ia_ammo10", 0); //0 = Ammo10;
         }
     }
     
@@ -167,7 +127,7 @@ public class ShopCards : MonoBehaviourPun   //
         if (!waitRPC && view.IsMine)
         {
             SetAllCardsToNormalSize();
-            CheckShopCard(Ammo20, count_Values[1]); //1 = Ammo20;
+            CheckShopCard(Ammo20, ammoCounts[1]); //1 = Ammo20;
         }
     }
     public void OnClickAmmo20Buy() 
@@ -175,7 +135,7 @@ public class ShopCards : MonoBehaviourPun   //
         if (!waitRPC && view.IsMine)
         {
             Add_LM_HandDeck(Ammo20.GetComponent<Image>().sprite);
-            BuyShopCard(Ammo20, count_Values[1], "ia_ammo20", 1); //1 = Ammo20;
+            BuyShopCard(Ammo20, ammoCounts[1], "ia_ammo20", 1); //1 = Ammo20;
         }
     }
 
@@ -184,7 +144,7 @@ public class ShopCards : MonoBehaviourPun   //
         if (!waitRPC && view.IsMine)
         {
             SetAllCardsToNormalSize();
-            CheckShopCard(Ammo30, count_Values[2]); //2 = Ammo30;
+            CheckShopCard(Ammo30, ammoCounts[2]); //2 = Ammo30;
         }
 
     }
@@ -193,7 +153,7 @@ public class ShopCards : MonoBehaviourPun   //
         if (!waitRPC && view.IsMine)
         {
             Add_LM_HandDeck(Ammo30.GetComponent<Image>().sprite);
-            BuyShopCard(Ammo30, count_Values[2], "ia_ammo30", 2); //2 = Ammo30;
+            BuyShopCard(Ammo30, ammoCounts[2], "ia_ammo30", 2); //2 = Ammo30;
         }
 
     }
@@ -203,7 +163,7 @@ public class ShopCards : MonoBehaviourPun   //
         if (!waitRPC && view.IsMine)
         {
             SetAllCardsToNormalSize();
-            CheckShopCard(Handgun, count_Values[3]); //3 = Handguns;
+            CheckShopCard(Handgun, HandgunList.Count); //3 = Handguns;
         }
     }
     public void OnClickHandgunBuy()
@@ -212,7 +172,7 @@ public class ShopCards : MonoBehaviourPun   //
         {
             string name = Handgun.GetComponent<SpriteFromAtlas>().spriteName;
             Add_LM_HandDeck(Handgun.GetComponent<Image>().sprite);
-            BuyShopCard(Handgun, count_Values[3], name, 3); //3 = Handguns;
+            BuyShopCard(Handgun, HandgunList.Count, name, 3); //3 = Handguns;
         }
     }
 
@@ -221,7 +181,7 @@ public class ShopCards : MonoBehaviourPun   //
         if (!waitRPC && view.IsMine)
         {
             SetAllCardsToNormalSize();
-            CheckShopCard(Knife, count_Values[4]); //4 = Knifes;
+            CheckShopCard(Knife, KnifeList.Count); //4 = Knifes;
         }
     }
     public void OnClickKnifeBuy()
@@ -230,7 +190,7 @@ public class ShopCards : MonoBehaviourPun   //
         {
             string name = Knife.GetComponent<SpriteFromAtlas>().spriteName;
             Add_LM_HandDeck(Knife.GetComponent<Image>().sprite);
-            BuyShopCard(Knife, count_Values[4], name, 4); //4 = Knifes;
+            BuyShopCard(Knife, KnifeList.Count, name, 4); //4 = Knifes;
         }
     }
 
@@ -239,7 +199,7 @@ public class ShopCards : MonoBehaviourPun   //
         if (!waitRPC && view.IsMine)
         {
             SetAllCardsToNormalSize();
-            CheckShopCard(Grenade, count_Values[5]); //5 = Grenades;
+            CheckShopCard(Grenade, GrenadeList.Count); //5 = Grenades;
         }
     }
     public void OnClickGrenadeBuy()
@@ -248,7 +208,7 @@ public class ShopCards : MonoBehaviourPun   //
         {
             string name = Grenade.GetComponent<SpriteFromAtlas>().spriteName;
             Add_LM_HandDeck(Grenade.GetComponent<Image>().sprite);
-            BuyShopCard(Grenade, count_Values[5], name, 5); //5 = Grenades;
+            BuyShopCard(Grenade, GrenadeList.Count, name, 5); //5 = Grenades;
         }
     }
 
@@ -257,7 +217,7 @@ public class ShopCards : MonoBehaviourPun   //
         if (!waitRPC && view.IsMine)
         {
             SetAllCardsToNormalSize();
-            CheckShopCard(HP, count_Values[6]); //6 = HP (herbs and first aid);
+            CheckShopCard(HP, HPList.Count); //6 = HP (herbs and first aid);
         }
     }
     public void OnClickHPHerbsBuy()
@@ -266,7 +226,7 @@ public class ShopCards : MonoBehaviourPun   //
         {
             string name = HP.GetComponent<SpriteFromAtlas>().spriteName;
             Add_LM_HandDeck(HP.GetComponent<Image>().sprite);
-            BuyShopCard(HP, count_Values[6], name, 6); //6 = HP (herbs and first aid);
+            BuyShopCard(HP, HPList.Count, name, 6); //6 = HP (herbs and first aid);
         }
     }
 
@@ -277,7 +237,7 @@ public class ShopCards : MonoBehaviourPun   //
         if (!waitRPC && view.IsMine)
         {
             SetAllCardsToNormalSize();
-            CheckShopCard(Shotgun, count_Values[7]); //7 = Shotguns;
+            CheckShopCard(Shotgun, ShotgunList.Count); //7 = Shotguns;
         }
     }
     public void OnClickShotgunBuy()
@@ -286,7 +246,7 @@ public class ShopCards : MonoBehaviourPun   //
         {
             string name = Shotgun.GetComponent<SpriteFromAtlas>().spriteName;
             Add_LM_HandDeck(Shotgun.GetComponent<Image>().sprite);
-            BuyShopCard(Shotgun, count_Values[7], name, 7); //7 = Shotguns;
+            BuyShopCard(Shotgun, ShotgunList.Count, name, 7); //7 = Shotguns;
         }
     }
 
@@ -295,7 +255,7 @@ public class ShopCards : MonoBehaviourPun   //
         if (!waitRPC && view.IsMine)
         {
             SetAllCardsToNormalSize();
-            CheckShopCard(AR_SG, count_Values[8]); //8 = Assault rifles and Submachine guns;
+            CheckShopCard(AR_SG, AR_SG_List.Count); //8 = Assault rifles and Submachine guns;
         }
     }
     public void OnClickAR_SGBuy()
@@ -304,7 +264,7 @@ public class ShopCards : MonoBehaviourPun   //
         {
             string name = AR_SG.GetComponent<SpriteFromAtlas>().spriteName;
             Add_LM_HandDeck(AR_SG.GetComponent<Image>().sprite);
-            BuyShopCard(AR_SG, count_Values[8], name, 8); //8 = Assault rifles and Submachine guns;
+            BuyShopCard(AR_SG, AR_SG_List.Count, name, 8); //8 = Assault rifles and Submachine guns;
         }
     }
 
@@ -313,7 +273,7 @@ public class ShopCards : MonoBehaviourPun   //
         if (!waitRPC && view.IsMine)
         {
             SetAllCardsToNormalSize();
-            CheckShopCard(Rifle, count_Values[9]); //9 = Rifles;
+            CheckShopCard(Rifle, RifleList.Count); //9 = Rifles;
         }
     }
     public void OnClickRifleBuy()
@@ -322,7 +282,7 @@ public class ShopCards : MonoBehaviourPun   //
         {
             string name = Rifle.GetComponent<SpriteFromAtlas>().spriteName;
             Add_LM_HandDeck(Rifle.GetComponent<Image>().sprite);
-            BuyShopCard(Rifle, count_Values[9], name, 9); //9 = Rifles;
+            BuyShopCard(Rifle, RifleList.Count, name, 9); //9 = Rifles;
         }
     }
 
@@ -333,7 +293,7 @@ public class ShopCards : MonoBehaviourPun   //
         if (!waitRPC && view.IsMine)
         {
             SetAllCardsToNormalSize();
-            CheckShopCard(Action1, count_Values[10]); //10 = Action1;
+            CheckShopCard(Action1, ActionList1.Count); //10 = Action1;
         }
     }
     public void OnClickAction1Buy()
@@ -342,7 +302,7 @@ public class ShopCards : MonoBehaviourPun   //
         {
             string name = Action1.GetComponent<SpriteFromAtlas>().spriteName;
             Add_LM_HandDeck(Action1.GetComponent<Image>().sprite);
-            BuyShopCard(Action1, count_Values[10], name, 10); //10 = Action1;
+            BuyShopCard(Action1, ActionList1.Count, name, 10); //10 = Action1;
         }
     }
 
@@ -351,7 +311,7 @@ public class ShopCards : MonoBehaviourPun   //
         if (!waitRPC && view.IsMine)
         {
             SetAllCardsToNormalSize();
-            CheckShopCard(Action2, count_Values[11]); //11 = Action2;
+            CheckShopCard(Action2, ActionList2.Count); //11 = Action2;
         }
     }
     public void OnClickAction2Buy()
@@ -360,7 +320,7 @@ public class ShopCards : MonoBehaviourPun   //
         {
             string name = Action2.GetComponent<SpriteFromAtlas>().spriteName;
             Add_LM_HandDeck(Action2.GetComponent<Image>().sprite);
-            BuyShopCard(Action2, count_Values[11], name, 11); //11 = Action2;
+            BuyShopCard(Action2, ActionList2.Count, name, 11); //11 = Action2;
         }
     }
     
@@ -369,7 +329,7 @@ public class ShopCards : MonoBehaviourPun   //
         if (!waitRPC && view.IsMine)
         {
             SetAllCardsToNormalSize();
-            CheckShopCard(Action3, count_Values[12]); //12 = Action3;
+            CheckShopCard(Action3, ActionList3.Count); //12 = Action3;
         }
     }
     public void OnClickAction3Buy()
@@ -378,7 +338,7 @@ public class ShopCards : MonoBehaviourPun   //
         {
             string name = Action3.GetComponent<SpriteFromAtlas>().spriteName;
             Add_LM_HandDeck(Action3.GetComponent<Image>().sprite);
-            BuyShopCard(Action3, count_Values[12], name, 12); //12 = Action3;
+            BuyShopCard(Action3, ActionList3.Count, name, 12); //12 = Action3;
         }
     }
     
@@ -387,7 +347,7 @@ public class ShopCards : MonoBehaviourPun   //
         if (!waitRPC && view.IsMine)
         {
             SetAllCardsToNormalSize();
-            CheckShopCard(Action4, count_Values[13]); //13 = Action4;
+            CheckShopCard(Action4, ActionList4.Count); //13 = Action4;
         }
     }
     public void OnClickAction4Buy()
@@ -396,7 +356,7 @@ public class ShopCards : MonoBehaviourPun   //
         {
             string name = Action4.GetComponent<SpriteFromAtlas>().spriteName;
             Add_LM_HandDeck(Action4.GetComponent<Image>().sprite);
-            BuyShopCard(Action4, count_Values[13], name, 13); //13 = Action4;
+            BuyShopCard(Action4, ActionList4.Count, name, 13); //13 = Action4;
         }
     }
     
@@ -405,7 +365,7 @@ public class ShopCards : MonoBehaviourPun   //
         if (!waitRPC && view.IsMine)
         {
             SetAllCardsToNormalSize();
-            CheckShopCard(Action5, count_Values[14]); //14 = Action5;
+            CheckShopCard(Action5, ActionList5.Count); //14 = Action5;
         }
     }
     public void OnClickAction5Buy()
@@ -414,7 +374,7 @@ public class ShopCards : MonoBehaviourPun   //
         {
             string name = Action5.GetComponent<SpriteFromAtlas>().spriteName;
             Add_LM_HandDeck(Action5.GetComponent<Image>().sprite);
-            BuyShopCard(Action5, count_Values[14], name, 14); //14 = Action5;
+            BuyShopCard(Action5, ActionList5.Count, name, 14); //14 = Action5;
         }
     }
 
@@ -423,7 +383,7 @@ public class ShopCards : MonoBehaviourPun   //
         if (!waitRPC && view.IsMine)
         {
             SetAllCardsToNormalSize();
-            CheckShopCard(Action6, count_Values[15]); //15 = Action6;
+            CheckShopCard(Action6, ActionList6.Count); //15 = Action6;
         }
     }
     public void OnClickAction6Buy()
@@ -432,7 +392,7 @@ public class ShopCards : MonoBehaviourPun   //
         {
             string name = Action6.GetComponent<SpriteFromAtlas>().spriteName;
             Add_LM_HandDeck(Action6.GetComponent<Image>().sprite);
-            BuyShopCard(Action6, count_Values[15], name, 15); //15 = Action6;
+            BuyShopCard(Action6, ActionList6.Count, name, 15); //15 = Action6;
         }
     }
 
@@ -441,7 +401,7 @@ public class ShopCards : MonoBehaviourPun   //
         if (!waitRPC && view.IsMine)
         {
             SetAllCardsToNormalSize();
-            CheckShopCard(Action7, count_Values[16]); //16 = Action7;
+            CheckShopCard(Action7, ActionList7.Count); //16 = Action7;
         }
     }
     public void OnClickAction7Buy()
@@ -450,7 +410,7 @@ public class ShopCards : MonoBehaviourPun   //
         {
             string name = Action7.GetComponent<SpriteFromAtlas>().spriteName;
             Add_LM_HandDeck(Action7.GetComponent<Image>().sprite);
-            BuyShopCard(Action7, count_Values[16], name, 16); //16 = Action7;
+            BuyShopCard(Action7, ActionList7.Count, name, 16); //16 = Action7;
         }
     }
     /// <summary>
@@ -459,7 +419,7 @@ public class ShopCards : MonoBehaviourPun   //
         if (!waitRPC && view.IsMine)
         {
             SetAllCardsToNormalSize();
-            CheckShopCard(Extra1, count_Values[17]); //17 = Extra1;
+            CheckShopCard(Extra1, ExtraList1.Count); //17 = Extra1;
         }
     }
     public void OnClickExtra1Buy()
@@ -468,7 +428,7 @@ public class ShopCards : MonoBehaviourPun   //
         {
             string name = Extra1.GetComponent<SpriteFromAtlas>().spriteName;
             Add_LM_HandDeck(Extra1.GetComponent<Image>().sprite);
-            BuyShopCard(Extra1, count_Values[17], name, 17); //17 = Extra1;
+            BuyShopCard(Extra1, ExtraList1.Count, name, 17); //17 = Extra1;
         }
     }
     public void OnClickExtra2() //Stretch button image bigger and show "Buy" button
@@ -476,7 +436,7 @@ public class ShopCards : MonoBehaviourPun   //
         if (!waitRPC && view.IsMine)
         {
             SetAllCardsToNormalSize();
-            CheckShopCard(Extra2, count_Values[18]); //18 = Extra2;
+            CheckShopCard(Extra2, ExtraList2.Count); //18 = Extra2;
         }
     }
     public void OnClickExtra2Buy()
@@ -485,7 +445,7 @@ public class ShopCards : MonoBehaviourPun   //
         {
             string name = Extra2.GetComponent<SpriteFromAtlas>().spriteName;
             Add_LM_HandDeck(Extra2.GetComponent<Image>().sprite);
-            BuyShopCard(Extra2, count_Values[18], name, 18); //18 = Extra2;
+            BuyShopCard(Extra2, ExtraList2.Count, name, 18); //18 = Extra2;
         }
     }
 
@@ -508,7 +468,7 @@ public class ShopCards : MonoBehaviourPun   //
     }
     IEnumerator ExtraRandomCard()
     {
-        int count = ExtraList2.Length;
+        int count = ExtraList2.Count;
         int newValue = Random.Range(0, count);
         yield return new WaitForSeconds(1f);
         view.RPC("SetNewExtra2RandomCard", RpcTarget.AllBuffered, ExtraList2[newValue]);
@@ -542,114 +502,164 @@ public class ShopCards : MonoBehaviourPun   //
 
 
     }
-    private void BuyShopCard(GameObject cardObj, int cardCount, string cardName, int count_Value) //cardName MUST be original card sprite name!
+    private void BuyShopCard(GameObject cardObj, int cardCount, string cardName, int listIndex) //cardName MUST be original card sprite name!
     {                                                                                             //count_Value=card number in list (GameObject)
             if (cardCount > 1)
             {
                 SpawnCards.GetComponent<SpawnCards>().SHOP_AddCardToDiscardPile(cardName);
                 cardCount--;
-                cardObj.transform.GetChild(0).transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = cardCount.ToString()+" pcs";
- 
-                count_RandomNumber = 0;
-            if (count_Value > 2) //Not ammo card
+                //cardObj.transform.GetChild(0).transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = cardCount-1+" pcs";
+                
+                int random = 0;
+                if (listIndex > 2) //Not ammo card
+                {
+                    random = Random.Range(0, cardCount);
+                }
+                view.RPC("PUN_BuyCard", RpcTarget.AllBuffered, cardName, listIndex, random);
+            }       
+            else //Delete card
             {
-                count_RandomNumber = Random.Range(0, cardCount);
-            }
-                view.RPC("PUN_BuyCard", RpcTarget.AllBuffered, cardCount, count_Value, count_RandomNumber);
-            }
-            else
-            {
-                cardObj.SetActive(false);
+            view.RPC("PUN_LastCard", RpcTarget.AllBuffered, listIndex);
+            //cardObj.SetActive(false);
             }
     }
+
+
     private void Add_LM_HandDeck(Sprite sprt) //LM = Left menu 
     {
         LeftMenuControl.GetComponent<LeftMenuControl>().InstantiateNewHandCard(sprt);
-
     }
 
 
 
     [PunRPC]
-    public void PUN_BuyCard(int cardCount,int count_Value, int randomNumber)
+    public void PUN_BuyCard(string cardName, int listIndex, int randomNumber)
     {
-        currentCardObject = count_Value;
-        count_Values[currentCardObject] = cardCount;
-        Sold.transform.position = buttonList[currentCardObject].transform.position;
-        Sold.text = "Card bought!"+"\n"+" ("+cardCount.ToString()+" pcs left)";
-
+        boughtCardListIndex = listIndex;
+        //count_Values[boughtCardListIndex] = cardCount;
+        int count = 0;
         UpdateAndResetBuysCount(false); //Update don't reset
+        string newCardName = "";
 
-        //if (count_Value != 0) //Not ammo card
-        {
-            count_RandomNumber = randomNumber;
+        count_RandomNumber = randomNumber;
 
-            switch (count_Value)
+            switch (listIndex)
             {
-                case 0: //Ammo10
-                    holdNameRPC = "ia_ammo10";
-                    break;
-                case 1: ////Ammo20
-                    holdNameRPC = "ia_ammo20";
-                    break;
-                case 2: ////Ammo30
-                    holdNameRPC = "ia_ammo30";
-                    break;
-                case 3: //Handguns
-                    holdNameRPC = HandgunList[count_RandomNumber];
-                    break;
-                case 4: //Knives
-                    holdNameRPC = KnifeList[count_RandomNumber];
-                    break;
-                case 5: //Grenades
-                    holdNameRPC = GrenadeList[count_RandomNumber];
-                    break;
-                case 6: //HP
-                    holdNameRPC = HPList[count_RandomNumber];
-                    break;
-                case 7: //Shotguns
-                    holdNameRPC = ShotgunList[count_RandomNumber];
-                    break;
-                case 8: //Assault rifles and submachine guns
-                    holdNameRPC = AR_SG_List[count_RandomNumber];
-                    break;
-                case 9: //Rifles
-                    holdNameRPC = RifleList[count_RandomNumber];
-                    break;
-                case 10: //Action cards1
-                    holdNameRPC = ActionList1[count_RandomNumber];
-                    break;
-                case 11: //Action cards2
-                    holdNameRPC = ActionList2[count_RandomNumber];
-                    break;
+            case 0: //Ammo10
+                newCardName = "ia_ammo10";
+                ammoCounts[0]--;
+                count = ammoCounts[0];
+                break;
+            case 1: ////Ammo20
+                newCardName = "ia_ammo20";
+                ammoCounts[1]--;
+                count = ammoCounts[1];
+                break;
+            case 2: ////Ammo30
+                newCardName = "ia_ammo30";
+                ammoCounts[2]--;
+                count = ammoCounts[2];
+                break;
+            case 3: //Handguns
+                HandgunList.Remove(cardName);
+                count = HandgunList.Count;
+                newCardName = HandgunList[count_RandomNumber];
+                break;
+           case 4: //Knives
+                KnifeList.Remove(cardName);
+                count = KnifeList.Count;
+                newCardName = KnifeList[count_RandomNumber];
+                break;
+            case 5: //Grenades
+                GrenadeList.Remove(cardName);
+                count = GrenadeList.Count;
+                newCardName = GrenadeList[count_RandomNumber];
+                break;
+            case 6: //HP
+                HPList.Remove(cardName);
+                count = HPList.Count;
+                newCardName = HPList[count_RandomNumber];
+                break;
+            case 7: //Shotguns
+                ShotgunList.Remove(cardName);
+                count = ShotgunList.Count;
+                newCardName = ShotgunList[count_RandomNumber];
+                break;
+            case 8: //Assault rifles and submachine guns
+                AR_SG_List.Remove(cardName);
+                count = AR_SG_List.Count;
+                newCardName = AR_SG_List[count_RandomNumber];
+                break;
+            case 9: //Rifles
+                RifleList.Remove(cardName);
+                count = RifleList.Count;
+                newCardName = RifleList[count_RandomNumber];
+                break;
+            case 10: //Action cards1
+                ActionList1.Remove(cardName);
+                count = ActionList1.Count;
+                newCardName = ActionList1[count_RandomNumber];
+                break;
+            case 11: //Action cards2
+                ActionList2.Remove(cardName);
+                count = ActionList2.Count;
+                newCardName = ActionList2[count_RandomNumber];
+                break;
                 case 12: //Action cards3
-                    holdNameRPC = ActionList3[count_RandomNumber];
-                    break;
-                case 13: //Action cards4
-                    holdNameRPC = ActionList4[count_RandomNumber];
-                    break;
-                case 14: //Action cards5
-                    holdNameRPC = ActionList5[count_RandomNumber];
-                    break;
-                case 15: //Action cards6
-                    holdNameRPC = ActionList6[count_RandomNumber];
-                    break;
-                case 16: //Action cards7
-                    holdNameRPC = ActionList7[count_RandomNumber];
-                    break;
-                case 17: //Extra1 cards
-                    holdNameRPC = ExtraList1[count_RandomNumber];
-                    break;
-                case 18: //Extra2 cards
-                    holdNameRPC = ExtraList2[count_RandomNumber];
-                    break;
+                ActionList3.Remove(cardName);
+                count = ActionList3.Count;
+                newCardName = ActionList3[count_RandomNumber];
+                break;
+            case 13: //Action cards4
+                ActionList4.Remove(cardName);
+                count = ActionList4.Count;
+                newCardName = ActionList4[count_RandomNumber];
+                break;
+            case 14: //Action cards5
+                ActionList5.Remove(cardName);
+                count = ActionList5.Count;
+                newCardName = ActionList5[count_RandomNumber];
+                break;
+            case 15: //Action cards6
+                ActionList6.Remove(cardName);
+                count = ActionList6.Count;
+                newCardName = ActionList6[count_RandomNumber];
+                break;
+            case 16: //Action cards7
+                ActionList7.Remove(cardName);
+                count = ActionList7.Count;
+                newCardName = ActionList7[count_RandomNumber];
+                break;
+            case 17: //Extra1 cards
+                ExtraList1.Remove(cardName);
+                count = ExtraList1.Count;
+                newCardName = ExtraList1[count_RandomNumber];
+                break;
+            case 18: //Extra2 cards
+                ExtraList2.Remove(cardName);
+                count = ExtraList2.Count;
+                newCardName = ExtraList2[count_RandomNumber];
+                break;
             }
-        }
 
 
-        StartCoroutine(WaitSoldText());
+        Sold.transform.position = allButtonsList[boughtCardListIndex].transform.position;
+        Sold.text = "Card bought!" + "\n" + " (" + count.ToString() + " pcs left)";
+        StartCoroutine(WaitSoldText(newCardName));
     }
-    private IEnumerator WaitSoldText()
+
+    [PunRPC]
+    void PUN_LastCard(int listIndex)
+    {
+        GameObject hideThis = allButtonsList[listIndex];
+
+        Sold.transform.position = hideThis.transform.position;
+        Sold.text = "Card bought!" + "\n" + " (Deck is now empty!)";
+        StartCoroutine(HideButtonAndWait(hideThis));
+
+        
+    }
+    private IEnumerator WaitSoldText(string cardName)
     {
         waitRPC = true;
 
@@ -659,16 +669,42 @@ public class ShopCards : MonoBehaviourPun   //
         rect.enabled = false;
 
         yield return new WaitForSeconds(2f);
-        if (holdNameRPC != "")
+        if (cardName != "")
         {
-            buttonList[currentCardObject].GetComponent<SpriteFromAtlas>().ChangeCardSprite(holdNameRPC);
+            allButtonsList[boughtCardListIndex].GetComponent<SpriteFromAtlas>().ChangeCardSprite(cardName);
         }
+        else
+        {
+
+        }
+
         isZoomed = false;
-        buttonList[currentCardObject].transform.localScale = vec_Normal;
-        buttonList[currentCardObject].transform.GetChild(0).gameObject.SetActive(false);
+        allButtonsList[boughtCardListIndex].transform.localScale = vec_Normal;
+        allButtonsList[boughtCardListIndex].transform.GetChild(0).gameObject.SetActive(false);
         Sold.text = "";
         waitRPC = false;
         rect.enabled = true;
+    }
+
+    IEnumerator HideButtonAndWait(GameObject buttonObject)
+    {
+        
+            waitRPC = true;
+
+            ScrollRect rect = Shop_Items.GetComponent<ScrollRect>();
+            rect = Shop_Items.GetComponent<ScrollRect>();
+            rect.StopMovement();
+            rect.enabled = false;
+
+            yield return new WaitForSeconds(2f);
+
+            isZoomed = false;
+            allButtonsList[boughtCardListIndex].transform.localScale = vec_Normal;
+            allButtonsList[boughtCardListIndex].transform.GetChild(0).gameObject.SetActive(false);
+            Sold.text = "";
+            waitRPC = false;
+            rect.enabled = true;
+            buttonObject.SetActive(false);
     }
 
     public void SetAllCardsToNormalSize() //When ShopMenu button is pressed (GameControl.cs)

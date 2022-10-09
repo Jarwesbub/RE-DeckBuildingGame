@@ -112,11 +112,12 @@ MonoBehaviour:
   MainCanvas: {fileID: 0}
   atlas:
   - {fileID: 4343727234628468602, guid: 9b7cff6f174fbdf4c81fc091a313fa61, type: 2}
-  - {fileID: 4343727234628468602, guid: 28aa52ad18bd5224f9ca8dab7d59a3e5, type: 2}
-  - {fileID: 4343727234628468602, guid: d2d2b8ec883c5bc40aff7f176d10cd2f, type: 2}
-  - {fileID: 4343727234628468602, guid: cd72b5f7e74e8bc47b7ec3d9fc5e4a34, type: 2}
+  - {fileID: 4343727234628468602, guid: 8feb230b39acaf946a8e872db3d064a5, type: 2}
   - {fileID: 4343727234628468602, guid: 857c44f771cc64e429bd29440c566171, type: 2}
   - {fileID: 4343727234628468602, guid: 48724146a76b71b479fffce163977239, type: 2}
+  - {fileID: 4343727234628468602, guid: 28aa52ad18bd5224f9ca8dab7d59a3e5, type: 2}
+  - {fileID: 4343727234628468602, guid: cd72b5f7e74e8bc47b7ec3d9fc5e4a34, type: 2}
+  - {fileID: 4343727234628468602, guid: d2d2b8ec883c5bc40aff7f176d10cd2f, type: 2}
   - {fileID: 4343727234628468602, guid: 69ec99299a15b0f4f8cad714c63a38a2, type: 2}
   currentAtlas: 0
   spriteName: 

@@ -1,12 +1,5 @@
-sup_knife1
-sup_knife1
-sup_knife2
-sup_knife2
-sup_knife3
-sup_knife3
-sup_stunrod
-sup_stunrod
-sup_bow1
-sup_bow1
 sup_bow2
-sup_bow2
+sup_knife3
+sup_knife2
+sup_knife1
+sup_bow1

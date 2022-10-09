@@ -1,3 +1,11 @@
+There is a list of cards that work in the game but their description don't
+
+_____________________________________
+
+MANSION CARDS
+_____________________________________
+
+
 LOW TIER
 0-ma-047_outbreak_reinforced_zombie
 0-ma-076_mercenaries_base_majini_gun_skill_mod
@@ -41,3 +49,20 @@ ITEMS
 3_ma-072_nightmare_prl_412
 
 (If changes are made -> remember to add in tier- and MainMansioNCards text files)
+
+
+_____________________________________
+
+WEAPONS
+_____________________________________
+
+MACHINE GUNS AND BIG GUNS
+
+arsg_mp5
+bg_rpg7
+
+SUPPORT
+
+sup_flash1
+sup_grenade1
+sup_stunrod

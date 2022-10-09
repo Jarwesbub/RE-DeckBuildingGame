@@ -20,7 +20,19 @@ SpriteAtlas:
       readable: 0
       crunchedCompression: 0
       sRGB: 1
-    platformSettings: []
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 4096
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
     packingSettings:
       serializedVersion: 2
       padding: 4
@@ -38,6 +50,7 @@ SpriteAtlas:
     cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
+  - {fileID: 21300000, guid: 7789c8e0afd7ce644ba5dd747c9cb860, type: 3}
   - {fileID: 21300000, guid: f2382572b33d108409e58b5c875876e6, type: 3}
   - {fileID: 21300000, guid: 14cf4463008c7bd438a05643598acf7b, type: 3}
   - {fileID: 21300000, guid: 863f09771d73cc544a6c7f7800a3656f, type: 3}
@@ -45,8 +58,10 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 36fa2f0b87969dd498460de976aa075c, type: 3}
   - {fileID: 21300000, guid: 59d2614ba6f92a942aaeb24a37542d53, type: 3}
   - {fileID: 21300000, guid: 22e4175b33cef304aa190bdac8ede6e6, type: 3}
-  - {fileID: 21300000, guid: aeac6cbed77564a4abc70d7938a358be, type: 3}
+  - {fileID: 21300000, guid: 71ab04cb758f26a4787367e820a2bd0e, type: 3}
+  - {fileID: 21300000, guid: 21d8774f5cf625a49a029e84242cd0f3, type: 3}
   m_PackedSpriteNamesToIndex:
+  - ia_ammo20_mercenaries
   - ia_treasure
   - ia_redherb
   - ia_firstaidkit2
@@ -54,7 +69,8 @@ SpriteAtlas:
   - ia_ammo20
   - ia_greenherb
   - ia_ammo10
-  - ia_custom_jill_sandwich
+  - ia_ammo30_mercenaries
+  - ia_ammo10_mercenaries
   m_RenderDataMap: {}
   m_Tag: AmmoAndItems
   m_IsVariant: 0

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class StatsControl : MonoBehaviour
+public class StatsMansionCards : MonoBehaviour
 {
     public GameObject PhotonRoomMaster;
 
