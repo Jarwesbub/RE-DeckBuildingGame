@@ -27,7 +27,7 @@ public class UIEdShopLoadDropDownHandler : MonoBehaviour
 
         List<string> items = new List<string>();
 
-        items.Add(" ");
+        //items.Add(" ");
 
         for (int i = 1; i <= shopDataCount; i++)
         {
@@ -49,8 +49,8 @@ public class UIEdShopLoadDropDownHandler : MonoBehaviour
     {
         int index = dropdown.value;
         Debug.Log("Load ShopData pressed");
-        if(index!=0)
-            EditShopControl.GetComponent<EditShopControl>().LoadNewShopData(index);
+        //if(index!=0)
+        EditShopControl.GetComponent<EditShopControl>().LoadNewShopData(index);
 
     }
 }

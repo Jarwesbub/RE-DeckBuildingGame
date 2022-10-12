@@ -6,10 +6,11 @@ using UnityEngine.UI;
 public class UIEdShopTypeDropdown : MonoBehaviour
 {
     public GameObject EditShopControl;
+    private Dropdown dropdown;
 
     private void Start()
     {
-        var dropdown = transform.GetComponent<Dropdown>();
+        dropdown = transform.GetComponent<Dropdown>();
         dropdown.options.Clear();
 
         List<string> items = new List<string>();
@@ -38,9 +39,13 @@ public class UIEdShopTypeDropdown : MonoBehaviour
             dropdown.options.Add(new Dropdown.OptionData() { text = item });
         }
 
-        dropdown.value = items.Count;
+        //dropdown.value = items.Count;
         dropdown.onValueChanged.AddListener(delegate { DropDownItemSelected(dropdown); });
 
+    }
+    public void FirstLoadDone()
+    {
+        EditShopControl.GetComponent<EditShopControl>().UpdateShopDeckType(0);
     }
 
     private void DropDownItemSelected(Dropdown dropdown)
