@@ -7,7 +7,7 @@ public class UILobbyRoomDropDownHandler : MonoBehaviour
 {
     [SerializeField] int dropdownType;
     [SerializeField] GameObject LobbyRoomControl;
-    private int value;
+    //private int value;
 
     void Start()
     {
@@ -38,9 +38,21 @@ public class UILobbyRoomDropDownHandler : MonoBehaviour
             dropdown.options.Add(new Dropdown.OptionData() { text = item });
         }
 
+        int value = GameStats.MansionDeckValue;
+        if (value > 0) value--;
         dropdown.value = value;
+        dropdown.RefreshShownValue();
         dropdown.onValueChanged.AddListener(delegate { MansionDropDownItemSelected(dropdown); });
     }
+    private void MansionDropDownItemSelected(Dropdown dropdown)
+    {
+        int index = dropdown.value + 1;
+        PlayerPrefs.SetInt("MansionDeckValue", index);
+        GameStats.MansionDeckValue = index;
+    }
+
+    ////////////////////////////
+
     private void ShopType()
     {
         var dropdown = transform.GetComponent<Dropdown>();
@@ -53,7 +65,7 @@ public class UILobbyRoomDropDownHandler : MonoBehaviour
 
         for (int i = 1; i <= cardCount; i++)
         {
-            items.Add("Custom Shop cards: " + i);
+            items.Add("Shop cards: " + i);
         }
 
 
@@ -62,18 +74,35 @@ public class UILobbyRoomDropDownHandler : MonoBehaviour
             dropdown.options.Add(new Dropdown.OptionData() { text = item });
         }
 
+        int value = GameStats.ShopDeckDataValue;
+        if (value > 0) value--;
+
         dropdown.value = value;
-        dropdown.onValueChanged.AddListener(delegate { MansionDropDownItemSelected(dropdown); });
+        dropdown.RefreshShownValue();
+        dropdown.onValueChanged.AddListener(delegate { ShopDropDownItemSelected(dropdown); });
     }
+    private void ShopDropDownItemSelected(Dropdown dropdown)
+    {
+        int index = dropdown.value + 1;
+        //LobbyRoomControl.GetComponent<OverwriteTextFileList>().Shop_CreateDataCards(index);
+        GameStats.ShopDeckDataValue = index;
+    }
+
+    ////////////////////////////
+    
     private void CharacterType()
     {
+        /*
         if (PlayerPrefs.HasKey("CharacterType")) //0 = Original; 1 = Custom
             value = PlayerPrefs.GetInt("CharacterType");
         else
         {
             PlayerPrefs.SetInt("CharacterType", 0);
             value = 0;
-        }
+        }*/
+
+        int value = GameStats.CharacterDeckValue; //0 = Original; 1 = Custom
+
         var dropdown = transform.GetComponent<Dropdown>();
         dropdown.options.Clear();
 
@@ -87,24 +116,17 @@ public class UILobbyRoomDropDownHandler : MonoBehaviour
         }
 
         dropdown.value = value;
+        //dropdown.Select();
+        dropdown.RefreshShownValue();
         dropdown.onValueChanged.AddListener(delegate { CharacterDropDownItemSelected(dropdown); });
 
     }
 
     private void CharacterDropDownItemSelected(Dropdown dropdown)
     {
-        int index = dropdown.value;
+        int index = dropdown.value; //0 = Original; 1 = Custom
         PlayerPrefs.SetInt("CharacterType", index);
-    }
-    private void ShopDropDownItemSelected(Dropdown dropdown)
-    {
-        int index = dropdown.value;
-        LobbyRoomControl.GetComponent<OverwriteTextFileList>().Shop_CreateDataCards(index+1);
-    }
-
-    private void MansionDropDownItemSelected(Dropdown dropdown)
-    {
-        int index = dropdown.value;
         GameStats.CharacterDeckValue = index;
     }
+
 }

@@ -1,10 +1,11 @@
-ras_hydra
-ras_shotgun1
 ras_automaticshotgun
-ras_shotgun2
-ras_shotgun2
+ras_hydra
+ras_m3
+ras_m3
 ras_m3
 ras_shotgun1
 ras_shotgun1
-ras_m3
-ras_m3
+ras_shotgun1
+ras_shotgun1
+ras_shotgun2
+ras_shotgun2

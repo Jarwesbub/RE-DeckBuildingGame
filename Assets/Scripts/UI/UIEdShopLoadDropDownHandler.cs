@@ -41,6 +41,7 @@ public class UIEdShopLoadDropDownHandler : MonoBehaviour
         }
 
         dropdown.value = 0;
+        dropdown.RefreshShownValue();
         dropdown.onValueChanged.AddListener(delegate { DropDownItemSelected(dropdown); });
 
     }

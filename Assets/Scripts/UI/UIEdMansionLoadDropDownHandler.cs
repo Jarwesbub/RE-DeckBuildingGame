@@ -6,10 +6,11 @@ using UnityEngine.UI;
 public class UIEdMansionLoadDropDownHandler : MonoBehaviour
 {
     public int customCount;
-    private int value;
 
     private void Start()
     {
+        //int value = 0;
+        /*
         if (PlayerPrefs.HasKey("MansionType")) //by number: 1-4 Custom Mansion Decks
             value = PlayerPrefs.GetInt("MansionType");
         else
@@ -17,8 +18,13 @@ public class UIEdMansionLoadDropDownHandler : MonoBehaviour
             PlayerPrefs.SetInt("MansionType", 1);
             value = 1;
         }
-
-        var dropdown = transform.GetComponent<Dropdown>();
+        if (value == 0)
+        {
+            value = 1;
+            GameStats.MansionDeckValue = value;
+        }
+        */
+        Dropdown dropdown = transform.GetComponent<Dropdown>();
         dropdown.options.Clear();
 
         List<string> items = new List<string>();
@@ -38,7 +44,8 @@ public class UIEdMansionLoadDropDownHandler : MonoBehaviour
             dropdown.options.Add(new Dropdown.OptionData() { text = item });
         }
 
-        dropdown.value = value;
+        dropdown.value = 0;
+        dropdown.RefreshShownValue();
         dropdown.onValueChanged.AddListener(delegate { DropDownItemSelected(dropdown); });
 
     }

@@ -267,6 +267,7 @@ public class StatsMansionCards : MonoBehaviour
         //Top Tier
 
         int hp = 0, dmg = 0, deco = 0; bool isMainBoss=false;
+        string info = "";
 
         switch (cardNumber)
         {
@@ -277,7 +278,7 @@ public class StatsMansionCards : MonoBehaviour
                 hp = 60; dmg = 40; deco = 5; //Nemesis T-Type
                 break;
             case 10:
-                hp = 90; dmg = 70; deco = 8; isMainBoss = true; //Uroboros Aheri //MAIN BOSS
+                hp = 90; dmg = 70; deco = 8; isMainBoss = true; info = "shuffle"; //Uroboros Aheri //MAIN BOSS
                 break;
             case 14:
                 hp = 40; dmg = 25; deco = 4; //Gatling Gun Majini
@@ -304,7 +305,7 @@ public class StatsMansionCards : MonoBehaviour
                 hp = 55; dmg = 30; deco = 4; //Nosferatu
                 break;
             case 41:
-                hp = 90; dmg = 70; deco = 8; isMainBoss = true; //Tyrant T-002 //MAIN BOSS
+                hp = 90; dmg = 70; deco = 8; isMainBoss = true; info = "shuffle";  //Tyrant T-002 //MAIN BOSS
                 break;
             case 42:
                 hp = 40; dmg = 30; deco = 4; //Yawn
@@ -316,7 +317,7 @@ public class StatsMansionCards : MonoBehaviour
                 hp = 40; dmg = 20; deco = 0; //Lisa Trevor
                 break;
             case 54:
-                hp = 90; dmg = 60; deco = 8; isMainBoss = true; //Osmund Saddler // MAIN BOSS
+                hp = 90; dmg = 60; deco = 8; isMainBoss = true; info = "shuffle"; //Osmund Saddler // MAIN BOSS
                 break;
             case 55:
                 hp = 70; dmg = 50; deco = 6; //Bitores Mendez
@@ -354,6 +355,7 @@ public class StatsMansionCards : MonoBehaviour
 
         }
         CurrentMansionCard.SetCard(hp, dmg, deco, isMainBoss);
+        CurrentMansionCard.SetCardInfo(info);
         Debug.Log("Mansion card - Tier: LOW " + " hp: " + hp + " dmg: " + dmg + " deco: " + deco + " isBoss: "+isMainBoss);
         return deco;
     }
@@ -427,11 +429,21 @@ public static class CurrentMansionCard
 {
     private static int hp, dmg, deco;
     private static bool isBoss;
+    private static string cardInfo;
 
     public static void SetCard(int health, int damage, int decoration, bool isMainBoss)
     {
         hp = health; dmg = damage; deco = decoration; isBoss = isMainBoss;
+        cardInfo = "";
+    }
+    public static void SetCardInfo(string info)
+    {
+        cardInfo = info;
 
+    }
+    public static string GetCardInfo()
+    {
+        return cardInfo;
     }
 
     public static int GetPoints()

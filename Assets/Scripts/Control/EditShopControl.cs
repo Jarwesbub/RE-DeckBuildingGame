@@ -10,7 +10,7 @@ using System;
 public class EditShopControl : MonoBehaviour
 {
     public GameObject AllShopCards, CardTypeDropdown, LoadGridContent;
-    public GameObject AddCardsPrefab, UI_CurrentDeck, UI_AddCards, currentDeck_btn, addCards_btn;
+    public GameObject AddCardsPrefab, currentDeck_btn, addCards_btn;
     public Scrollbar currDeckScrollBar;
     private Image img;
     public TMP_Text mainTitleText, loadingText, cardCountText;
@@ -33,7 +33,7 @@ public class EditShopControl : MonoBehaviour
         loadingText.text = "";
         shopDataCount = GameStats.ShopDeckDataCount;
         CreateLinkedShopLists();
-        OnClickChooseCurrentDeck();
+
     }
     private void CreateLinkedShopLists()
     {
@@ -411,30 +411,6 @@ public class EditShopControl : MonoBehaviour
                 result += value;
         }
         return result;
-    }
-
-    public void OnClickChooseCurrentDeck()
-    {
-        mainTitleText.text = "Shop Builder";
-        UI_CurrentDeck.SetActive(true);
-        UI_AddCards.SetActive(false);
-        currentDeck_btn.GetComponent<Image>().color = colorON;
-        addCards_btn.GetComponent<Image>().color = Color.black;
-    }
-    public void OnClickChooseAddCards()
-    {
-        if (shopCardTypeIsChosen)
-        {
-            mainTitleText.text = "Add Shop Cards";
-            UI_CurrentDeck.SetActive(false);
-            UI_AddCards.SetActive(true);
-            currentDeck_btn.GetComponent<Image>().color = Color.black;
-            addCards_btn.GetComponent<Image>().color = colorON;
-        }
-        else
-        {
-           
-        }
     }
 
     private IEnumerator LoadAndSave(bool load) //load = true, save = false

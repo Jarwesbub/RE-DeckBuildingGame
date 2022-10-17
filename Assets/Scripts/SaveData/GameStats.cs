@@ -8,7 +8,9 @@ public static class GameStats
     public static int MansionDeckValue { get; set; }
     public static int MansionDeckCount { get; set; }
 
+    public static int ShopDeckDataValue { get; set; }
     public static int ShopDeckDataCount { get; set; }
+
     public static int CharacterDeckValue { get; set; } //0 = Normal, 1 = Custom
 
     public static int currentPlayerID { get; set; }

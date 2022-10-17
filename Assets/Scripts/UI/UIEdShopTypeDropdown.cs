@@ -40,6 +40,9 @@ public class UIEdShopTypeDropdown : MonoBehaviour
         }
 
         //dropdown.value = items.Count;
+        dropdown.value = 0;
+        
+        dropdown.RefreshShownValue();
         dropdown.onValueChanged.AddListener(delegate { DropDownItemSelected(dropdown); });
 
     }

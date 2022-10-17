@@ -131,6 +131,11 @@ MonoBehaviour:
   - EmptyCardList
   - PUN_LastCard
   - Pun_OverwriteGameData
+  - PUN_CreateAllShopDataCards
+  - SendRandomizedFirstCardFromArray
+  - SetRandomValuesToClients
+  - SetArrayValuesToClients
+  - Pun_SetAllShopCardSprites
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

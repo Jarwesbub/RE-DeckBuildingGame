@@ -19,12 +19,14 @@ public class OverwriteTextFileList : MonoBehaviourPun
     [SerializeField] string[] extraList1, extraList2;
     [SerializeField] LinkedList<string[]> shopCardsList;
     [SerializeField] string[] startingDeckList, characterCardsList, mansionCardsList;
+    private int currentShopDataValue;
 PhotonView view;
 
     private void Start()
     {
         isMaster = PhotonNetwork.IsMasterClient;
         buttonIsPressed = false;
+        currentShopDataValue = 0;
         view = GetComponent<PhotonView>();
 
         shopDataFileNames = new string[17]
@@ -47,7 +49,7 @@ PhotonView view;
         "Extra1List_AllCounted",
         "Extra2List_AllCounted"
         };
-        Shop_CreateDataCards(1);
+        //Shop_CreateDataCards(1); //false = testing        //NEW TEST 17.10.2022
     }
 
     public void OnClickOverwriteNewFiles() //
@@ -58,55 +60,117 @@ PhotonView view;
             //OverwriteNewFiles();
         }      
     }
+    /*
     public void Shop_CreateDataCards(int value)
     {
-
-        string readFromFilePath = Application.persistentDataPath + "/Custom_data/ShopCardsData" + value + ".txt";
-        fileLines = File.ReadAllLines(readFromFilePath).ToArray();
-        //int[] countActionCards = Shop_ConvertTextToNumbers(fileLines[8]); //ALL ACTION CARDS
-        //ammoList = GetIntArrayValuesFromLine(fileLines[0]); //Ammo
-        int[] ammoCount = Shop_ConvertTextToNumbers(fileLines[0]);
-        ammoList = new string[3];
-        for (int i = 0; i < 3; i++)
+        if (currentShopDataValue != value)
         {
-            ammoList[i] = ammoCount[i].ToString();
+            string readFromFilePath = Application.persistentDataPath + "/Custom_data/ShopCardsData" + value + ".txt";
+            fileLines = File.ReadAllLines(readFromFilePath).ToArray();
+            //int[] countActionCards = Shop_ConvertTextToNumbers(fileLines[8]); //ALL ACTION CARDS
+            //ammoList = GetIntArrayValuesFromLine(fileLines[0]); //Ammo
+            int[] ammoCount = Shop_ConvertTextToNumbers(fileLines[0]);
+            ammoList = new string[3];
+            for (int i = 0; i < 3; i++)
+            {
+                ammoList[i] = ammoCount[i].ToString();
+            }
+            hpList = Shop_GetCardNamesByIndex(1);
+            knifeList = Shop_GetCardNamesByIndex(2);
+            handgunList = Shop_GetCardNamesByIndex(3);
+            shotgunList = Shop_GetCardNamesByIndex(4);
+            machinegunList = Shop_GetCardNamesByIndex(5);
+            rifleList = Shop_GetCardNamesByIndex(6);
+            explosiveList = Shop_GetCardNamesByIndex(7);
+            actionList1 = Shop_GetCardNamesByIndex(8);
+            actionList2 = Shop_GetCardNamesByIndex(9);
+            actionList3 = Shop_GetCardNamesByIndex(10);
+            actionList4 = Shop_GetCardNamesByIndex(11);
+            actionList5 = Shop_GetCardNamesByIndex(12);
+            actionList6 = Shop_GetCardNamesByIndex(13);
+            actionList7 = Shop_GetCardNamesByIndex(14);
+            extraList1 = Shop_GetCardNamesByIndex(15);
+            extraList2 = Shop_GetCardNamesByIndex(16);
+
+
+            shopCardsList = new LinkedList<string[]>();
+            shopCardsList.AddLast(ammoList);
+            shopCardsList.AddLast(hpList);
+            shopCardsList.AddLast(knifeList);
+            shopCardsList.AddLast(handgunList);
+            shopCardsList.AddLast(shotgunList);
+            shopCardsList.AddLast(machinegunList);
+            shopCardsList.AddLast(rifleList);
+            shopCardsList.AddLast(explosiveList);
+            shopCardsList.AddLast(actionList1);
+            shopCardsList.AddLast(actionList2);
+            shopCardsList.AddLast(actionList3);
+            shopCardsList.AddLast(actionList4);
+            shopCardsList.AddLast(actionList5);
+            shopCardsList.AddLast(actionList6);
+            shopCardsList.AddLast(actionList7);
+            shopCardsList.AddLast(extraList1);
+            shopCardsList.AddLast(extraList2);
+
+            currentShopDataValue = value;
         }
-        hpList = Shop_GetCardNamesByIndex(1);
-        knifeList = Shop_GetCardNamesByIndex(2);
-        handgunList = Shop_GetCardNamesByIndex(3);
-        shotgunList = Shop_GetCardNamesByIndex(4);
-        machinegunList = Shop_GetCardNamesByIndex(5);
-        rifleList = Shop_GetCardNamesByIndex(6);
-        explosiveList = Shop_GetCardNamesByIndex(7);
-        actionList1 = Shop_GetCardNamesByIndex(8);
-        actionList2 = Shop_GetCardNamesByIndex(9);
-        actionList3 = Shop_GetCardNamesByIndex(10);
-        actionList4 = Shop_GetCardNamesByIndex(11);
-        actionList5 = Shop_GetCardNamesByIndex(12);
-        actionList6 = Shop_GetCardNamesByIndex(13);
-        actionList7 = Shop_GetCardNamesByIndex(14);
-        extraList1 = Shop_GetCardNamesByIndex(15);
-        extraList2 = Shop_GetCardNamesByIndex(16);
+    }
+    */
+    [PunRPC] public void PUN_CreateAllShopDataCards(string[] masterFileLines)
+    {
+        {
+            fileLines = masterFileLines;
 
+            int[] ammoCount = Shop_ConvertTextToNumbers(fileLines[0]);
+            ammoList = new string[3];
+            for (int i = 0; i < 3; i++)
+            {
+                ammoList[i] = ammoCount[i].ToString();
+            }
+            hpList = Shop_GetCardNamesByIndex(1);
+            knifeList = Shop_GetCardNamesByIndex(2);
+            handgunList = Shop_GetCardNamesByIndex(3);
+            shotgunList = Shop_GetCardNamesByIndex(4);
+            machinegunList = Shop_GetCardNamesByIndex(5);
+            rifleList = Shop_GetCardNamesByIndex(6);
+            explosiveList = Shop_GetCardNamesByIndex(7);
+            actionList1 = Shop_GetCardNamesByIndex(8);
+            actionList2 = Shop_GetCardNamesByIndex(9);
+            actionList3 = Shop_GetCardNamesByIndex(10);
+            actionList4 = Shop_GetCardNamesByIndex(11);
+            actionList5 = Shop_GetCardNamesByIndex(12);
+            actionList6 = Shop_GetCardNamesByIndex(13);
+            actionList7 = Shop_GetCardNamesByIndex(14);
+            extraList1 = Shop_GetCardNamesByIndex(15);
+            extraList2 = Shop_GetCardNamesByIndex(16);
 
-        shopCardsList = new LinkedList<string[]>();
-        shopCardsList.AddLast(ammoList);
-        shopCardsList.AddLast(hpList);
-        shopCardsList.AddLast(knifeList);
-        shopCardsList.AddLast(handgunList);
-        shopCardsList.AddLast(shotgunList);
-        shopCardsList.AddLast(machinegunList);
-        shopCardsList.AddLast(rifleList);
-        shopCardsList.AddLast(explosiveList);
-        shopCardsList.AddLast(actionList1);
-        shopCardsList.AddLast(actionList2);
-        shopCardsList.AddLast(actionList3);
-        shopCardsList.AddLast(actionList4);
-        shopCardsList.AddLast(actionList5);
-        shopCardsList.AddLast(actionList6);
-        shopCardsList.AddLast(actionList7);
-        shopCardsList.AddLast(extraList1);
-        shopCardsList.AddLast(extraList2);
+            shopCardsList = new LinkedList<string[]>();
+            shopCardsList.AddLast(ammoList);
+            shopCardsList.AddLast(hpList);
+            shopCardsList.AddLast(knifeList);
+            shopCardsList.AddLast(handgunList);
+            shopCardsList.AddLast(shotgunList);
+            shopCardsList.AddLast(machinegunList);
+            shopCardsList.AddLast(rifleList);
+            shopCardsList.AddLast(explosiveList);
+            shopCardsList.AddLast(actionList1);
+            shopCardsList.AddLast(actionList2);
+            shopCardsList.AddLast(actionList3);
+            shopCardsList.AddLast(actionList4);
+            shopCardsList.AddLast(actionList5);
+            shopCardsList.AddLast(actionList6);
+            shopCardsList.AddLast(actionList7);
+            shopCardsList.AddLast(extraList1);
+            shopCardsList.AddLast(extraList2);
+        }
+
+        int index = 0; //Skip ammo card
+        foreach (string[] array in shopCardsList)
+        {
+            view.RPC("Pun_OverwriteGameData", RpcTarget.AllBuffered, (object)array, shopDataFileNames[index]);
+            Pun_OverwriteGameData(array, shopDataFileNames[index]);
+            index++;
+        }
     }
 
     private string[] Shop_GetCardNamesByIndex(int index)
@@ -115,14 +179,14 @@ PhotonView view;
         {
             int[] countArray = Shop_ConvertTextToNumbers(fileLines[index]); //Double digit values
             string[] cardNameArray = AllShopCards.GetComponent<AllShopCards>().GetShopCardByCount(countArray, index);
-            cardNameArray = ShuffleArray(cardNameArray);
+            //cardNameArray = ShuffleArray(cardNameArray);
             return cardNameArray;
         }
         else if (index <=14) //Action cards
         {
             int[] countArray = Shop_ConvertTextToNumbers(fileLines[8]); //Double digit values
             string[] cardNameArray = AllShopCards.GetComponent<AllShopCards>().GetShopCardByCount(countArray, index);
-            cardNameArray = ShuffleArray(cardNameArray);
+            //cardNameArray = ShuffleArray(cardNameArray);
             return cardNameArray;
         }
         else //Extra cards //index = 15-16
@@ -130,7 +194,7 @@ PhotonView view;
             int line = index - 6;
             int[] countArray = Shop_ConvertTextToNumbers(fileLines[line]); //Double digit values
             string[] cardNameArray = AllShopCards.GetComponent<AllShopCards>().GetShopCardByCount(countArray, index);
-            cardNameArray = ShuffleArray(cardNameArray);
+            //cardNameArray = ShuffleArray(cardNameArray);
             return cardNameArray;
         }
     }
@@ -158,6 +222,7 @@ PhotonView view;
         }
         return cardType;
     }
+    /*
     private string[] ShuffleArray(string[] array)
     {
         string temp;
@@ -173,20 +238,20 @@ PhotonView view;
         }
         return decklist;
     }
-
+    */
     private void Others_ReadTextFiles()
     {
         int value = GameStats.MansionDeckValue;
-        if (value == 0)
+        if (value == 0) //Avoid possible errors
             value = 1;
-
+        //Debug.Log("MansionDeckValue=" + value);
         startingDeckList = ReadFromCustomData("StartingDeckList");
         characterCardsList = ReadFromCustomData("CharacterList");
         mansionCardsList = ReadFromCustomData("MansionCards" + value);
     }
     private string[] ReadFromCustomData(string fileName)
     {
-        string readFromFilePath = Application.streamingAssetsPath + "/Game_data/" + fileName + ".txt";
+        string readFromFilePath = Application.persistentDataPath + "/Custom_data/" + fileName + ".txt";
         string[] fileLines = File.ReadAllLines(readFromFilePath).ToArray();
         return fileLines;
     }
@@ -202,12 +267,21 @@ PhotonView view;
 
     private void SendAllDataToClients() //And self
     {
+        /*
         int index = 0; //Skip ammo card
         foreach (string[] array in shopCardsList)
         {
             view.RPC("Pun_OverwriteGameData", RpcTarget.AllBuffered, (object)array, shopDataFileNames[index]);
             index++;
-        }
+        }*/
+        //NEW TEST 17.10.2022
+        int value = GameStats.ShopDeckDataValue;
+        if (value == 0) value = 1;
+
+        string readFromFilePath = Application.persistentDataPath + "/Custom_data/ShopCardsData" + value + ".txt";
+        string[] masterFileLines = File.ReadAllLines(readFromFilePath).ToArray();
+
+        view.RPC("PUN_CreateAllShopDataCards", RpcTarget.AllBuffered, (object)masterFileLines);
 
         view.RPC("Pun_OverwriteGameData", RpcTarget.AllBuffered, (object)startingDeckList, "StartingDeckList");
         view.RPC("Pun_OverwriteGameData", RpcTarget.AllBuffered, (object)characterCardsList, "CharacterList");

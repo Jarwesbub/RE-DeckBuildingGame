@@ -285,7 +285,7 @@ public class MansionControl : MonoBehaviourPun
             mansionHandCard.transform.localScale = new Vector3(1f, 1f, 1f);
             view.RPC("RPC_SendCardToPlayer", RpcTarget.AllBuffered, isBottomCard);
             int points = CurrentMansionCard.GetPoints();
-            view.RPC("RPC_SetMainTextPlayer", RpcTarget.AllBuffered, currentPlayerName, true, points, 0);
+            view.RPC("RPC_SetMainTextPlayer", RpcTarget.AllBuffered, currentPlayerName, true, points, "");
             MansionActionButtons.SetActive(false); OtherActionButtons.SetActive(true);
             LeftMenuControl.GetComponent<LeftMenuControl>().SetPlus1Text();
 
@@ -314,7 +314,12 @@ public class MansionControl : MonoBehaviourPun
         {
             view.RPC("RPC_SendCardBottomOfTheDeck", RpcTarget.AllBuffered, isBottomCard);
             int dmg = CurrentMansionCard.GetDMG();
-            view.RPC("RPC_SetMainTextPlayer", RpcTarget.AllBuffered, currentPlayerName, false, 0, dmg);
+            string cardInfo = CurrentMansionCard.GetCardInfo();
+            if (cardInfo == "shuffle")
+                OnClickShuffleDeck(dmg);
+            else
+                view.RPC("RPC_SetMainTextPlayer", RpcTarget.AllBuffered, currentPlayerName, false, dmg, "");
+
             MansionActionButtons.SetActive(false); OtherActionButtons.SetActive(true);
         }
     }
@@ -329,21 +334,22 @@ public class MansionControl : MonoBehaviourPun
             MansionBossIsBeaten(false);
     }
     ///////////////////////////
-    public void OnClickShuffleDeck() //SHUFFLE btn
+    public void OnClickShuffleDeck(int dmg) //SHUFFLE btn
     {
         if (view.IsMine)
         {
             mansionDeckArrayHolder = mansionDeck.ToArray();
             ShuffleMansionDeck();      
             view.RPC("RPC_ShuffleMansionDeck", RpcTarget.AllBuffered, (object)mansionDeckArrayHolder);
-            string txt = "Mansion deck SHUFFLE";
-            view.RPC("RPC_SetMainTextManually", RpcTarget.AllBuffered, txt);
+            //string txt = "Mansion deck SHUFFLE";
+            view.RPC("RPC_SetMainTextPlayer", RpcTarget.AllBuffered, currentPlayerName, false, dmg, "Deck shuffled");
+            //view.RPC("RPC_SetMainTextManually", RpcTarget.AllBuffered, txt);
         }
     }
 
-    [PunRPC] private void RPC_SetMainTextPlayer(string name, bool wins, int points, int dmg)
+    [PunRPC] private void RPC_SetMainTextPlayer(string name, bool wins, int value, string info)
     {
-        StartCoroutine(Main_PlayerWins(name, wins,points, dmg));
+        StartCoroutine(Main_PlayerWins(name, wins,value, info));
     }
     [PunRPC] private void RPC_SetMainTextManually(string txt)
     {
@@ -369,14 +375,14 @@ public class MansionControl : MonoBehaviourPun
         yield return new WaitForSeconds(5f);
         mansionActionTMP.text = "";
     }
-    IEnumerator Main_PlayerWins(string name, bool wins, int points, int dmg)
+    IEnumerator Main_PlayerWins(string name, bool wins, int value, string info)
     {
         MansionCard.GetComponent<Image>().color = inactiveColor;
         if (wins)
         {
             mansionActionTMP.text = "WIN\n";
-            if(points>0)
-                mansionActionTMP.text += name + " got "+points+" points";
+            if(value > 0)
+                mansionActionTMP.text += name + " got "+ value + " points";
             else
                 mansionActionTMP.text += name + " didn't get any points";
         }
@@ -384,11 +390,12 @@ public class MansionControl : MonoBehaviourPun
         {
             mansionActionTMP.text = "LOSE\n";
             //int dmg = CurrentMansionCard.GetDMG();
-            if(dmg>0)
-                mansionActionTMP.text += name + " takes "+dmg+" damage";
+            if(value > 0)
+                mansionActionTMP.text += name + " takes "+ value + " damage";
             else
                 mansionActionTMP.text += name + " takes no damage";
         }
+        mansionActionTMP.text += "\n" + info;
         yield return new WaitForSeconds(5f);
         
         mansionActionTMP.text = "";
