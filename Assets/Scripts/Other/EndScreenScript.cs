@@ -5,7 +5,7 @@ using TMPro;
 
 public class EndScreenScript : MonoBehaviour
 {
-    public GameObject PhotonRoomMaster, WinnerCharacterCard;
+    public GameObject PhotonRoomMaster, WinnerCharacterCard, HostButtons;
     private GameObject Child;
     public TMP_Text winnerMainTMP;
     public GameObject Shop_btn, Mansion_btn, endTurn_btn;
@@ -17,6 +17,10 @@ public class EndScreenScript : MonoBehaviour
         Shop_btn.SetActive(false);
         Mansion_btn.SetActive(false);
         Shop_btn.SetActive(false);
+
+        bool isMaster = PhotonRoomMaster.GetComponent<PhotonRoomMaster>().CheckIfIsMasterClient();
+        HostButtons.SetActive(isMaster);
+
         StartCoroutine(ShowEndScreen());
     }
 

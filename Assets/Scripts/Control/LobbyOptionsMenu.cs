@@ -8,7 +8,7 @@ using UnityEditor;
 
 public class LobbyOptionsMenu : MonoBehaviourPun
 {
-    public GameObject CharacterCardList, characterTypeDropDown, mansionTypeDropDown, OptionsMenu;
+    public GameObject characterTypeDropDown, mansionTypeDropDown, OptionsMenu;
     public TMP_Text mainInfoText;
     private bool gameStarts, isMaster, optionsMenuOn;
     PhotonView view;
@@ -46,25 +46,13 @@ public class LobbyOptionsMenu : MonoBehaviourPun
             //PlayerPrefs.SetInt("CharacterType", characterValue);
             //Debug.Log("CharacterType = " + characterValue);
 
-            view.RPC("Pun_StartGetLobbyOptions", RpcTarget.AllBuffered/*, characterValue*/);
+            view.RPC("Pun_StartGetLobbyOptions", RpcTarget.AllBuffered);
             gameStarts = true;
         }
     }
 
-    [PunRPC] void Pun_StartGetLobbyOptions(/*int charValue*/)
+    [PunRPC] void Pun_StartGetLobbyOptions()
     {
-        /*
-        if (charValue==0)
-        {
-            CharacterCardList.GetComponent<TextFileToList>().LoadTextFileByName("CharacterList");
-        }
-        else //Value == 1
-        {
-            CharacterCardList.GetComponent<TextFileToList>().LoadTextFileByName("CharacterCustomlist");
-        }*/
-
-        //GameStats.MansionDeckValue = mansionValue;
-
         SetMainInfoText("Game is starting...");
     }
 

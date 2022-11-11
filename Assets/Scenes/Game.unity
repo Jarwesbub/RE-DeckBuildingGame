@@ -1892,6 +1892,45 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 142555838}
   m_CullTransparentMesh: 1
+--- !u!1 &143556294
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 143556295}
+  m_Layer: 5
+  m_Name: Host buttons
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &143556295
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143556294}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 228746597}
+  - {fileID: 822467935}
+  - {fileID: 1262912694}
+  m_Father: {fileID: 986646036}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &173591340
 GameObject:
   m_ObjectHideFlags: 0
@@ -2659,8 +2698,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1925063851}
-  m_Father: {fileID: 1924610372}
-  m_RootOrder: 3
+  m_Father: {fileID: 143556295}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3079,6 +3118,7 @@ MonoBehaviour:
   ActionList7: []
   ExtraList1: []
   ExtraList2: []
+  firstLoadShopCardNames: []
 --- !u!114 &263973198
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3270,7 +3310,7 @@ GameObject:
   m_Component:
   - component: {fileID: 303211443}
   m_Layer: 5
-  m_Name: DeleteActions
+  m_Name: TrashActions
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3796,7 +3836,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 168}
+  m_AnchoredPosition: {x: 0, y: 146.6}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &386573780
@@ -3819,9 +3859,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Winner is:
-
-    Player'
+  m_text: Player Wins!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3830,8 +3868,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 2887523552
-  m_fontColor: {r: 0.8773585, g: 0.11173906, b: 0.11173906, a: 0.6745098}
+    rgba: 4285314258
+  m_fontColor: {r: 0.8235295, g: 0.7058824, b: 0.42352945, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -3848,13 +3886,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 26
-  m_fontSizeBase: 26
+  m_fontSize: 24
+  m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
@@ -6063,7 +6101,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Delete Card
+  m_text: 'Trash a Card
 
 '
   m_isRightToLeft: 0
@@ -8090,8 +8128,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1740552899}
-  m_Father: {fileID: 1924610372}
-  m_RootOrder: 4
+  m_Father: {fileID: 143556295}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -9474,6 +9512,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1924610372}
+  - {fileID: 143556295}
   m_Father: {fileID: 1202037457}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9496,6 +9535,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PhotonRoomMaster: {fileID: 1703685841}
   WinnerCharacterCard: {fileID: 525903544}
+  HostButtons: {fileID: 143556294}
   winnerMainTMP: {fileID: 386573780}
   Shop_btn: {fileID: 743575664}
   Mansion_btn: {fileID: 1640655020}
@@ -11733,12 +11773,12 @@ GameObject:
   - component: {fileID: 1184354482}
   - component: {fileID: 1184354481}
   m_Layer: 5
-  m_Name: ShowCardDeleted_txt
+  m_Name: ShowCardTrashed_txt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1184354480
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11779,7 +11819,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Card deleted!
+  m_text: Card trashed!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5416dfa9dbb70a2428832122b6d021e1, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 5416dfa9dbb70a2428832122b6d021e1, type: 2}
@@ -11944,7 +11984,7 @@ GameObject:
   - component: {fileID: 1195097677}
   - component: {fileID: 1195097676}
   m_Layer: 5
-  m_Name: DeletePlatform
+  m_Name: TrashPlatform
   m_TagString: DeleteCardPlatform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12413,7 +12453,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1257983581}
   m_Layer: 0
-  m_Name: DeleteCardPlatform
+  m_Name: TrashCardPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12603,8 +12643,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1459785540}
-  m_Father: {fileID: 1924610372}
-  m_RootOrder: 5
+  m_Father: {fileID: 143556295}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -13952,7 +13992,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Discard card?
+  m_text: Trash this card?
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -18539,9 +18579,6 @@ RectTransform:
   - {fileID: 67051459}
   - {fileID: 386573779}
   - {fileID: 525903545}
-  - {fileID: 228746597}
-  - {fileID: 822467935}
-  - {fileID: 1262912694}
   m_Father: {fileID: 986646036}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

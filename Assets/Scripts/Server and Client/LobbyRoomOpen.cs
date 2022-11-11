@@ -46,7 +46,7 @@ public class LobbyRoomOpen : MonoBehaviourPunCallbacks
             PhotonNetwork.CurrentRoom.IsOpen = false; //Set room unjoinable before creating character cards
             int playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
 
-            int deckType = PlayerPrefs.GetInt("CharacterType"); // 0 = ORIGINAL , 1 = CUSTOM
+            int deckType = GameStats.CharacterDeckValue; // 0 = ORIGINAL , 1 = CUSTOM
             string[] characterCardsList = CharacterList.GetComponent<AllCharacterCards>().GetCharacterCardsByType(deckType);
 
             int cardCount = characterCardsList.Length;

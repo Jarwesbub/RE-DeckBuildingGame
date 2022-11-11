@@ -9,29 +9,32 @@ using System;
 
 public class EditShopControl : MonoBehaviour
 {
-    public GameObject AllShopCards, CardTypeDropdown, LoadGridContent;
+    public GameObject AllShopCards, LoadGridContent;
     public GameObject AddCardsPrefab, currentDeck_btn, addCards_btn;
     public Scrollbar currDeckScrollBar;
+    public Dropdown ShopLoadDropdown, CardTypeDropdown;
+    public InputField NameEdit_inputf;
     private Image img;
     public TMP_Text mainTitleText, loadingText, cardCountText;
     bool shopCardTypeIsChosen, buttonLock;
+    [SerializeField] Color colorON;
+    private int shopDataNumber;
+    string shopDeckName;
     [SerializeField] int[] ammoCounts, hpItemCounts, knifeCounts, handgunCounts, shotgunCounts, machinegunCounts, rifleCounts, explosiveCounts;
     [SerializeField] int[] action1Counts, action2Counts, action3Counts, action4Counts, action5Counts, action6Counts, action7Counts;
     [SerializeField] int[] extra1Counts, extra2Counts;
-    private int shopDataCount, shopDataNumber;
     private LinkedList<int[]> shopCardsLinkedList;
-
-    [SerializeField] Color colorON;
 
     void Start()
     {
         shopDataNumber = 1;
         img = GetComponent<Image>();
-        CardTypeDropdown.GetComponent<Dropdown>().interactable = false;
+        CardTypeDropdown.interactable = false;
+        NameEdit_inputf.text = "";
+        NameEdit_inputf.interactable = false;
         shopCardTypeIsChosen = false;
         buttonLock = true;
         loadingText.text = "";
-        shopDataCount = GameStats.ShopDeckDataCount;
         CreateLinkedShopLists();
 
     }
@@ -178,6 +181,7 @@ public class EditShopControl : MonoBehaviour
     public void LoadNewShopData(int dropdownIndexValue)
     {
         shopDataNumber = dropdownIndexValue+1;
+        OnLoad();
     }
 
 
@@ -276,7 +280,7 @@ public class EditShopControl : MonoBehaviour
         return count;
     }
     
-    public void UpdateShopCardArrayValue(int cardTypeIndex, int row, int value)
+    public void UpdateShopCardArrayValue(int cardTypeIndex, int row, int value) //Shop card prefab -> when card value is changed
     {
         switch (cardTypeIndex)
         {
@@ -338,65 +342,109 @@ public class EditShopControl : MonoBehaviour
     }
 
 
-    public void OnClickLoad()
+    public void OnLoad()
     {
         string textFilePath = Application.persistentDataPath + "/Custom_data/ShopCardsData" + shopDataNumber + ".txt";
         string[] fileLines = File.ReadAllLines(textFilePath).ToArray();
 
-        Debug.Log("Filelines length = " + fileLines.Length);
+        shopDeckName = fileLines[0];
+        ammoCounts = SetStringNumberValues(fileLines[1]);
+        hpItemCounts = SetStringNumberValues(fileLines[2]);
+        knifeCounts = SetStringNumberValues(fileLines[3]);
+        handgunCounts = SetStringNumberValues(fileLines[4]);
+        shotgunCounts = SetStringNumberValues(fileLines[5]);
+        machinegunCounts = SetStringNumberValues(fileLines[6]);
+        rifleCounts = SetStringNumberValues(fileLines[7]);
+        explosiveCounts = SetStringNumberValues(fileLines[8]);
 
-        ammoCounts = SetStringNumberValues(fileLines[0]);
-        hpItemCounts = SetStringNumberValues(fileLines[1]);
-        knifeCounts = SetStringNumberValues(fileLines[2]);
-        handgunCounts = SetStringNumberValues(fileLines[3]);
-        shotgunCounts = SetStringNumberValues(fileLines[4]);
-        machinegunCounts = SetStringNumberValues(fileLines[5]);
-        rifleCounts = SetStringNumberValues(fileLines[6]);
-        explosiveCounts = SetStringNumberValues(fileLines[7]);
+        action1Counts = SetStringNumberValues(fileLines[9]);
+        action2Counts = SetStringNumberValues(fileLines[10]);
+        action3Counts = SetStringNumberValues(fileLines[11]);
+        action4Counts = SetStringNumberValues(fileLines[12]);
+        action5Counts = SetStringNumberValues(fileLines[13]);
+        action6Counts = SetStringNumberValues(fileLines[14]);
+        action7Counts = SetStringNumberValues(fileLines[15]);
 
-        action1Counts = SetStringNumberValues(fileLines[8]);
-        action2Counts = action1Counts;
-        action3Counts = action1Counts;
-        action4Counts = action1Counts;
-        action5Counts = action1Counts;
-        action6Counts = action1Counts;
-        action7Counts = action1Counts;
+        extra1Counts = SetStringNumberValues(fileLines[16]);
+        extra2Counts = SetStringNumberValues(fileLines[17]);
 
-        extra1Counts = SetStringNumberValues(fileLines[9]);
-        extra2Counts = SetStringNumberValues(fileLines[10]);
+        NameEdit_inputf.GetComponent<InputField>().text = shopDeckName;
 
         if (buttonLock)
         {
-            CardTypeDropdown.GetComponent<Dropdown>().interactable = true;
+            CardTypeDropdown.interactable = true;
+            NameEdit_inputf.interactable = true;
             buttonLock = false;
             UpdateShopDeckType(0);
         }
-
+        else
+        {
+            if(CardTypeDropdown.value==0)
+                UpdateShopDeckType(0);
+            else
+                CardTypeDropdown.value = 0;
+        }
     }
 
     public void OnClickSaveAll()
     {
-        string[] writeLine = new string[11];
+        string[] writeLine = new string[18];
+        string newName = NameEdit_inputf.text;
+        if (shopDeckName != newName)
+        {
+            shopDeckName = newName;
+            Debug.Log("ShopCards: " + shopDataNumber + " name: " + shopDeckName);
+            ShopLoadDropdown.GetComponent<UIEdShopLoadDropDownHandler>().ChangeDropItemNameByIndex(shopDataNumber - 1, shopDeckName);
+            ShopLoadDropdown.captionText.text = shopDeckName;
+        }
+        writeLine[0] = shopDeckName;
+        writeLine[1] = ConvertIntArrayToString(ammoCounts);
+        writeLine[2] = ConvertIntArrayToString(hpItemCounts);
+        writeLine[3] = ConvertIntArrayToString(knifeCounts);
+        writeLine[4] = ConvertIntArrayToString(handgunCounts);
+        writeLine[5] = ConvertIntArrayToString(shotgunCounts);
+        writeLine[6] = ConvertIntArrayToString(machinegunCounts);
+        writeLine[7] = ConvertIntArrayToString(rifleCounts);
+        writeLine[8] = ConvertIntArrayToString(explosiveCounts);
+        writeLine[9] = ConvertIntArrayToString(action1Counts); //action cards 1-7
+        writeLine[10] = ConvertIntArrayToString(action2Counts); //action cards 1-7
+        writeLine[11] = ConvertIntArrayToString(action3Counts); //action cards 1-7
+        writeLine[12] = ConvertIntArrayToString(action4Counts); //action cards 1-7
+        writeLine[13] = ConvertIntArrayToString(action5Counts); //action cards 1-7
+        writeLine[14] = ConvertIntArrayToString(action6Counts); //action cards 1-7
+        writeLine[15] = ConvertIntArrayToString(action7Counts); //action cards 1-7
+        writeLine[16] = ConvertIntArrayToString(extra1Counts);
+        writeLine[17] = ConvertIntArrayToString(extra2Counts);
 
-        writeLine[0] = ConvertIntArrayToString(ammoCounts);
-        writeLine[1] = ConvertIntArrayToString(hpItemCounts);
-        writeLine[2] = ConvertIntArrayToString(knifeCounts);
-        writeLine[3] = ConvertIntArrayToString(handgunCounts);
-        writeLine[4] = ConvertIntArrayToString(shotgunCounts);
-        writeLine[5] = ConvertIntArrayToString(machinegunCounts);
-        writeLine[6] = ConvertIntArrayToString(rifleCounts);
-        writeLine[7] = ConvertIntArrayToString(explosiveCounts);
-        writeLine[8] = ConvertIntArrayToString(action1Counts); //action cards 1-7
-        writeLine[9] = ConvertIntArrayToString(extra1Counts);
-        writeLine[10] = ConvertIntArrayToString(extra2Counts);
-
-
-        string writeToFilePath = Application.persistentDataPath + "/Custom_data/ShopCardsData" + shopDataNumber + ".txt";
-        File.WriteAllLines(writeToFilePath, writeLine);
-        Debug.Log("Overwriting to: " + writeToFilePath);
+        string textFilePath = Application.persistentDataPath + "/Custom_data/ShopCardsData" + shopDataNumber + ".txt";
+        File.WriteAllLines(textFilePath, writeLine);
+        Debug.Log("Overwriting to: " + writeLine[0]);
 
         StartCoroutine(LoadAndSave(false)); //save text
     }
+
+    public void OnClickClearAllCountsFromCurrentDeck()
+    {
+        foreach (Transform child in LoadGridContent.transform) //WRONG OBJECT TESTING
+        {
+            child.gameObject.GetComponent<EdShopCardCountScript>().ResetMyCountToZero();
+        }
+    }
+    public void OnClickAddOneToAll()
+    {
+        foreach (Transform child in LoadGridContent.transform) //WRONG OBJECT TESTING
+        {
+            child.gameObject.GetComponent<EdShopCardCountScript>().OnClickAddToMyCounts();
+        }
+    }
+    public void OnClickRemoveOneFromAll()
+    {
+        foreach (Transform child in LoadGridContent.transform) //WRONG OBJECT TESTING
+        {
+            child.gameObject.GetComponent<EdShopCardCountScript>().OnClickRemoveFromMyCounts();
+        }
+    }
+
     private string ConvertIntArrayToString(int[] array)
     {
         int length = array.Length;
@@ -418,10 +466,10 @@ public class EditShopControl : MonoBehaviour
         buttonLock = true;
         if (load)
         {
-            CardTypeDropdown.GetComponent<Dropdown>().interactable = false;
+            CardTypeDropdown.interactable = false;
             loadingText.text = "Loading...";
             yield return new WaitForSeconds(1f);
-            CardTypeDropdown.GetComponent<Dropdown>().interactable = true;
+            CardTypeDropdown.interactable = true;
         }
         else //Save
         {

@@ -23,7 +23,7 @@ public class ShopCards : MonoBehaviourPun   //
     [SerializeField] private List<GameObject> allButtonsList; //List of all objects. Can be accessed by list number! (used in [PunRPC])  
     PhotonView view;
     public int buysCount; //Reset to 0 from "GameControl.cs" when player turn changes
-    private bool isZoomed, isMaster; //Tells if current card is in bigger- or normal size
+    private bool isZoomed, isMaster, isRandomCardActive; //Tells if current card is in bigger- or normal size
     Vector3 vec_Normal = new Vector3(1, 1, 1);
     Vector3 vec_Zoom = new Vector3(1.5f, 1.5f, 1); //OLD = 1.8f
     [SerializeField] private bool waitRPC;  //Shows if "wait time" is active while sending data in network
@@ -44,6 +44,7 @@ public class ShopCards : MonoBehaviourPun   //
         SpawnCards = GameObject.FindWithTag("Respawn");
         waitRPC = false;
         isZoomed = false;
+        isRandomCardActive = true;
         Sold.text = "";
         buysCount = 0;
         BuysCounttxt.text = "Buys (B) = "+buysCount;
@@ -115,11 +116,13 @@ public class ShopCards : MonoBehaviourPun   //
             //cardList[i] = card;
             cardList.Add(card);
         }
-        if(isMaster)
+        if(isMaster && listCount>0)
         {
             int rand = Random.Range(0, cardList.Count);
             firstLoadShopCardNames.Add(cardList[rand]);
         }
+        else if (listCount==0)
+            firstLoadShopCardNames.Add("");
         //buttonObject.GetComponent<SpriteFromAtlas>().ChangeCardSprite(cardList[0]); //Set first card in list to SPRITE
         allButtonsList.Add(buttonObject); //List of gameobjects in order for PunRPC (same order as count_Values list)
         return cardList;
@@ -137,8 +140,14 @@ public class ShopCards : MonoBehaviourPun   //
 
         foreach (GameObject o in allButtonsList)
         {
-            if (index > 2) //Skip Ammo Cards
+            if (index > 2 && array[index] != "") //Skip Ammo Cards
                 o.GetComponent<SpriteFromAtlas>().ChangeCardSprite(array[index]); //Set first card in list to SPRITE
+            else if (array[index] == "")
+            {
+                if (index == array.Length-1) //If card is last one -> Random card! (extra2)
+                    isRandomCardActive = false;
+                o.SetActive(false);
+            }
             index++;
         }
 
@@ -494,7 +503,7 @@ public class ShopCards : MonoBehaviourPun   //
         {
             buysCount = 0;
             //EXTRA2 RANDOM CARD ->
-            if (view.IsMine)
+            if (view.IsMine && isRandomCardActive)
             {
                 StartCoroutine(ExtraRandomCard());
             }

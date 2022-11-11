@@ -175,20 +175,22 @@ PhotonView view;
 
     private string[] Shop_GetCardNamesByIndex(int index)
     {
-        if (index <= 7)
+        //if (index <= 7)
         {
             int[] countArray = Shop_ConvertTextToNumbers(fileLines[index]); //Double digit values
             string[] cardNameArray = AllShopCards.GetComponent<AllShopCards>().GetShopCardByCount(countArray, index);
             //cardNameArray = ShuffleArray(cardNameArray);
             return cardNameArray;
         }
+        /*
         else if (index <=14) //Action cards
         {
-            int[] countArray = Shop_ConvertTextToNumbers(fileLines[8]); //Double digit values
+            int[] countArray = Shop_ConvertTextToNumbers(fileLines[index]); //Double digit values
             string[] cardNameArray = AllShopCards.GetComponent<AllShopCards>().GetShopCardByCount(countArray, index);
             //cardNameArray = ShuffleArray(cardNameArray);
             return cardNameArray;
         }
+        
         else //Extra cards //index = 15-16
         {
             int line = index - 6;
@@ -196,7 +198,7 @@ PhotonView view;
             string[] cardNameArray = AllShopCards.GetComponent<AllShopCards>().GetShopCardByCount(countArray, index);
             //cardNameArray = ShuffleArray(cardNameArray);
             return cardNameArray;
-        }
+        }*/
     }
     private int[] Shop_ConvertTextToNumbers(string s)
     {
@@ -280,9 +282,10 @@ PhotonView view;
 
         string readFromFilePath = Application.persistentDataPath + "/Custom_data/ShopCardsData" + value + ".txt";
         string[] masterFileLines = File.ReadAllLines(readFromFilePath).ToArray();
+        masterFileLines = masterFileLines.Skip(1).ToArray(); //Skips the first line which contains the deck name (no values)
+        
 
         view.RPC("PUN_CreateAllShopDataCards", RpcTarget.AllBuffered, (object)masterFileLines);
-
         view.RPC("Pun_OverwriteGameData", RpcTarget.AllBuffered, (object)startingDeckList, "StartingDeckList");
         view.RPC("Pun_OverwriteGameData", RpcTarget.AllBuffered, (object)characterCardsList, "CharacterList");
         view.RPC("Pun_OverwriteGameData", RpcTarget.AllBuffered, (object)mansionCardsList, "MatchMansionCards");

@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
+using System.Linq;
 
 public class UILobbyRoomDropDownHandler : MonoBehaviour
 {
     [SerializeField] int dropdownType;
     [SerializeField] GameObject LobbyRoomControl;
-    //private int value;
 
     void Start()
     {
@@ -47,7 +48,6 @@ public class UILobbyRoomDropDownHandler : MonoBehaviour
     private void MansionDropDownItemSelected(Dropdown dropdown)
     {
         int index = dropdown.value + 1;
-        PlayerPrefs.SetInt("MansionDeckValue", index);
         GameStats.MansionDeckValue = index;
     }
 
@@ -65,7 +65,9 @@ public class UILobbyRoomDropDownHandler : MonoBehaviour
 
         for (int i = 1; i <= cardCount; i++)
         {
-            items.Add("Shop cards: " + i);
+            string textFilePath = Application.persistentDataPath + "/Custom_data/ShopCardsData" + i + ".txt";
+            string name = File.ReadLines(textFilePath).First();
+            items.Add(name);
         }
 
 
@@ -92,17 +94,6 @@ public class UILobbyRoomDropDownHandler : MonoBehaviour
     
     private void CharacterType()
     {
-        /*
-        if (PlayerPrefs.HasKey("CharacterType")) //0 = Original; 1 = Custom
-            value = PlayerPrefs.GetInt("CharacterType");
-        else
-        {
-            PlayerPrefs.SetInt("CharacterType", 0);
-            value = 0;
-        }*/
-
-        int value = GameStats.CharacterDeckValue; //0 = Original; 1 = Custom
-
         var dropdown = transform.GetComponent<Dropdown>();
         dropdown.options.Clear();
 
@@ -115,8 +106,8 @@ public class UILobbyRoomDropDownHandler : MonoBehaviour
             dropdown.options.Add(new Dropdown.OptionData() { text = item });
         }
 
+        int value = GameStats.CharacterDeckValue; //0 = Original; 1 = Custom
         dropdown.value = value;
-        //dropdown.Select();
         dropdown.RefreshShownValue();
         dropdown.onValueChanged.AddListener(delegate { CharacterDropDownItemSelected(dropdown); });
 
@@ -125,7 +116,6 @@ public class UILobbyRoomDropDownHandler : MonoBehaviour
     private void CharacterDropDownItemSelected(Dropdown dropdown)
     {
         int index = dropdown.value; //0 = Original; 1 = Custom
-        PlayerPrefs.SetInt("CharacterType", index);
         GameStats.CharacterDeckValue = index;
     }
 

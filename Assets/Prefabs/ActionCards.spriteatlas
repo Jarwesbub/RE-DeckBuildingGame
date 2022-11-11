@@ -23,7 +23,7 @@ SpriteAtlas:
     platformSettings:
     - serializedVersion: 3
       m_BuildTarget: DefaultTexturePlatform
-      m_MaxTextureSize: 4096
+      m_MaxTextureSize: 8192
       m_ResizeAlgorithm: 0
       m_TextureFormat: -1
       m_TextureCompression: 1
@@ -50,57 +50,89 @@ SpriteAtlas:
     cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
-  - {fileID: 21300000, guid: 07319850e72d8ea47b3a691be8cdede7, type: 3}
-  - {fileID: 21300000, guid: c3fd99c07b0306640a32a0af1c65e4a3, type: 3}
-  - {fileID: 21300000, guid: 2c3217e03fe461c488213cf4a04f4758, type: 3}
-  - {fileID: 21300000, guid: 8a6faf912d1255f46b110ebfe4b068b3, type: 3}
-  - {fileID: 21300000, guid: b5bf0bc21df181043a649cd9c91f91b6, type: 3}
-  - {fileID: 21300000, guid: bec59583359f8a94393ab679b839db53, type: 3}
-  - {fileID: 21300000, guid: b02a2ac3a9a5fdf438f7c79d3b7e8b03, type: 3}
-  - {fileID: 21300000, guid: 65e63d0478a362a4c8d6294cc86363db, type: 3}
-  - {fileID: 21300000, guid: 3795da05ea5b7ad439f885a99dda67a7, type: 3}
-  - {fileID: 21300000, guid: ec89e7150d56ed74c8d2c891dca023b7, type: 3}
-  - {fileID: 21300000, guid: 60e71395de1039a4d9ee4cf918b6a771, type: 3}
-  - {fileID: 21300000, guid: ce8a02d547fa5aa47aac2bac37d81e0f, type: 3}
-  - {fileID: 21300000, guid: 4b913cd51fadb66418544ce37b78f66c, type: 3}
-  - {fileID: 21300000, guid: ec7d13560a34b15498d6274e56776c77, type: 3}
-  - {fileID: 21300000, guid: 5de2752722dcc8e4e9693807c423d483, type: 3}
-  - {fileID: 21300000, guid: 0803e0a762fd5d54ca26a723ed9b8c91, type: 3}
-  - {fileID: 21300000, guid: 51a62b8a36996dc4cba32bf42f20e0d5, type: 3}
-  - {fileID: 21300000, guid: 9cbecdca16f543e41b9c855edb9c8fd1, type: 3}
-  - {fileID: 21300000, guid: 7854801b3d8a35340aa719536c8b0c13, type: 3}
-  - {fileID: 21300000, guid: 3af55d4cba81ca744a51d8eb0a2a397b, type: 3}
-  - {fileID: 21300000, guid: 4106453dd05d46c49b3ff03f2d697199, type: 3}
-  - {fileID: 21300000, guid: 9aa09dfdd3850ea469cd58fdf06de221, type: 3}
-  - {fileID: 21300000, guid: 943af44e39b76074ea50d19d11c18227, type: 3}
-  - {fileID: 21300000, guid: 9476275e0caf2c6498f6f2c55e6bc71f, type: 3}
-  - {fileID: 21300000, guid: 5047807f941c3d54ab49628839d91a99, type: 3}
+  - {fileID: 21300000, guid: 7fb3d0107f23e874a832ab1cc91005f4, type: 3}
+  - {fileID: 21300000, guid: 1b68be806e21c7246bb2e3f7b4055af5, type: 3}
+  - {fileID: 21300000, guid: 478f04513cf6bc542b09820268776611, type: 3}
+  - {fileID: 21300000, guid: a15de23251b5b6243bff786c4bf631cc, type: 3}
+  - {fileID: 21300000, guid: 88caa942341d5b84790e5d3f46ac5258, type: 3}
+  - {fileID: 21300000, guid: ea348d133e3f11b49b8607cf826928ef, type: 3}
+  - {fileID: 21300000, guid: 12c1d923c2e96e14d865094c0ec96418, type: 3}
+  - {fileID: 21300000, guid: c9f4c1332d0a76d45bb8c8355df3b962, type: 3}
+  - {fileID: 21300000, guid: 0830c23330c1b434c86e51d96acf28f7, type: 3}
+  - {fileID: 21300000, guid: 299b4b5439442064388dca2b3ac1bb10, type: 3}
+  - {fileID: 21300000, guid: 9bd40ae421e2e394e8d5273a276da472, type: 3}
+  - {fileID: 21300000, guid: 74a7fcf4054d95e4bb207b189c79eb48, type: 3}
+  - {fileID: 21300000, guid: 1122460591aa45849bf3b7ad43e157de, type: 3}
+  - {fileID: 21300000, guid: c3f02e054cc5e2a4bbb33630c537c921, type: 3}
+  - {fileID: 21300000, guid: c9496d7550e2101468c76f1cf87659ae, type: 3}
+  - {fileID: 21300000, guid: fc14aba78b11eae4b97a156f87ab729a, type: 3}
+  - {fileID: 21300000, guid: 5081a4d7872ecf54fb411b2e67ecbde4, type: 3}
+  - {fileID: 21300000, guid: c66cd70847c0e9945a3cef76d2f2a213, type: 3}
+  - {fileID: 21300000, guid: a15ed789cda7f1b4fa2aedb5197a5e4d, type: 3}
+  - {fileID: 21300000, guid: 512bc5b9642e05b43bf782b54174f8c1, type: 3}
+  - {fileID: 21300000, guid: 41588af917057ee41a22f61f8e5dac28, type: 3}
+  - {fileID: 21300000, guid: ac5fe35a962b43f4ab88100a962819ea, type: 3}
+  - {fileID: 21300000, guid: 8519f9aa271ee3641ba136509ae412cd, type: 3}
+  - {fileID: 21300000, guid: 7e21bdba106ba1943be5d48946237fc4, type: 3}
+  - {fileID: 21300000, guid: 75e3426bf05bb2b41990ddd18c1ae18c, type: 3}
+  - {fileID: 21300000, guid: 2ea3737bc7b60e94b9181a62453c514e, type: 3}
+  - {fileID: 21300000, guid: 1c5a5d9b35a7ce34d982a01e19521181, type: 3}
+  - {fileID: 21300000, guid: 5458ddeb97eb54046956df4488b4c6c4, type: 3}
+  - {fileID: 21300000, guid: ea267a4c54812d442b9f4b8adab78671, type: 3}
+  - {fileID: 21300000, guid: 74aef98c4ba088a4c8b3ce6ec112e4b8, type: 3}
+  - {fileID: 21300000, guid: e7f1999c9c1318b439f3fcdc97526f9d, type: 3}
+  - {fileID: 21300000, guid: 9146e52d42bd2914e8000e9065197608, type: 3}
+  - {fileID: 21300000, guid: 87984cfd7780819429384f3a9f0f6460, type: 3}
+  - {fileID: 21300000, guid: 3e59f50e31f2cb948960341d568b2331, type: 3}
+  - {fileID: 21300000, guid: ba64841e4f82e644f8e6dac0cdcbf43b, type: 3}
+  - {fileID: 21300000, guid: 9974615e75017e44795e8c272067a3aa, type: 3}
+  - {fileID: 21300000, guid: efc7da6ebb85f8046b9155fc1063dc87, type: 3}
+  - {fileID: 21300000, guid: 026a5dbead2efab4b85927bf14e793d1, type: 3}
+  - {fileID: 21300000, guid: 759f121f1b5de4d47a4d5fc6db337acb, type: 3}
+  - {fileID: 21300000, guid: f8030c3fcc44a1f40802e6787a720f70, type: 3}
+  - {fileID: 21300000, guid: 9975ce9f78740f74495a7dcce08fed3c, type: 3}
   m_PackedSpriteNamesToIndex:
-  - _ac18uroborosinjection
-  - _ac12struggletosurvival
-  - _ac17fiercebattle
-  - _ac28higherpriorities
-  - _ac11masterofunlocking
-  - _ac22desperateescape
-  - _ac19quirkoffate
-  - _ac08backtoback
-  - _ac24ihavethis
-  - _ac40vengefulintentions
-  - _ac34raccooncitypolicedepartment
-  - _ac02deadlyaim
-  - _ac13partners
-  - _ac15greatambition
-  - _ac10omniousbattle
-  - _ac33highvaluetargets
-  - _ac01mansionfoyer
-  - _ac36toetotoe
-  - _ac06themerchant
-  - _ac05reload
-  - _ac07umbrellacorporation
-  - _ac16archrival
-  - _ac14starcrossedduo
-  - _ac03shatteredmemories
-  - _ac04escapefromdeadcity
+  - ac-029_outbreak_parting_ways
+  - ac-022_alliance_desperate_escape1
+  - ac-030_outbreak_returned_favor
+  - ac-027_outbreak_by_any_means_necessary_infection_mod
+  - ac-013_alliance_partners_partner_mod
+  - ac-036_nightmare_toe_to_toe
+  - ac-040_nightmare_vengeful_intention
+  - ac-018_alliance_uroboros_injection1
+  - ac-032_nightmare_lonewolf
+  - ac-034_nightmare_raccoon_city_police_department
+  - ac-026_outbreak_injection_infection_mod
+  - ac-028_outbreak_higher_priorities
+  - ac-041_nightmare_symbol_of_evil
+  - ac-037_nightmare_a_gift
+  - ac-003_premier_shattered_memories1
+  - ac-039_nightmare_long_awaited_dawn
+  - ac-005_premier_reload1
+  - ac-001_premier_mansion_foyer1
+  - ac-020_alliance_cornered_partner_mod
+  - ac-002_premier_deadly_aim1
+  - ac-023_outbreak_power_of_the_t-virus_infection_mod
+  - ac-009_premier_item_management1
+  - ac-024_outbreak_i_have_this
+  - ac-015_alliance_great_ambition_partner_mod
+  - ac-010_premier_ominous_battle1
+  - ac-017_alliance_fierce_battle1
+  - ac-011_premier_master_of_unlocking1
+  - ac-016_alliance_archrival_partner_mod
+  - ac-038_nightmare_mind_control
+  - ac-031_outbreak_the_gathering_darkness
+  - ac-012_premier_struggle_for_survival1
+  - ac-007_premier_umbrella_corporation1
+  - ac-004_premier_escape_from_dead_city
+  - ac-006_premier_the_merchant1
+  - ac-035_nightmare_pda
+  - ac-021_alliance_gathering_forces1
+  - ac-014_alliance_star-crossed_duo_partner_mod
+  - ac-025_outbreak_weskers_secret_infection_mod
+  - ac-033_nightmare_high_value_targets
+  - ac-019_alliance_quirk_of_fate1
+  - ac-008_premier_back_to_back1
   m_RenderDataMap: {}
   m_Tag: ActionCards
   m_IsVariant: 0

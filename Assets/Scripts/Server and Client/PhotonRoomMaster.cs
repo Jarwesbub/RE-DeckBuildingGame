@@ -42,6 +42,12 @@ public class PhotonRoomMaster : MonoBehaviourPunCallbacks
             isGameScene = false;
         }
     }
+    public bool CheckIfIsMasterClient()
+    {
+        return isMaster;
+    }
+
+
     private void SetCurrentRoomOpen(bool value)
     {
         PhotonNetwork.CurrentRoom.IsOpen = value;

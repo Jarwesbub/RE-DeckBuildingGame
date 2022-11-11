@@ -52,6 +52,14 @@ public class EdShopCardCountScript : MonoBehaviour
 
     }
 
+    public void ResetMyCountToZero()
+    {
+        myCardCount = 0;
+        UpdateMyCount();
+    }
+
+
+
     public void OnClickChangeCardShowcaseImage()
     {
         ShowCaseCard.GetComponent<Image>().sprite = img.sprite;
