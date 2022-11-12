@@ -65,6 +65,18 @@ public class TextFileToList : MonoBehaviourPun
         return TextList[value];
 
     }
+    public int RemoveFirstLineFromList() //Useful when avoiding unwanted value (custom name) in a text file (example: MansionControl.cs)
+    {
+        int length = TextList.Length;
+        if (length > 0)
+        {
+            List<string> list = TextList.ToList();
+            list.RemoveAt(0);
+            TextList = list.ToArray();
+        }
+        return TextList.Length;
+    }
+
 
     private void ShuffleTextList()
     {

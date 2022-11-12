@@ -17,7 +17,7 @@ public class MansionControl : MonoBehaviourPun
     private string[] mansionDeckArrayHolder; //Holds mansionDeck cards and helps as a "randomizer"
     private string currentMansionCard;
     private string mansionTxt;
-    private bool activeOtherActionBtn, doorKnobLock, isBottomCard, isBossEncounter;
+    private bool activeOtherActionBtn, doorKnobLock, isBottomCard, isBossEncounter, isButtonLock;
     private int mansionBossCount;
     [SerializeField] private Color inactiveColor; //Color indication for mansion card when player has won/lost etc.
     private Image image;
@@ -35,7 +35,7 @@ public class MansionControl : MonoBehaviourPun
         MansionExploreCount = 0;
         exploreCountTMP.text = "Explores this turn: " + 0;
         mansionBossCount = 0; isBossEncounter = false;
-        BossEncounterObj.SetActive(false);
+        BossEncounterObj.GetComponent<MansionBossEncounter>().SetBossCounterActive(false);
         MansionDoor.SetActive(true);
         MansionDoor_btnUI.SetActive(false);
         activeOtherActionBtn = false;
@@ -52,11 +52,12 @@ public class MansionControl : MonoBehaviourPun
             ShuffleMansionDeck();
             StartCoroutine(AddDelay_SendMansionDeckToClients());
         }
-
+        isButtonLock = false;
     }
+
     private string[] SetMansionCardsFromTextList()
     {
-        int listCount = MansionCardTextFile.GetComponent<TextFileToList>().GetTextListCount();
+        int listCount = MansionCardTextFile.GetComponent<TextFileToList>().RemoveFirstLineFromList(); //Removes Mansion deck's name (returns list count)
 
         string[] cardList = new string[listCount];
         for (int i = 0; i < listCount; i++)
@@ -109,13 +110,13 @@ public class MansionControl : MonoBehaviourPun
             UpdateMansionBossCount();
 
             if (mansionBossCount > 0)
-                BossEncounterObj.SetActive(false);
+                BossEncounterObj.GetComponent<MansionBossEncounter>().SetBossCounterActive(false);
             else
                 BossEncounterObj.GetComponent<MansionBossEncounter>().AllBossesDefeated();
         }
         else
         {
-            BossEncounterObj.SetActive(false);
+            BossEncounterObj.GetComponent<MansionBossEncounter>().SetBossCounterActive(false);
         }
 
         isBossEncounter = false;
@@ -159,6 +160,11 @@ public class MansionControl : MonoBehaviourPun
         mansionDeckCountTMP.text = "Mansion card count: " + MansionDeckCount;
         UpdateMansionBossCount();
     }
+
+    public bool IsButtonLockActive()
+    {
+        return isButtonLock;
+    }
     public void MansionDoorReset()
     {
         OnClickSetMansionTextEmpty();
@@ -167,10 +173,13 @@ public class MansionControl : MonoBehaviourPun
         OtherActionButtons.SetActive(false);
         isBottomCard = false;
         doorKnobLock = false;
+        isButtonLock = false;
     }
 
     public void DoorAnimationEnds()
     {
+        isButtonLock = false;
+
         if (view.IsMine)
         {
             MansionActionButtons.SetActive(true);
@@ -207,9 +216,11 @@ public class MansionControl : MonoBehaviourPun
         {
             if (MansionDeckCount > 0)
             {
+                isButtonLock = true;
+                doorKnobLock = true;
+
                 if (clickValue == 1) //Mouse1 button
                 {
-                    doorKnobLock = true;
                     isBottomCard = false;
                     currentMansionCard = mansionDeck[0];
                     GetComponent<StatsMansionCards>().CheckMansionCardStats(view.OwnerActorNr, currentMansionCard);
@@ -219,7 +230,6 @@ public class MansionControl : MonoBehaviourPun
                 }
                 else if (clickValue == 2) //Mouse2 button
                 {
-                    doorKnobLock = true;
                     isBottomCard = true;
                     MansionDoor_btnUI.SetActive(true);
                 }
@@ -251,11 +261,10 @@ public class MansionControl : MonoBehaviourPun
 
         MansionCard.GetComponent<SpriteFromAtlas>().SetMansionCardSprite(mansionDeck[value]);
         MansionDoor.GetComponent<MansionDoor>().OpenMansionDoor();
-        if (isBossCard)
-        {
-            isBossEncounter = isBossCard;
-            BossEncounterObj.SetActive(true);
-        }
+
+        isBossEncounter = isBossCard;
+        BossEncounterObj.GetComponent<MansionBossEncounter>().SetBossCounterActive(isBossCard);
+        
     }
 
     ///////////////////////////

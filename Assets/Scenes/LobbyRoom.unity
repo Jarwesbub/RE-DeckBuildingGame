@@ -471,6 +471,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AllShopCards: {fileID: 1915303085}
+  ammoList: []
+  hpList: []
+  knifeList: []
+  handgunList: []
+  shotgunList: []
+  machinegunList: []
+  rifleList: []
+  explosiveList: []
+  actionList1: []
+  actionList2: []
+  actionList3: []
+  actionList4: []
+  actionList5: []
+  actionList6: []
+  actionList7: []
+  extraList1: []
+  extraList2: []
+  startingDeckList: []
+  characterCardsList: []
+  mansionCardsList: []
 --- !u!114 &39118508
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -511,6 +531,7 @@ MonoBehaviour:
   HostSetup: {fileID: 1295320797}
   LeftMenu: {fileID: 1865150415}
   myCharacterCard: 
+  mainInfoText: {fileID: 1875937782}
 --- !u!4 &39118510
 Transform:
   m_ObjectHideFlags: 0
@@ -3683,7 +3704,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21d0a3cbd65eae94c99b8f159192a08b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CharacterCardList: {fileID: 0}
   characterTypeDropDown: {fileID: 1172811972}
   mansionTypeDropDown: {fileID: 593796562}
   OptionsMenu: {fileID: 1381574983}
@@ -4870,7 +4890,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1295320798
 Transform:
   m_ObjectHideFlags: 0
@@ -4887,7 +4907,7 @@ Transform:
   - {fileID: 1666508100}
   - {fileID: 1381574984}
   m_Father: {fileID: 1575803689}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1317583239
 GameObject:
@@ -5941,8 +5961,8 @@ Transform:
   - {fileID: 309919263}
   - {fileID: 2091953459}
   - {fileID: 2130002276}
-  - {fileID: 1295320798}
   - {fileID: 1875937784}
+  - {fileID: 1295320798}
   m_Father: {fileID: 772292417}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6164,9 +6184,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 772292420}
-        m_TargetAssemblyTypeName: LobbyOptionsMenu, Assembly-CSharp
-        m_MethodName: OnClickStartGetLobbyOptions
+      - m_Target: {fileID: 39118509}
+        m_TargetAssemblyTypeName: LobbyRoomOpen, Assembly-CSharp
+        m_MethodName: OnClickStartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6971,7 +6991,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1575803689}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

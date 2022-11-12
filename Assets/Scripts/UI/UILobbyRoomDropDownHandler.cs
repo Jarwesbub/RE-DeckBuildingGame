@@ -30,7 +30,9 @@ public class UILobbyRoomDropDownHandler : MonoBehaviour
 
         for (int i = 1; i <= cardCount; i++)
         {
-            items.Add("Custom Deck "+i);
+            string textFilePath = Application.persistentDataPath + "/Custom_data/MansionCards" + i + ".txt";
+            string name = File.ReadLines(textFilePath).First();
+            items.Add(name);
         }
 
 

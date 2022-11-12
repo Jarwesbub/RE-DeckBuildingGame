@@ -1,41 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIEdMansionLoadDropDownHandler : MonoBehaviour
 {
-    public int customCount;
+    private int customCount;
+    private Dropdown dropdown;
 
     private void Start()
     {
-        //int value = 0;
-        /*
-        if (PlayerPrefs.HasKey("MansionType")) //by number: 1-4 Custom Mansion Decks
-            value = PlayerPrefs.GetInt("MansionType");
-        else
-        {
-            PlayerPrefs.SetInt("MansionType", 1);
-            value = 1;
-        }
-        if (value == 0)
-        {
-            value = 1;
-            GameStats.MansionDeckValue = value;
-        }
-        */
-        Dropdown dropdown = transform.GetComponent<Dropdown>();
+        dropdown = transform.GetComponent<Dropdown>();
         dropdown.options.Clear();
 
         List<string> items = new List<string>();
 
-        if (customCount == 0)
-            Debug.Log("NO MansionCards1-? .txt files");
-        else
-            for (int i = 0; i < customCount; i++)
+        customCount = GameStats.MansionDeckCount;
+
+        if(customCount>0)
+            for (int i = 1; i <= customCount; i++)
             {
-                int val = i + 1;
-                string name = "Custom " + val;
+                string textFilePath = Application.persistentDataPath + "/Custom_data/MansionCards" + i + ".txt";
+                string name = File.ReadLines(textFilePath).First();
                 items.Add(name);
             }
 
@@ -53,8 +41,19 @@ public class UIEdMansionLoadDropDownHandler : MonoBehaviour
     private void DropDownItemSelected(Dropdown dropdown)
     {
         int index = dropdown.value;
-        PlayerPrefs.SetInt("MansionType", index);
+        //PlayerPrefs.SetInt("MansionType", index);
+        GameStats.MansionDeckValue = index+1;
 
+    }
+
+    public void ChangeDropItemNameByIndex(int index, string name)
+    {
+        //if (index <= customCount)
+        {
+            Dropdown.OptionData newItem = new Dropdown.OptionData(name);
+            this.dropdown.options.RemoveAt(index);
+            this.dropdown.options.Insert(index, newItem);
+        }
     }
 }
 

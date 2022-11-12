@@ -136,6 +136,7 @@ MonoBehaviour:
   - SetRandomValuesToClients
   - SetArrayValuesToClients
   - Pun_SetAllShopCardSprites
+  - Pun_StartGameInfo
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

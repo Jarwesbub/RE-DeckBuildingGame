@@ -8,18 +8,17 @@ public class EndScreenScript : MonoBehaviour
     public GameObject PhotonRoomMaster, WinnerCharacterCard, HostButtons;
     private GameObject Child;
     public TMP_Text winnerMainTMP;
-    public GameObject Shop_btn, Mansion_btn, endTurn_btn;
+    public GameObject Shop_btn, Mansion_btn, MansionExit_btn, endTurn_btn;
 
     void OnEnable()
     {
+        HostButtons.SetActive(false);
         Child = transform.GetChild(0).gameObject;
         Child.SetActive(false);
         Shop_btn.SetActive(false);
         Mansion_btn.SetActive(false);
-        Shop_btn.SetActive(false);
-
-        bool isMaster = PhotonRoomMaster.GetComponent<PhotonRoomMaster>().CheckIfIsMasterClient();
-        HostButtons.SetActive(isMaster);
+        MansionExit_btn.SetActive(false);
+        Shop_btn.SetActive(false);      
 
         StartCoroutine(ShowEndScreen());
     }
@@ -31,7 +30,7 @@ public class EndScreenScript : MonoBehaviour
         EndScreen();
     }
     private void EndScreen()
-    {
+    {      
         winnerMainTMP.text = "Winner is:\n";
         string name = PhotonRoomMaster.GetComponent<PlayerListControl>().GetPlayerWithMostPoints();
         winnerMainTMP.text += name;
@@ -50,5 +49,6 @@ public class EndScreenScript : MonoBehaviour
         }
 
         WinnerCharacterCard.GetComponent<SpriteFromAtlas>().ChangeCardSprite(characterCard);
+        HostButtons.SetActive(PhotonRoomMaster.GetComponent<PhotonRoomMaster>().CheckIfIsMasterClient());
     }
 }

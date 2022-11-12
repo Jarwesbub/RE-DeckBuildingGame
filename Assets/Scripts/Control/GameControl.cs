@@ -247,7 +247,7 @@ public class GameControl : MonoBehaviourPunCallbacks
     public void OnClickOpenMansionMenu()
     {
         if (!onButtonLock)
-        if (view.IsMine)
+        if (view.IsMine && !GetComponent<MansionControl>().IsButtonLockActive())
         {
             if(mansionOpen)
                 EndTurnMenuObject.SetActive(true);

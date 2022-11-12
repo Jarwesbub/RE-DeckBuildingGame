@@ -8,19 +8,20 @@ using TMPro;
 
 public class EditMansionControl : MonoBehaviour
 {
-    public GameObject AllMansionCards, MansionDropDownHandler, MansionBaseCardPrefab, MansionGridContent;
+    public GameObject AllMansionCards, MansionBaseCardPrefab, MansionGridContent;
     public GameObject UI_CurrentDeck, UI_AddCards, currentDeck_btn, addCards_btn;
     public GameObject UI_EasyTier, UI_NormalTier, UI_HardTier, easy_btn, normal_btn, hard_btn;
     public GameObject UI_Items, items_btn, AddCardsPrefab, ShowCaseCard1, ShowCaseCard2;
-    public Text dropdownText;
     public TMP_Text mainTitleText, loadSaveInfo, consoleTxt;
+    public Dropdown MansionDropDownHandler;
+    public InputField EditName_inputf;
     public TMP_Text _cardCount, _lowCount, _midCount, _topCount;
     [SerializeField] private int cardCount, lowCount, midCount, topCount;
     public int mansionValue;
     private bool isButtonLock, mansionCardsLoaded;
     private Image img;
 
-    [SerializeField] private string currentCustomDeck;
+    [SerializeField] private string currentCustomDeck, customDeckName;
     [SerializeField] private List<string> CustomDeckCardsList;
     [SerializeField] private string[] LowTierCardsList, MidTierCardsList, HighTierCardsList, ItemCardsList;
     public int textListCount;
@@ -28,39 +29,20 @@ public class EditMansionControl : MonoBehaviour
 
     private void Awake()
     {
-        int value = 1;
-        string name = "MansionCards"+value;
-        
-        int maxMansionDecks = 10;
-        string readFromFilePath = Application.persistentDataPath + "/Custom_data/MansionCards1.txt";
-
-        if (System.IO.File.Exists(readFromFilePath))
+        int mansionCount = 1;
+        while (File.Exists(Application.persistentDataPath + "/Custom_data/MansionCards" + mansionCount + ".txt"))
         {
-            while (value < maxMansionDecks)
-            {
-                name = "MansionCards"+value;
-                readFromFilePath = Application.persistentDataPath + "/Custom_data/" + name + ".txt";
-
-                if (System.IO.File.Exists(readFromFilePath))
-                {
-                    value++;
-                    Debug.Log(readFromFilePath);
-                }
-                else
-                {
-                    value--;
-                    break;
-                }
-                
-            }
+            mansionCount++;
         }
-        MansionDropDownHandler.GetComponent<UIEdMansionLoadDropDownHandler>().customCount = value;
-        //Debug.Log("MansionCards count = " + value);
+        mansionCount--;
+        GameStats.MansionDeckCount = mansionCount;
+
     }
     private void Start()
     {
-        consoleTxt.text = ""; dropdownText.text = "";
+        consoleTxt.text = "";
         loadSaveInfo.text = "Load your Custom deck first";
+        EditName_inputf.text = ""; customDeckName = "";
         UpdateCardsCount(true);
         img = GetComponent<Image>();
         OnClickChooseCurrentDeck();
@@ -108,27 +90,7 @@ public class EditMansionControl : MonoBehaviour
             StartCoroutine(ShowInConsole("Load your Custom Deck first!"));
         }
     }
-    /*
-    private void OLD_CreateEnemyTierCards() //START
-    {
-        string readLowTierFile = Application.streamingAssetsPath + "/Base_Data/MansionEnemies_LowTierList.txt";
-        LowTierCardsList = File.ReadAllLines(readLowTierFile).ToArray();
 
-        string readMidTierFile = Application.streamingAssetsPath + "/Base_Data/MansionEnemies_MidTierList.txt";
-        MidTierCardsList = File.ReadAllLines(readMidTierFile).ToArray();
-
-        string readHighTierFile = Application.streamingAssetsPath + "/Base_Data/MansionEnemies_HighTierList.txt";
-        HighTierCardsList = File.ReadAllLines(readHighTierFile).ToArray();
-
-        string readMansionItemsFile = Application.streamingAssetsPath + "/Base_Data/MansionEnemies_Items.txt";
-        ItemCardsList = File.ReadAllLines(readMansionItemsFile).ToArray();
-
-        CreateMansionCards(UI_EasyTier, LowTierCardsList);
-        CreateMansionCards(UI_NormalTier, MidTierCardsList);
-        CreateMansionCards(UI_HardTier, HighTierCardsList);
-        CreateMansionCards(UI_Items, ItemCardsList);
-
-    }*/
     private void CreateEnemyTierCards() //START
     {
         LowTierCardsList = AllMansionCards.GetComponent<AllMansionCards>().GetLowTierMansionCards();
@@ -236,9 +198,10 @@ public class EditMansionControl : MonoBehaviour
         if (!isButtonLock)
         {
             isButtonLock = true;
-            mansionValue = PlayerPrefs.GetInt("MansionType") +1;
-            string file = "MansionCards"+mansionValue;
-
+            //mansionValue = PlayerPrefs.GetInt("MansionType") +1;
+            mansionValue = GameStats.MansionDeckValue; // TESTING 12.11.2022
+            if (mansionValue == 0) mansionValue++;
+            string file = "MansionCards"+mansionValue;;
             LoadTextFileByName(file);
 
             cardCount = CustomDeckCardsList.Count;
@@ -266,9 +229,20 @@ public class EditMansionControl : MonoBehaviour
     {
         string readFromFilePath = Application.persistentDataPath + "/Custom_data/" + name + ".txt";
         List<string> fileLines = File.ReadAllLines(readFromFilePath).ToList();
+        if (fileLines.Any()) //Checks if list is not empty
+        {
+            customDeckName = fileLines[0]; //First row = card name
+            fileLines.RemoveAt(0); //Remove card name from custom list
+            Debug.Log("FILE IS NOT EMPTY");
+        }
+        else
+            customDeckName = name;
+
         CustomDeckCardsList = fileLines;
         textListCount = CustomDeckCardsList.Count;
         currentCustomDeck = name;
+        EditName_inputf.text = customDeckName;
+        MansionDropDownHandler.captionText.text = customDeckName;
         Debug.Log("File loaded: " + name + ".txt");
     }
     
@@ -280,8 +254,17 @@ public class EditMansionControl : MonoBehaviour
 
             string writeToFilePath = Application.persistentDataPath + "/Custom_data/" + currentCustomDeck + ".txt";
             CustomDeckCardsList.Sort();
-            File.WriteAllLines(writeToFilePath, CustomDeckCardsList);
-            
+            customDeckName = EditName_inputf.text;
+            MansionDropDownHandler.captionText.text = customDeckName;
+            MansionDropDownHandler.GetComponent<UIEdMansionLoadDropDownHandler>().ChangeDropItemNameByIndex(mansionValue-1, customDeckName);
+            List<string> list = new();
+            list.Add(customDeckName);
+            foreach(string s in CustomDeckCardsList)
+            {
+                list.Add(s);
+            }
+
+            File.WriteAllLines(writeToFilePath, list);
             StartCoroutine(LoadAndSave(false)); //Save
             
         }
@@ -363,7 +346,6 @@ public class EditMansionControl : MonoBehaviour
         if (load)
         {
             loadSaveInfo.text = "Loading...";
-            dropdownText.text = "Custom " + mansionValue;
             yield return new WaitForSeconds(1f);
             InstantiateToHandler();
             mansionCardsLoaded = true;

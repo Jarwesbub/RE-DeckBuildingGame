@@ -3,7 +3,9 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
+using TMPro;
 
+//LobbyRoom.scene script
 //Attach this script to object that contains "OverwriteTextFileList.cs" -script
 
 public class LobbyRoomOpen : MonoBehaviourPunCallbacks
@@ -15,10 +17,10 @@ public class LobbyRoomOpen : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        PhotonNetwork.AutomaticallySyncScene = true; //Works with PhotonNetwork.LoadLevel();
         view = GetComponent<PhotonView>();
-        isMaster = PhotonNetwork.IsMasterClient;
+        PhotonNetwork.AutomaticallySyncScene = true; //Works with PhotonNetwork.LoadLevel();
         GameStats.playerInfos = new Hashtable(); //Set new (empty) Hashtable in GameStats script
+        isMaster = PhotonNetwork.IsMasterClient;
 
         if (isMaster)
                 HostSetup.SetActive(true);
