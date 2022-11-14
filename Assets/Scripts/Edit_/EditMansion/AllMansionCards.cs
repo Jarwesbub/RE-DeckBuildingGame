@@ -176,9 +176,10 @@ public class AllMansionCards : MonoBehaviour
 		};
 		return allCards;
 	}
+}
 
-	/*
-	
+/*
+
 Currently unsupported Mansion cards:
 
 LOW TIER
@@ -224,4 +225,3 @@ ITEMS
 3_ma-072_nightmare_prl_412
 
 */
-}

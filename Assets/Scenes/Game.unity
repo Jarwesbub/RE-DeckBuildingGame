@@ -3146,8 +3146,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43bfcd767632ad74b87b82aaa20a34f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Sold: {fileID: 924003041}
-  BuysCounttxt: {fileID: 827494865}
   Ammo10: {fileID: 1987409703}
   Ammo20: {fileID: 2011502603}
   Ammo30: {fileID: 2121069775}
@@ -3184,30 +3182,15 @@ MonoBehaviour:
   Action7ListPrefab: {fileID: 1664918066}
   Extra1ListPrefab: {fileID: 1771314314}
   Extra2ListPrefab: {fileID: 971188449}
+  view: {fileID: 0}
+  waitRPC: 0
+  Sold: {fileID: 924003041}
+  BuysCounttxt: {fileID: 827494865}
   LeftMenuControl: {fileID: 836635456}
   ShopScrollBar: {fileID: 1043278291}
   Shop_Items: {fileID: 1484793109}
   allButtonsList: []
   buysCount: 0
-  waitRPC: 0
-  ammoCounts: 
-  HandgunList: []
-  KnifeList: []
-  GrenadeList: []
-  HPList: []
-  ShotgunList: []
-  AR_SG_List: []
-  RifleList: []
-  ActionList1: []
-  ActionList2: []
-  ActionList3: []
-  ActionList4: []
-  ActionList5: []
-  ActionList6: []
-  ActionList7: []
-  ExtraList1: []
-  ExtraList2: []
-  firstLoadShopCardNames: []
 --- !u!114 &263973198
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9908,7 +9891,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1012182467}
-  - component: {fileID: 1012182466}
   m_Layer: 0
   m_Name: ShopList_GunsItems_AC
   m_TagString: Untagged
@@ -9916,20 +9898,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1012182466
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1012182465}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4c74e307cb5b1040b10631971b3d5d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MainCanvasControl: {fileID: 263973188}
-  Shop_HandgunsListPrefab: {fileID: 3750306072369686114, guid: 10a8140a87baad143bf0585b27c47bbd, type: 3}
 --- !u!4 &1012182467
 Transform:
   m_ObjectHideFlags: 0
@@ -17862,7 +17830,7 @@ GameObject:
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1880300820
 Transform:
   m_ObjectHideFlags: 0
@@ -21885,6 +21853,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 263973197}
+    - target: {fileID: 431141705440907325, guid: 8a8e3ac9449b0224b858b002c60a4b86, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ShopButtonsControl, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 431141705440907326, guid: 8a8e3ac9449b0224b858b002c60a4b86, type: 3}
       propertyPath: MainCanvas
       value: 

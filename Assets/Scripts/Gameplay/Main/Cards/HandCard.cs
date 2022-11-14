@@ -16,7 +16,6 @@ public class HandCard : MonoBehaviourPun, IPunInstantiateMagicCallback
         
     }
 
-    // Start is called before the first frame update
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {
         object[] instantiationData = info.photonView.InstantiationData;

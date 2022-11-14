@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class LM_GetStarterHandCards : MonoBehaviour
 {
     //This script gets starter hand cards from text file
-    //When Start function is done -> ShopCards takes the control when new card is bought
+    //When Start function is done -> ShopControl takes the control when new card is bought
 
     public GameObject LeftMenuControl, HandCardPrefab, HandCardsGridContent;
     [SerializeField]private List<string> sDeck;

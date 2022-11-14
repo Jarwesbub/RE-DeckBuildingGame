@@ -183,7 +183,7 @@ public class GameControl : MonoBehaviourPunCallbacks
         else
             UIGameControl.GetComponent<GameUIControl>().UIOtherTurnStart(name, currentPlayerID);
 
-        GetComponent<ShopCards>().UpdateAndResetBuysCount(true);
+        GetComponent<ShopControl>().UpdateAndResetBuysCount(true);
         GetComponent<MansionControl>().MansionSetForNextPlayer(name);
         /*
         if (playerCount > 1)
@@ -215,7 +215,7 @@ public class GameControl : MonoBehaviourPunCallbacks
         {
             if (shopMenuOpen)
             {
-                GetComponent<ShopCards>().SetAllCardsToNormalSize();
+                GetComponent<ShopControl>().SetAllCardsToNormalSize();
                 EndTurnMenuObject.SetActive(true);
                 shopMenuOpen = false;
             }

@@ -210,6 +210,7 @@ public class MansionControl : MonoBehaviourPun
 
     ////////////////////
 
+
     public void ClickEnterMansion(int clickValue) //ClickableObject.cs
     {
         if (view.IsMine && !doorKnobLock)
@@ -325,7 +326,7 @@ public class MansionControl : MonoBehaviourPun
             int dmg = CurrentMansionCard.GetDMG();
             string cardInfo = CurrentMansionCard.GetCardInfo();
             if (cardInfo == "shuffle")
-                OnClickShuffleDeck(dmg);
+                ShuffleDeck(dmg);
             else
                 view.RPC("RPC_SetMainTextPlayer", RpcTarget.AllBuffered, currentPlayerName, false, dmg, "");
 
@@ -343,7 +344,7 @@ public class MansionControl : MonoBehaviourPun
             MansionBossIsBeaten(false);
     }
     ///////////////////////////
-    public void OnClickShuffleDeck(int dmg) //SHUFFLE btn
+    private void ShuffleDeck(int dmg) //SHUFFLE btn
     {
         if (view.IsMine)
         {
@@ -365,7 +366,7 @@ public class MansionControl : MonoBehaviourPun
         StartCoroutine(Main_OtherText(txt));
     }
 
-    public void OnClickSetMansionTextEmpty()
+    public void OnClickSetMansionTextEmpty() // CLICK???
     {
         string txt = "";
         view.RPC("RPC_SetMainTextManually", RpcTarget.AllBuffered, txt);
