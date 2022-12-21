@@ -9,7 +9,7 @@ public class MansionControl : MonoBehaviourPun
 {
     public GameObject MansionCard, MansionDoor, MansionCardTextFile, MansionGridContent, MansionHandCardPrefab;
     public GameObject LeftMenuControl, MansionDoor_btnUI, BossEncounterObj;
-    public GameObject MansionActionButtons, OtherActionButtons, ToggleOtherActions;
+    public GameObject MansionActionButtons, OtherActionButtons;
     public TMP_Text mansionActionTMP, mansionDeckCountTMP, exploreCountTMP, bossCountTMP;
     public int MansionDeckCount, MansionExploreCount;
     [SerializeField] private string enemyName, currentPlayerName;
@@ -41,7 +41,6 @@ public class MansionControl : MonoBehaviourPun
         activeOtherActionBtn = false;
         MansionActionButtons.SetActive(false);
         OtherActionButtons.SetActive(false);
-        ToggleOtherActions.SetActive(false);
 
         currentPlayerName = PhotonNetwork.MasterClient.NickName;
         ResetMansionAnimation();
@@ -169,7 +168,6 @@ public class MansionControl : MonoBehaviourPun
     {
         OnClickSetMansionTextEmpty();
         MansionActionButtons.SetActive(false);
-        ToggleOtherActions.SetActive(false);
         OtherActionButtons.SetActive(false);
         isBottomCard = false;
         doorKnobLock = false;
@@ -270,29 +268,15 @@ public class MansionControl : MonoBehaviourPun
 
     ///////////////////////////
     
-    public void OnClickOtherButton()
-    {
-        if(activeOtherActionBtn)
-        {
-            ToggleOtherActions.SetActive(false);
-            activeOtherActionBtn = false;
-        }
-        else
-        {
-            ToggleOtherActions.SetActive(true);
-            activeOtherActionBtn = true;
-        }
-
-    }
-    
     public void OnClickDeleteCard() //WIN button
     {
         if (view.IsMine)
         {
-            GameObject mansionHandCard = Instantiate(MansionHandCardPrefab);
+            /*GameObject mansionHandCard = Instantiate(MansionHandCardPrefab);
             mansionHandCard.GetComponent<Image>().sprite = image.sprite;
             mansionHandCard.transform.SetParent(MansionGridContent.transform);
-            mansionHandCard.transform.localScale = new Vector3(1f, 1f, 1f);
+            mansionHandCard.transform.localScale = new Vector3(1f, 1f, 1f);*/
+            LeftMenuControl.GetComponent<LeftMenuControl>().AddNewMansionCard(image.sprite);
             view.RPC("RPC_SendCardToPlayer", RpcTarget.AllBuffered, isBottomCard);
             int points = CurrentMansionCard.GetPoints();
             view.RPC("RPC_SetMainTextPlayer", RpcTarget.AllBuffered, currentPlayerName, true, points, "");
