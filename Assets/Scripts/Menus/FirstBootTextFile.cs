@@ -98,9 +98,10 @@ public class FirstBootTextFile : MonoBehaviour
                 string writeToCustomFolder = Application.persistentDataPath + "/Custom_data/MansionCards1.txt";
                 File.WriteAllLines(writeToCustomFolder, fileLines);
             }
-            else //Create empty text files
+            else //Create empty text files with Mansion2-4 name
             {
-                string[] fileLines = new string[0];
+                string[] fileLines = new string[1];
+                fileLines[0] = "Mansion"+i;
                 string writeToCustomFolder = Application.persistentDataPath + "/Custom_data/MansionCards" + i + ".txt";
                 File.WriteAllLines(writeToCustomFolder, fileLines);
             }
