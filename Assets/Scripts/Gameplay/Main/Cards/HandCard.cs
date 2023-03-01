@@ -37,7 +37,7 @@ public class HandCard : MonoBehaviourPun, IPunInstantiateMagicCallback
 
     public void DeleteThisCardCompletely()
     {
-        SpawnCards.GetComponent<SpawnCards>().DeleteHandCardsCompletely(currentCard);
+        SpawnCards.GetComponent<SpawnCards>().TrashAHandCard(currentCard);
         PhotonNetwork.Destroy(gameObject);
     }
 }

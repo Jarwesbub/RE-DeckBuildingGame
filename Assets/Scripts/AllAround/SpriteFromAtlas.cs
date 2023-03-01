@@ -9,7 +9,7 @@ public class SpriteFromAtlas : MonoBehaviour
     public GameObject MainCanvas;
     [SerializeField] List<SpriteAtlas> atlas;
     public int currentAtlas;
-    public string spriteName, characterName;
+    [SerializeField] private string spriteName;
     private Image image;
     [SerializeField] private bool isVisible, isCharacterCard, isHandCard, isMansionCard;
     public int characterCardNumber;
@@ -18,32 +18,19 @@ public class SpriteFromAtlas : MonoBehaviour
     {
         image = GetComponent<Image>();
         SetHandCardSpriteVisibility(isVisible);
-        //SetHandCardSpriteVisibility(isVisible);
     }
 
     void Start()
     {
-        /*
-        if(!isCharacterCard && isHandCard) //Player hand card
-        {
-            //string getSprite = SpawnCardsPrefab.GetComponent<SpawnCards>().currentCard; //Get card sprite name!
-            string getSprite = GetComponent<HandCard>().currentCard;
-            spriteName = getSprite;
-            int count = atlas.Count;
-
-            for (int i = 0; i < count; i++)
-            {
-                image.sprite = atlas[i].GetSprite(spriteName);
-                currentAtlas = i;
-                if (image.sprite != null)
-                    break;
-            }
-        }*/
         if (!isCharacterCard && isHandCard) //Player hand card
         {
             spriteName = GetComponent<HandCard>().currentCard;
             GetCurrentSpriteFromAtlas(spriteName);
         }
+    }
+    public string GetSpriteName()
+    {
+        return spriteName;
     }
     private void GetCurrentSpriteFromAtlas(string name)
     {

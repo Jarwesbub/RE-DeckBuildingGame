@@ -82,29 +82,7 @@ public class AllShopCards : MonoBehaviour
         }
 		return namesList;
     }
-/*
-	private string[] AddCardNamesByCountArray(string[] arrayNames, int[] shopDataCounts)
-    {
-		List<string> cards = new();
-		Debug.Log("arrayNames.length: " + arrayNames.Length + " shopDataCounts.length: " + shopDataCounts.Length);
 
-		int index = 0;
-		foreach (int value in shopDataCounts)
-		{
-			for (int i = 0; i < value; i++)
-			{
-				cards.Add(arrayNames[index]);
-				Debug.Log(arrayNames[index] + " added");
-			}
-
-			index++;
-		}
-		return cards.ToArray();
-	}*/
-	/// <summary>
-	/// 
-	/// </summary>
-	/// <returns></returns>
 	public string[] GetAmmoCards()//3 (6)
 	{
 		string[] ammo = new string[3]
@@ -138,6 +116,7 @@ public class AllShopCards : MonoBehaviour
 		"sup_knife3",
 		"sup_bow1",
 		"sup_bow2"
+		//"sup_stunrod"
 		};
 		return knives;
 	}

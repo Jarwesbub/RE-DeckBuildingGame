@@ -12,7 +12,7 @@ public class GameControl : MonoBehaviourPunCallbacks
     PhotonView view;
     public GameObject SpawnCardsPrefab, UIGameControl, OtherCharacterControl, HPControl;
     private GameObject MainSpawnCards;
-    public GameObject EndTurnMenuObject, ShopMenuObject, MansionMenuObject;
+    public GameObject EndTurnMenuObject, ShopMenuObject, MansionMenuObject, HandCardsStatsControl;
     private bool shopMenuOpen, mansionOpen;
     public int currentPlayerID, currentRound;
 
@@ -37,9 +37,8 @@ public class GameControl : MonoBehaviourPunCallbacks
         myPlayerID = PhotonNetwork.LocalPlayer.ActorNumber;
         currentPlayerID = 1; //HOST
         ShopMenuObject.SetActive(true);     
-        EndTurnMenuObject.SetActive(true);
+        //EndTurnMenuObject.SetActive(true);
         MainSpawnCards = Instantiate(SpawnCardsPrefab, new Vector3(0f, 0f, 0f), Quaternion.identity); //NEW
-        
         shopMenuOpen = false;
         mansionOpen = false;
         currentRound = 0;
@@ -92,7 +91,8 @@ public class GameControl : MonoBehaviourPunCallbacks
 
     public void OnClickDrawCard()
     {
-        if (!onButtonLock)
+        bool playerHasDrawsLeft = HandCardsStatsControl.GetComponent<HandCardStatsControl>().PlayerDrawsACard();
+        if (!onButtonLock && playerHasDrawsLeft)
         {
             if (view.IsMine)
                 MainSpawnCards.GetComponent<SpawnCards>().DrawCard();
@@ -124,7 +124,7 @@ public class GameControl : MonoBehaviourPunCallbacks
         if (!shopMenuOpen && !mansionOpen)
         {
             GetComponent<MansionControl>().ResetMansionAnimation(); //RESET MANSION
-            MainSpawnCards.GetComponent<SpawnCards>().PutHandCardsToDiscardPile();
+            MainSpawnCards.GetComponent<SpawnCards>().PutAllHandCardsToDiscardPile();
         }
         
         cardCount = MainSpawnCards.GetComponent<SpawnCards>().handCards;
@@ -183,7 +183,7 @@ public class GameControl : MonoBehaviourPunCallbacks
         else
             UIGameControl.GetComponent<GameUIControl>().UIOtherTurnStart(name, currentPlayerID);
 
-        GetComponent<ShopControl>().UpdateAndResetBuysCount(true);
+        GetComponent<ShopControl>().PlayerTurnEnds();
         GetComponent<MansionControl>().MansionSetForNextPlayer(name);
         /*
         if (playerCount > 1)
@@ -232,16 +232,9 @@ public class GameControl : MonoBehaviourPunCallbacks
     [PunRPC]
     public void RPC_OnClickShopMenuButton(bool isGettingIn)
     {
-        if (!isGettingIn)
-        {
-            shopMenuOpen = false;
-            ShopMenuObject.SetActive(false);
-        }
-        else
-        {
-            shopMenuOpen = true;
-            ShopMenuObject.SetActive(true);
-        }
+        shopMenuOpen = isGettingIn;
+        GetComponent<ShopControl>().SetShopOpen(isGettingIn);
+        ShopMenuObject.SetActive(isGettingIn);
     }
 
     public void OnClickOpenMansionMenu()
@@ -302,9 +295,9 @@ public class GameControl : MonoBehaviourPunCallbacks
     }
     [PunRPC] void PRC_ShowDeleteCardInfo()
     {
-        UIGameControl.GetComponent<DeleteCardsControl>().ShowDeletedCardInfo();
-    }
+        UIGameControl.GetComponent<DeleteCardsControl>().ShowCardDeletedSuccesfully();
 
+    }
 
     /*
     private void OnDestroy()

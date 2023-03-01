@@ -8,7 +8,7 @@ using TMPro;
 public class SpawnCards : MonoBehaviourPun
 {
     public int handCards, cardCount;
-    public GameObject PNCardPrefab, CharacterCardPrefab;
+    public GameObject PNCardPrefab, CharacterCardPrefab, HandCardStatsControl;
     private GameObject HandCardsParent, MainCanvas;
     [SerializeField] private TMP_Text deckCountTxt, discardpileCountTxt;
     public List<string> sDeck;
@@ -31,11 +31,13 @@ public class SpawnCards : MonoBehaviourPun
 
         HandCardsParent = GameObject.FindWithTag("HandCardsParent");
         MainCanvas = GameObject.FindWithTag("MainCanvas");
+        HandCardStatsControl = GameObject.FindWithTag("HandCardStatsControl");
 
         GameObject parentDeckCounter;
         parentDeckCounter = GameObject.FindWithTag("DeckCardsCounter");
         deckCountTxt = parentDeckCounter.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>();
         discardpileCountTxt = parentDeckCounter.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>();
+        HandCardStatsControl.GetComponent<HandCardStatsControl>().SetPlayerDeckSizes(sDeck.Count, sDiscardPileCards.Count);
         SetDeckCountText();
 
         posX = startPosX; posY = startPosY;
@@ -92,6 +94,7 @@ public class SpawnCards : MonoBehaviourPun
             ShuffleDeck(true);
             Debug.Log("Shuffling Deck !");
         }
+        HandCardStatsControl.GetComponent<HandCardStatsControl>().SetPlayerDeckSizes(sDeck.Count,sDiscardPileCards.Count);
         SetDeckCountText();
     }
     private void ShuffleDeck(bool sendShuffleInfo)
@@ -120,7 +123,24 @@ public class SpawnCards : MonoBehaviourPun
             currentCard = sDeck[0]; 
     }
 
-    public void PutHandCardsToDiscardPile()
+    public void PutHandCardToDiscardPile(GameObject handCardObj)
+    {
+        foreach (Transform child in HandCardsParent.transform)
+        {
+            if(child.gameObject.Equals(handCardObj))
+            {
+                Debug.Log("SpawnCards: Card added to discarpile: " + handCardObj.name);
+                string cardName = child.GetComponent<HandCard>().currentCard;
+                sHandCards.Remove(cardName);
+                sDiscardPileCards.Add(cardName);
+                PhotonNetwork.Destroy(child.gameObject);
+                break;
+            }
+
+        }
+    }
+
+    public void PutAllHandCardsToDiscardPile()
     {
         foreach (string c in sHandCards)
         {
@@ -137,13 +157,15 @@ public class SpawnCards : MonoBehaviourPun
         posX = startPosX; posY = startPosY;
         SetDeckCountText();
     }
-    public void DeleteHandCardsCompletely(string name) //When using deleteplatform!
+    public void TrashAHandCard(string name) //When using deleteplatform
     {
+        Debug.Log("SpawnCards Remove: " + name);
         int count = sHandCards.Count;
         for (int i = 0; i < count; i++)
         {
             if (sHandCards[i] == name)
             {
+                
                 sHandCards.Remove(sHandCards[i]);
                 cardCount--;
                 break;

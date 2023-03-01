@@ -47,6 +47,9 @@ TagManager:
   - DeckCardsCounter
   - EditMansionControl
   - UICardShowcase
+  - HandCardStatsControl
+  - MansionMenuObject
+  - UIBlackedMain
   layers:
   - Default
   - TransparentFX

@@ -42,7 +42,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 281.8, y: 54.705}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 77.21, y: 109.41}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3658572025674238610
@@ -121,7 +121,6 @@ MonoBehaviour:
   - {fileID: 4343727234628468602, guid: 69ec99299a15b0f4f8cad714c63a38a2, type: 2}
   currentAtlas: 0
   spriteName: 
-  characterName: 
   isVisible: 0
   isCharacterCard: 0
   isHandCard: 1
@@ -246,6 +245,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MainCanvas: {fileID: 0}
   UIControl: {fileID: 0}
+  CardStatsControl: {fileID: 0}
   cardPosition: {x: 0, y: 0}
   lastPos: {x: 0, y: 0}
   showCardScale: 0

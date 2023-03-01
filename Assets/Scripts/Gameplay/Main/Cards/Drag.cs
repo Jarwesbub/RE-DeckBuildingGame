@@ -8,10 +8,12 @@ using UnityEngine.UI;
 public class Drag : MonoBehaviour
 {
     [SerializeField]
-    private GameObject MainCanvas, UIControl;
+    private GameObject MainCanvas, UIControl, CardStatsControl;
     private Canvas canvas;
     private PhotonView view;
     private PhotonTransformViewClassic transformView;
+    private Image img;
+    private string cardName;
     [SerializeField]
     private Vector2 cardPosition;
     [SerializeField]
@@ -23,12 +25,15 @@ public class Drag : MonoBehaviour
     private float minX = -8.5f, maxX = 8.5f, minY = -4.5f, maxY = 4.5f, pnLimitY = -0.5f;
     private float normalScale = 0.7f, zoomedScale = 1.1f, megaScale = 1.6f; //OLD: normal = 0.7f, zoomed = 1.3f;
     private bool zoomMegaScale, megaScaleActive, myView;
+    private int gameMode;
 
     void Awake()
     {
         UIControl = GameObject.FindWithTag("UIControl");
         MainCanvas = GameObject.FindWithTag("MainCanvas");
+        CardStatsControl = UIControl.transform.GetChild(0).gameObject;
         canvas = MainCanvas.GetComponent<Canvas>();
+        img = GetComponent<Image>();
         //Debug.Log("MainCanvas =" + MainCanvas + "inDrag.cs");       
         othersCanSeeThis = false;
         isOnDeletePlatform = false;
@@ -39,12 +44,18 @@ public class Drag : MonoBehaviour
         view = GetComponent<PhotonView>();
         myView = view.IsMine;
         transformView = GetComponent<PhotonTransformViewClassic>();
-
+        cardName = GetComponent<SpriteFromAtlas>().GetSpriteName();
+        gameMode = GameStats.GameMode;
         if (myView)
+        {
             transformView.m_ScaleModel.SynchronizeEnabled = true;
+            img.color = new Color(255, 255, 255, 255);
+        }
         else
+        {
             transformView.m_ScaleModel.SynchronizeEnabled = false;
-
+            img.color = new Color(0, 0, 0, 120);
+        }
 
         lastPos = transform.position;
         cardPosition = transform.position;
@@ -121,47 +132,66 @@ public class Drag : MonoBehaviour
 
             }
 
-            isOnDeletePlatform = CheckIfOnDeletePlatform(transform.position);
-            if (!isOnDeletePlatform)
-                lastPos = transform.position;
+            isOnDeletePlatform = CheckIfOnDeletePlatform(cardPosition);
 
             zoomMegaScale = true;
 
             if (!othersCanSeeThis)
-                if (lastPos.y >= pnLimitY) //When card crosses "visibility line" pnLimitY
-                    view.RPC("SetHandCardVisible", RpcTarget.AllBuffered);
+            {
+                if (cardPosition.y >= pnLimitY) //When card crosses "visibility line" pnLimitY
+                {
+                    othersCanSeeThis = true;
+                    //Debug.Log("Card is now visible to others!");
+                    CardStatsControl.GetComponent<HandCardStatsControl>().SetCardByName(cardName, gameObject);
+                    view.RPC("SetHandCardVisibility", RpcTarget.AllBuffered, true);
+                }
+            }
+            else
+                if (cardPosition.y <= pnLimitY) //When card is set back to the hand
+                {
+                    if (gameMode != 2)
+                    {
+                        othersCanSeeThis = false;
+                        transformView.m_ScaleModel.SynchronizeEnabled = false;
+                        //Debug.Log("Card is not visible!");
+                        CardStatsControl.GetComponent<HandCardStatsControl>().RemoveCardByName(cardName);
+                        view.RPC("SetHandCardVisibility", RpcTarget.AllBuffered, false);
+                    }
+                    else //gameMode = 2
+                    {
+                        JumpBackToLastPosition();
+                    }
+            }
+            if (!isOnDeletePlatform)
+                lastPos = cardPosition; //Set the last position to current position
         }
     }
 
-    /*
-    [PunRPC]
-    public void RPC_PointerExit(bool isVisible)
+    [PunRPC] public void SetHandCardVisibility(bool isVisible)
     {
-        if (!isOnDeletePlatform)
-            JumpBackToLastPosition();
+        if (!view.IsMine)
+        {
+            //GetComponent<SpriteFromAtlas>().SetHandCardSpriteVisibility(true);
+            if (isVisible)
+            {
+                img.color = new Color(255f, 255f, 255f, 255f);
+            }
+            else
+            {
+                img.color = new Color(0f, 0f, 0f, 120f);
+            }
 
-        if (!othersCanSeeThis)
-            if (lastPos.y >= pnLimitY) //When card crosses "visibility line" pnLimitY
-                view.RPC("SetHandCardVisible", RpcTarget.AllBuffered);
-
+            //othersCanSeeThis = isVisible; //not necessary ?
+        }
+        
     }
-    */
-    [PunRPC]
-    public void SetHandCardVisible()
-    {
-        GetComponent<SpriteFromAtlas>().SetHandCardSpriteVisibility(true);
-        othersCanSeeThis = true;
-        transformView.m_ScaleModel.SynchronizeEnabled = true;
-        //Debug.Log("Card is now visible to others!");
-    }
-
 
     private bool CheckIfOnDeletePlatform(Vector2 pos)
     {
         if (pos.x > deleteCardPosMin.x && pos.y > deleteCardPosMin.y //position is bigger than deleteCardPosMin
             && pos.x < deleteCardPosMax.x && pos.y < deleteCardPosMax.y) //and position is smaller than deleteCardPosMax
         {
-            view.RPC("SetHandCardVisible", RpcTarget.AllBuffered);
+            view.RPC("SetHandCardVisibility", RpcTarget.AllBuffered, true);
             UIControl.GetComponent<DeleteCardsControl>().AskDeleteAction(gameObject);
             return true;
         }
@@ -171,6 +201,7 @@ public class Drag : MonoBehaviour
     public void JumpBackToLastPosition()
     {
         transform.position = lastPos;
+        cardPosition = lastPos;
     }
 }
 

@@ -8,7 +8,7 @@ using TMPro;
 // ShopBaseControl.cs abstract class must be inherited!
 // All the lists are located in ShopBaseControl
 
-public class ShopControl : ShopBaseControl   //
+public class ShopControl : ShopControlAbstract   //
 {
     private GameObject SpawnCards;
     public TMP_Text Sold, BuysCounttxt;
@@ -20,7 +20,6 @@ public class ShopControl : ShopBaseControl   //
     //PhotonView view;
     public int buysCount; //Reset to 0 from "GameControl.cs" when player turn changes
     private bool isZoomed, isMaster, isRandomCardActive; //Tells if current card is in bigger- or normal size
-
     private int boughtCardListIndex;
     private int count_RandomNumber; //Random number for the next card
 
@@ -34,7 +33,8 @@ public class ShopControl : ShopBaseControl   //
         isRandomCardActive = true;
         Sold.text = "";
         buysCount = 0;
-        BuysCounttxt.text = "Buys (B) = "+buysCount;
+        //BuysCounttxt.text = "Buys (B) = "+buysCount + "/" + maxBuysCount; //OLD
+        BuysCounttxt.text = GetComponent<HandCardStatsUI>().GetShopInfo();
 
         SetCountValuesList();
 
@@ -59,9 +59,9 @@ public class ShopControl : ShopBaseControl   //
         if(isMaster)
         {
             hostNameHolder = new List<string>();
-            hostNameHolder.Add("Ammo10");
-            hostNameHolder.Add("Ammo20");
-            hostNameHolder.Add("Ammo30");
+            hostNameHolder.Add("ia_ammo10");
+            hostNameHolder.Add("ia_ammo20");
+            hostNameHolder.Add("ia_ammo30");
         }
 
                                     
@@ -127,7 +127,7 @@ public class ShopControl : ShopBaseControl   //
 
         foreach (GameObject o in allButtonsList)
         {
-            if (index > 2 && array[index] != "") //Skip Ammo Cards
+            if (/*index > 2 && */array[index] != "") //Skip Ammo Cards
                 o.GetComponent<SpriteFromAtlas>().ChangeCardSprite(array[index]); //Set first card in list to SPRITE
             else if (array[index] == "")
             {
@@ -139,23 +139,30 @@ public class ShopControl : ShopBaseControl   //
         }
 
     }
-
-    public void UpdateAndResetBuysCount(bool reset) //Buys counter on the top left corner in SHOP
+    public void PlayerTurnEnds()
     {
-        if (reset)
+        view.RPC("RPC_PlayerTurnEnds", RpcTarget.AllBuffered);
+        //EXTRA2 RANDOM CARD ->
+        if (view.IsMine && isRandomCardActive)
         {
-            buysCount = 0;
-            //EXTRA2 RANDOM CARD ->
-            if (view.IsMine && isRandomCardActive)
-            {
-                StartCoroutine(ExtraRandomCard());
-            }
+            StartCoroutine(ExtraRandomCard()); //Randomizes random deck (custom2)
         }
-        else
-            buysCount++;
+    }
+    [PunRPC] private void RPC_PlayerTurnEnds() //RESET STATS
+    {
+        buysCount = 0;
+        BuysCounttxt.text = GetComponent<HandCardStatsUI>().GetShopInfo();
+    }
+    public void SetShopOpen(bool open)
+    {
+        if (open)
+            UpdateBuysAndGoldText();
+    }
 
-            BuysCounttxt.text = "Buys (B) = " + buysCount;
-
+    public void UpdateBuysAndGoldText() //Buys counter on the top left corner in SHOP
+    {
+        //BuysCounttxt.text = "Buys (B) = " + buysCount + "/" + maxBuysCount; // OLD CODE
+        BuysCounttxt.text = GetComponent<HandCardStatsUI>().GetShopInfo();
     }
     IEnumerator ExtraRandomCard()
     {
@@ -190,31 +197,37 @@ public class ShopControl : ShopBaseControl   //
                 }
 
     }
-    protected override void BuyShopCard(GameObject cardObj, int cardCount, string cardName, int listIndex) //cardName MUST be original card sprite name!
-    {                                                                                             //count_Value=card number in list (GameObject)
-            if (cardCount > 1)
+    protected override void BuyShopCard(GameObject cardObj, int cardCount, string cardName, int listIndex)  //cardName MUST be original card sprite name!
+    {                                                                                                       //count_Value=card number in list (GameObject)
+        SpawnCards.GetComponent<SpawnCards>().SHOP_AddCardToDiscardPile(cardName); // Send card to player's hand
+        HandCardStatsControl.GetComponent<HandCardStatsControl>().PlayerBuysACard(cardName); // Set info to stats
+
+        if (cardCount > 1)
+        {
+            cardCount--;
+            //cardObj.transform.GetChild(0).transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = cardCount-1+" pcs";
+
+            int random = 0;
+            if (listIndex > 2) //Not ammo card
             {
-                SpawnCards.GetComponent<SpawnCards>().SHOP_AddCardToDiscardPile(cardName);
-                cardCount--;
-                //cardObj.transform.GetChild(0).transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = cardCount-1+" pcs";
-                
-                int random = 0;
-                if (listIndex > 2) //Not ammo card
-                {
-                    random = Random.Range(0, cardCount);
-                }
-                view.RPC("PUN_BuyCard", RpcTarget.AllBuffered, cardName, listIndex, random);
-            }       
-            else //Delete card
-            {
-            view.RPC("PUN_LastCard", RpcTarget.AllBuffered, listIndex);
-            //cardObj.SetActive(false);
+                random = Random.Range(0, cardCount);
             }
+            view.RPC("PUN_BuyCard", RpcTarget.AllBuffered, cardName, listIndex, random);
+        }
+        else // Last card -> hide shop deck
+        {
+            view.RPC("PUN_LastCard", RpcTarget.AllBuffered, listIndex);
+        }
     }
 
     protected override void Add_LM_HandDeck(Sprite sprt) //LM = Left menu 
     {
         LeftMenuControl.GetComponent<LeftMenuControl>().InstantiateNewHandCard(sprt);
+    }
+
+    protected override void PlayerHasNoMoreBuys()
+    {
+        view.RPC("Pun_ShowCustomText", RpcTarget.AllBuffered, "No more buys left");
     }
 
     [PunRPC]
@@ -223,7 +236,9 @@ public class ShopControl : ShopBaseControl   //
         boughtCardListIndex = listIndex;
         //count_Values[boughtCardListIndex] = cardCount;
         int count = 0;
-        UpdateAndResetBuysCount(false); //Update don't reset
+        buysCount++;
+        GetComponent<HandCardStatsUI>().AddBuyToUI();
+        UpdateBuysAndGoldText();
         string newCardName = "";
 
         count_RandomNumber = randomNumber;
@@ -336,8 +351,10 @@ public class ShopControl : ShopBaseControl   //
     [PunRPC]
     void PUN_LastCard(int listIndex)
     {
+        buysCount++;
+        GetComponent<HandCardStatsUI>().AddBuyToUI();
+        UpdateBuysAndGoldText();
         GameObject hideThis = allButtonsList[listIndex];
-
         Sold.transform.position = hideThis.transform.position;
         Sold.text = "Card bought!" + "\n" + " (Deck is now empty!)";
         StartCoroutine(HideButtonAndWait(hideThis));
@@ -362,6 +379,30 @@ public class ShopControl : ShopBaseControl   //
         {
 
         }
+
+        isZoomed = false;
+        allButtonsList[boughtCardListIndex].transform.localScale = vec_Normal;
+        allButtonsList[boughtCardListIndex].transform.GetChild(0).gameObject.SetActive(false);
+        Sold.text = "";
+        waitRPC = false;
+        rect.enabled = true;
+    }
+
+    [PunRPC] private void Pun_ShowCustomText(string text)
+    {
+        StartCoroutine(ShowCustomInfoText(text));
+    }
+    private IEnumerator ShowCustomInfoText(string text)
+    {
+        waitRPC = true;
+        Sold.text = text;
+        ScrollRect rect = Shop_Items.GetComponent<ScrollRect>();
+        rect = Shop_Items.GetComponent<ScrollRect>();
+        rect.StopMovement();
+        rect.enabled = false;
+        Sold.transform.position = new Vector3(0f, 0f, 0f);
+
+        yield return new WaitForSeconds(2f);
 
         isZoomed = false;
         allButtonsList[boughtCardListIndex].transform.localScale = vec_Normal;

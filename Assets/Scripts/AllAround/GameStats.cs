@@ -5,6 +5,7 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public static class GameStats
 {
+    public static int GameMode { get; set; }
     public static int MansionDeckValue { get; set; }
     public static int MansionDeckCount { get; set; }
 

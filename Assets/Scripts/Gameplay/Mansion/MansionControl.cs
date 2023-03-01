@@ -7,9 +7,9 @@ using TMPro;
 
 public class MansionControl : MonoBehaviourPun
 {
-    public GameObject MansionCard, MansionDoor, MansionCardTextFile, MansionGridContent, MansionHandCardPrefab;
+    public GameObject MansionCard, MansionDoor, MansionCardTextFile, MansionHandCardPrefab;
     public GameObject LeftMenuControl, MansionDoor_btnUI, BossEncounterObj;
-    public GameObject MansionActionButtons, OtherActionButtons;
+    public GameObject MansionActionButtons, OtherActionButtons, HandCardStats;
     public TMP_Text mansionActionTMP, mansionDeckCountTMP, exploreCountTMP, bossCountTMP;
     public int MansionDeckCount, MansionExploreCount;
     [SerializeField] private string enemyName, currentPlayerName;
@@ -282,8 +282,9 @@ public class MansionControl : MonoBehaviourPun
             view.RPC("RPC_SetMainTextPlayer", RpcTarget.AllBuffered, currentPlayerName, true, points, "");
             MansionActionButtons.SetActive(false); OtherActionButtons.SetActive(true);
             LeftMenuControl.GetComponent<LeftMenuControl>().SetPlus1Text();
+            HandCardStats.GetComponent<HandCardStatsControl>().MansionSetPlayerWins(true);
 
-            
+
         }
     }
     [PunRPC] public void RPC_SendCardToPlayer(bool chooseBottomCard)
@@ -315,6 +316,7 @@ public class MansionControl : MonoBehaviourPun
                 view.RPC("RPC_SetMainTextPlayer", RpcTarget.AllBuffered, currentPlayerName, false, dmg, "");
 
             MansionActionButtons.SetActive(false); OtherActionButtons.SetActive(true);
+            HandCardStats.GetComponent<HandCardStatsControl>().MansionSetPlayerWins(true);
         }
     }
     [PunRPC] private void RPC_SendCardBottomOfTheDeck(bool chooseBottomCard)

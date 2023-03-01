@@ -96,7 +96,7 @@ public class HPContol : MonoBehaviour
         {
             slider.value += 5;
             HPChange();
-            ShowHPDiff(true);
+            ShowHPDiff(+5);
         }
     }
     public void OnClickTakeHP()
@@ -105,8 +105,22 @@ public class HPContol : MonoBehaviour
         {
             slider.value -= 5;
             HPChange();
-            ShowHPDiff(false);
+            ShowHPDiff(-5);
         }
+    }
+    public void AddOrRemoveHP(int value) //Manual
+    {
+        if (myHP+value > myMaxHP)
+        {
+            slider.value = myMaxHP;
+        }
+        else
+        {
+            slider.value += value;
+        }
+        HPChange();
+        ShowHPDiff(value);
+
     }
 
     public void HPChange()
@@ -144,13 +158,12 @@ public class HPContol : MonoBehaviour
             otherMaxHpTxt.text = "YOU ARE DEAD";
 
     }
-    private void ShowHPDiff(bool addHP)
+    private void ShowHPDiff(int value)
     {
-        if(!addHP) //If you lose hp
-            myHPDiff -= 5;
-        else if (myMaxHP > 0) //If you get hp but are not dead
-            myHPDiff += 5;
-
+        if (myMaxHP > 0) //If you get hp but are not dead 
+            myHPDiff += value;
+                
+        
         if(myHPDiff==0)
         {
             hpPlus.text = ""; hpMinus.text = "";
@@ -162,7 +175,10 @@ public class HPContol : MonoBehaviour
         }
         else if (myHPDiff>0)
         {
-            hpPlus.text = "+" + myHPDiff;
+            if (value > myMaxHP)
+                hpPlus.text = "+MAX";
+            else
+                hpPlus.text = "+" + myHPDiff;
             hpMinus.text = "";
         }
     }

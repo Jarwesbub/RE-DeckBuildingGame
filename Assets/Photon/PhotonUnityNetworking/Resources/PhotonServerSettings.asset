@@ -137,6 +137,21 @@ MonoBehaviour:
   - SetArrayValuesToClients
   - Pun_SetAllShopCardSprites
   - Pun_StartGameInfo
+  - SetHandCardNotVisible
+  - SetHandCardVisibility
+  - ShowCustomText
+  - Pun_ShowCustomText
+  - RPC_PlayerTurnEnds
+  - Pun_UpdateBuysAndGoldText
+  - SetShopOpen
+  - Pun_PublicSetShopOpen
+  - UpdateBuysAndGoldText
+  - Pun_DrawPlayAreaText
+  - Pun_ResetPlayArea
+  - Rpc_AddBuyToUI
+  - Pun_AddToWeaponStats
+  - Pun_SetPlayArea
+  - Pun_AddMaxBuysToUI
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

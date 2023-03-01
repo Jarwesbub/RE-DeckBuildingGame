@@ -1,5 +1,5 @@
+ras_psg1
 ras_rifle1
-ras_rifle1
-ras_rifle1
-ras_rifle1
+ras_rifle2
+ras_rifle3
 ras_svd
