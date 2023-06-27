@@ -4,6 +4,9 @@ using Photon.Pun;
 using Photon.Realtime;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using TMPro;
+using System.IO;
+using System.Linq;
+
 
 //LobbyRoom.scene script
 //Attach this script to object that contains "OverwriteTextFileList.cs" -script
@@ -19,7 +22,7 @@ public class LobbyRoomOpen : MonoBehaviourPunCallbacks
     {
         view = GetComponent<PhotonView>();
         PhotonNetwork.AutomaticallySyncScene = true; //Works with PhotonNetwork.LoadLevel();
-        GameStats.playerInfos = new Hashtable(); //Set new (empty) Hashtable in GameStats script
+        GameStats.PlayerInfos = new Hashtable(); //Set new (empty) Hashtable in GameStats script
         isMaster = PhotonNetwork.IsMasterClient;
 
         if (isMaster)
@@ -48,8 +51,20 @@ public class LobbyRoomOpen : MonoBehaviourPunCallbacks
             PhotonNetwork.CurrentRoom.IsOpen = false; //Set room unjoinable before creating character cards
             int playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
 
-            int deckType = GameStats.CharacterDeckValue; // 0 = ORIGINAL , 1 = CUSTOM
-            string[] characterCardsList = CharacterList.GetComponent<AllCharacterCards>().GetCharacterCardsByType(deckType);
+            int deckType = GameStats.CharacterDeckType; // 0 = ORIGINAL , 1 = CUSTOM
+            //string[] characterCardsList = CharacterList.GetComponent<AllCharacterCards>().GetSupportedCharacterCardsByType(deckType);
+            //CharacterCardsList allCharCards = new();
+            //string[] characterCardsList = allCharCards.GetSupportedCharacterCardsByType(deckType);
+            int cardIndex = GameStats.CharacterDeckValue;
+            if (cardIndex == 0) cardIndex = 1;
+            string dataPath = Application.persistentDataPath + "/Custom_data/CharacterCards" + cardIndex + ".txt";
+            string[] characterCardsList = File.ReadAllLines(dataPath).ToArray();
+            if(characterCardsList.Length <= 1) // No cards in deck (only deck name)
+            {
+                dataPath = Application.persistentDataPath + "/Custom_data/CharacterCards1.txt";
+                characterCardsList = File.ReadAllLines(dataPath).ToArray();
+                Debug.Log("CharacterCards" + cardIndex + " is empty! Switched to CharacterCards1");
+            }
 
             int cardCount = characterCardsList.Length;
             int[] randomNumbers = new int[playerCount];
@@ -58,7 +73,7 @@ public class LobbyRoomOpen : MonoBehaviourPunCallbacks
             {
                 for (int i = 0; i < playerCount; i++)
                 {
-                    int number = Random.Range(0, cardCount);
+                    int number = Random.Range(1, cardCount); // Skips first row (deck name)
                     randomNumbers[i] = number;
 
                     while (!randomNumbers.Contains(number))
@@ -72,7 +87,7 @@ public class LobbyRoomOpen : MonoBehaviourPunCallbacks
             {
                 for (int i = 0; i < playerCount; i++)
                 {
-                    int number = Random.Range(0, cardCount);
+                    int number = Random.Range(1, cardCount); // Skips first row (deck name)
                     randomNumbers[i] = number;
                 }
             }
@@ -98,7 +113,7 @@ public class LobbyRoomOpen : MonoBehaviourPunCallbacks
     }
     [PunRPC] private void PRC_AddPlayerInfos(int id, string card)
     {
-        GameStats.playerInfos.Add(id, card);
+        GameStats.PlayerInfos.Add(id, card);
     }
 
     [PunRPC] public void RPC_GoToGameScene()

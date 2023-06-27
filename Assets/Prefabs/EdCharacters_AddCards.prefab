@@ -121,8 +121,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2837674038822640844}
-        m_TargetAssemblyTypeName: UIEdMansion_Cards, Assembly-CSharp
+      - m_Target: {fileID: 8096143235399484404}
+        m_TargetAssemblyTypeName: UIEdCharacter_Cards, Assembly-CSharp
         m_MethodName: OnClickChangeCardShowcaseImage
         m_Mode: 1
         m_Arguments:
@@ -145,9 +145,9 @@ GameObject:
   - component: {fileID: 2564409225766672906}
   - component: {fileID: 2564409225766672907}
   - component: {fileID: 2564409225766672904}
-  - component: {fileID: 2837674038822640844}
+  - component: {fileID: 8096143235399484404}
   m_Layer: 5
-  m_Name: EdMansion_AddCards 1
+  m_Name: EdCharacters_AddCards
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -234,7 +234,7 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: 1
   m_LayoutPriority: 1
---- !u!114 &2837674038822640844
+--- !u!114 &8096143235399484404
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -243,10 +243,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2564409225766672910}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f58d9f22a84aee409f1b52042d34a00, type: 3}
+  m_Script: {fileID: 11500000, guid: 3cfffb8f1acedf249b8bc2ba3284c5ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newCardAdded: {fileID: 53938553290968984}
 --- !u!1 &5764112537222851280
 GameObject:
   m_ObjectHideFlags: 0
@@ -369,8 +368,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2837674038822640844}
-        m_TargetAssemblyTypeName: UIEdMansion_Cards, Assembly-CSharp
+      - m_Target: {fileID: 8096143235399484404}
+        m_TargetAssemblyTypeName: UIEdCharacter_Cards, Assembly-CSharp
         m_MethodName: OnClickAddCard
         m_Mode: 1
         m_Arguments:

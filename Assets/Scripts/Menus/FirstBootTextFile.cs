@@ -40,8 +40,12 @@ public class FirstBootTextFile : MonoBehaviour
                 i++;
             }
             GameStats.ShopDeckDataCount = i-1; //Index values
-        }    
+        }
 
+        if(!System.IO.File.Exists(customDataFilePath + "CharacterCards1.txt"))
+        {
+            CreateCharacterCards();
+        }
 
 
         MainCanvas.GetComponent<StartMenu>().FirstBootTextFileIsReady(); //Disables button lock!
@@ -109,6 +113,36 @@ public class FirstBootTextFile : MonoBehaviour
         GameStats.MansionDeckCount = cardsCount;
 
         Debug.Log("Custom_data - MansionCard files created!");
+    }
+
+    void CreateCharacterCards()
+    {
+        int cardsCount = 4;
+
+        //CHARACTER CARDS
+        CharacterCardsList allCharCards = new();
+        List<string> characterCardsList = allCharCards.GetSupportedCharacterCardsByType(0).ToList();
+        characterCardsList.Insert(0, "CharacterDeck1");
+
+        for (int i = 1; i <= cardsCount; i++)
+        {
+            if (i == 1) //Base character cards listed in CharacterCardsList class
+            {
+                string writeToCustomFolder = Application.persistentDataPath + "/Custom_data/CharacterCards1.txt";
+                File.WriteAllLines(writeToCustomFolder, characterCardsList);
+            }
+            else //Create empty text files with CharacterCards2-4 name
+            {
+                string[] fileLines = new string[1];
+                fileLines[0] = "CharacterDeck" + i;
+                string writeToCustomFolder = Application.persistentDataPath + "/Custom_data/CharacterCards" + i + ".txt";
+                File.WriteAllLines(writeToCustomFolder, fileLines);
+            }
+        }
+
+        GameStats.CharacterDeckCount = cardsCount;
+        GameStats.CharacterDeckValue = 1;
+
     }
 
     void CreateShopData()

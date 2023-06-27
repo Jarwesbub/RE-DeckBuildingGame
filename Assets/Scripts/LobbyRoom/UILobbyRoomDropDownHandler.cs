@@ -60,8 +60,7 @@ public class UILobbyRoomDropDownHandler : MonoBehaviour
         var dropdown = transform.GetComponent<Dropdown>();
         int cardCount = GameStats.ShopDeckDataCount;
         dropdown.options.Clear();
-        if (cardCount == 0)
-            cardCount++;
+        if (cardCount == 0) cardCount=1;
 
         List<string> items = new List<string>();
 
@@ -96,19 +95,30 @@ public class UILobbyRoomDropDownHandler : MonoBehaviour
     
     private void CharacterType()
     {
+
         var dropdown = transform.GetComponent<Dropdown>();
+        int cardCount = GameStats.CharacterDeckCount;
         dropdown.options.Clear();
+        if (cardCount == 0) cardCount=1;
 
         List<string> items = new List<string>();
-        items.Add("Original");
-        items.Add("Custom");
+
+        for (int i = 1; i <= cardCount; i++)
+        {
+            string textFilePath = Application.persistentDataPath + "/Custom_data/CharacterCards" + i + ".txt";
+            string name = File.ReadLines(textFilePath).First();
+            items.Add(name);
+        }
+
 
         foreach (var item in items)
         {
             dropdown.options.Add(new Dropdown.OptionData() { text = item });
         }
 
-        int value = GameStats.CharacterDeckValue; //0 = Original; 1 = Custom
+        int value = GameStats.CharacterDeckValue;
+        if (value > 0) value--;
+
         dropdown.value = value;
         dropdown.RefreshShownValue();
         dropdown.onValueChanged.AddListener(delegate { CharacterDropDownItemSelected(dropdown); });
@@ -117,7 +127,7 @@ public class UILobbyRoomDropDownHandler : MonoBehaviour
 
     private void CharacterDropDownItemSelected(Dropdown dropdown)
     {
-        int index = dropdown.value; //0 = Original; 1 = Custom
+        int index = dropdown.value + 1;
         GameStats.CharacterDeckValue = index;
     }
 

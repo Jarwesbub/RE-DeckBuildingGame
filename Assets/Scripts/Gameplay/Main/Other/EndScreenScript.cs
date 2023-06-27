@@ -37,7 +37,7 @@ public class EndScreenScript : MonoBehaviour
 
         int id = PhotonRoomMaster.GetComponent<PlayerListControl>().GetWinnerIDNumber();
         string characterCard = "";
-        foreach (DictionaryEntry info in GameStats.playerInfos)
+        foreach (DictionaryEntry info in GameStats.PlayerInfos)
         {
             int _id = (int)info.Key;
 

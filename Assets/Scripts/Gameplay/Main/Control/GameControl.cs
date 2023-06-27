@@ -49,7 +49,7 @@ public class GameControl : MonoBehaviourPunCallbacks
     {
         currentPlayer = PhotonNetwork.PlayerList[0];
         string hostName = currentPlayer.NickName;
-        GameStats.currentPlayerID = currentPlayerID;
+        GameStats.CurrentPlayerID = currentPlayerID;
 
         UIGameControl.GetComponent<GameUIControl>().UIHostStartGame(isMaster); //true = is host, false = is not host
 
@@ -170,7 +170,7 @@ public class GameControl : MonoBehaviourPunCallbacks
     {
         currentPlayer = player;
         currentPlayerID = player.ActorNumber;
-        GameStats.currentPlayerID = currentPlayerID; //TESTING
+        GameStats.CurrentPlayerID = currentPlayerID; //TESTING
         string name = player.NickName;
         playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
 

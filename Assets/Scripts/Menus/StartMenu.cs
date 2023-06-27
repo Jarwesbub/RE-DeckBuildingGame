@@ -21,6 +21,14 @@ public class StartMenu : MonoBehaviour
 
     private void Start()
     {
+        SetMansionDeckCount();
+        SetCharacterDeckCount();
+
+        LeanTween.alphaCanvas(mainCanvas, 1f, 5f);
+        StartCoroutine(ShowPressAnyKey());
+    }
+    private void SetMansionDeckCount()
+    {
         string checkIfEmpty;
         string readFromFilePath;
         int count = 0;
@@ -34,11 +42,27 @@ public class StartMenu : MonoBehaviour
 
         count--;
         GameStats.MansionDeckCount = count;
-        Debug.Log("MansionCards count = " + count);
-
-        LeanTween.alphaCanvas(mainCanvas, 1f, 5f);
-        StartCoroutine(ShowPressAnyKey());
+        Debug.Log("MansionDeck count = " + count);
     }
+
+    private void SetCharacterDeckCount()
+    {
+        string checkIfEmpty;
+        string readFromFilePath;
+        int count = 0;
+        do //Checks all the available "CharacterCards(number).text" -files and counts them
+        {
+            count++;
+            checkIfEmpty = "CharacterCards" + count;
+            readFromFilePath = Application.persistentDataPath + "/Custom_data/" + checkIfEmpty + ".txt";
+        }
+        while (System.IO.File.Exists(readFromFilePath));
+
+        count--;
+        GameStats.CharacterDeckCount = count;
+        Debug.Log("CharacterDeck count = " + count);
+    }
+
     public void FirstBootTextFileIsReady()
     {
         StartCoroutine(ButtonLockTime());

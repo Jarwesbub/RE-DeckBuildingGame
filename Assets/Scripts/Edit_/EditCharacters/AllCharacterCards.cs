@@ -2,15 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AllCharacterCards : MonoBehaviour
+//Newest version
+public class CharacterCardsList
 {
-	public string[] GetCharacterCardsByType(int type) // 0 = ORIGINAL , 1 = CUSTOM
+	public string[] GetSupportedCharacterCardsByType(int type) // 0 = ORIGINAL , 1 = CUSTOM
     {
 		if (type == 1)
-			return GetCustomCharacterCards();
+			return GetAllCustomCharacterCards();
 		else
 			return GetCharacterCards();
 
+	}
+
+	public string[] GetAllNormalCharacterCards()
+	{
+		return GetAllCharacterCards();
 	}
 
 
@@ -49,7 +55,62 @@ public class AllCharacterCards : MonoBehaviour
 
     }
 
-	private string[] GetCustomCharacterCards()
+	private string[] GetAllCharacterCards()
+	{
+        string[] characters = new string[47]
+		{
+        "ch-001_premier_albert_wesker1",
+        "ch-002_premier_leon_s_kennedy1",
+        "ch-003_premier_claire_redfield1",
+        "ch-004_premier_sheva_alomar1",
+        "ch-005_premier_barry_burton1",
+        "ch-006_premier_ada_wong1",
+        "ch-007_premier_jack_krauser1",
+        "ch-008_premier_chris_redfield1",
+        "ch-009_premier_jill_valentine1",
+        "ch-011_alliance_carlos_oliveira1",
+        "ch-012_alliance_josh_stone_partner_mod",
+        "ch-013_alliance_steve_burnside1",
+        "ch-014_alliance_jack_krauser1",
+        "ch-015_alliance_hunk_partner_mod",
+        "ch-016_alliance_jill_valentine_partner_mod",
+        "ch-017_alliance_billy_coen1",
+        "ch-018_alliance_leon_s_kennedy1",
+        "ch-019_alliance_chris_redfield1",
+        "ch-020_alliance_claire_redfield1",
+        "ch-021_outbreak_excella_gionne_infection_mod",
+        "ch-022_outbreak_kevin_ryman",
+        "ch-023_outbreak_david_king",
+        "ch-024_outbreak_mark_wilkins",
+        "ch-025_outbreak_jill_valentine_infection_mod",
+        "ch-026_outbreak_leon_s_kennedy",
+        "ch-027_outbreak_ada_wong",
+        "ch-028_outbreak_chris_redfield",
+        "ch-029_outbreak_rebecca_chambers_infection_mod",
+        "ch-030_outbreak_hunk",
+        "ch-034_nightmare_chris_redfield",
+        "ch-035_nightmare_sergei_vladimir",
+        "ch-036_nightmare_luis_sera",
+        "ch-037_nightmare_josh_stone",
+        "ch-038_nightmare_mikhail_victor",
+        "ch-039_nightmare_carlos_oliveira",
+        "ch-040_nightmare_mysterious_mask",
+        "ch-041_nightmare_albert_wesker",
+        "ch-042_nightmare_leon_s_kennedy",
+        "ch-043_nightmare_ada_wong",
+        "ch-044_mercenaries_jack_krauser",
+        "ch-045_mercenaries_hunk",
+        "ch-046_mercenaries_claire_redfield",
+        "ch-047_mercenaries_chris_redfield",
+        "ch-048_mercenaries_jill_valentine",
+        "ch-049_mercenaries_albert_wesker",
+        "ch-100_rare_promo_cloak_hunk",
+        "ch-101_rare_promo_nurse_rebecca"
+		};
+        return characters;
+    }
+
+	public string[] GetAllCustomCharacterCards()
     {
 		string[] customCharacters = new string[37]
 		{

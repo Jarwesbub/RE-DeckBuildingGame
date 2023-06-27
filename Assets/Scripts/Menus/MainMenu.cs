@@ -59,4 +59,11 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene("EditShop");
 
     }
+
+    public void OnClickCharacterBuilder() //OPTIONS MENU
+    {
+        LoadingScreen.SetActive(true);
+        SceneManager.LoadScene("EditCharacters");
+
+    }
 }

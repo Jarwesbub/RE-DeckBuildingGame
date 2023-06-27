@@ -57,7 +57,7 @@ public class CharacterControl : MonoBehaviourPun
             PlayerIDs.Clear();
         }
 
-        foreach (DictionaryEntry info in GameStats.playerInfos)
+        foreach (DictionaryEntry info in GameStats.PlayerInfos)
         {
             int id = (int)info.Key;
             string card = (string)info.Value;

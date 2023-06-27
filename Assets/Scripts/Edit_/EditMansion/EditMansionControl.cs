@@ -201,7 +201,7 @@ public class EditMansionControl : MonoBehaviour
             //mansionValue = PlayerPrefs.GetInt("MansionType") +1;
             mansionValue = GameStats.MansionDeckValue; // TESTING 12.11.2022
             if (mansionValue == 0) mansionValue++;
-            string file = "MansionCards"+mansionValue;;
+            string file = "MansionCards"+mansionValue;
             LoadTextFileByName(file);
 
             cardCount = CustomDeckCardsList.Count;

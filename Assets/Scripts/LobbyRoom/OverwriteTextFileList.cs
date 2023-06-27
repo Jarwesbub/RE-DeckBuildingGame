@@ -19,7 +19,7 @@ public class OverwriteTextFileList : MonoBehaviourPun
     [SerializeField] string[] actionList1, actionList2, actionList3, actionList4, actionList5, actionList6, actionList7;
     [SerializeField] string[] extraList1, extraList2;
     [SerializeField] LinkedList<string[]> shopCardsList;
-    [SerializeField] string[] startingDeckList, characterCardsList, mansionCardsList;
+    [SerializeField] string[] startingDeckList, mansionCardsList;
     PhotonView view;
 
     private void Start()
@@ -158,7 +158,7 @@ public class OverwriteTextFileList : MonoBehaviourPun
             value = 1;
         //Debug.Log("MansionDeckValue=" + value);
         startingDeckList = ReadFromCustomData("StartingDeckList");
-        characterCardsList = ReadFromCustomData("CharacterList");
+        //characterCardsList = ReadFromCustomData("CharacterList"); //27.06.2023 NO NEED ANYMORE
         mansionCardsList = ReadFromCustomData("MansionCards" + value);
     }
     private string[] ReadFromCustomData(string fileName)
@@ -188,7 +188,7 @@ public class OverwriteTextFileList : MonoBehaviourPun
 
         view.RPC("PUN_CreateAllShopDataCards", RpcTarget.AllBuffered, (object)masterFileLines);
         view.RPC("Pun_OverwriteGameData", RpcTarget.AllBuffered, (object)startingDeckList, "StartingDeckList");
-        view.RPC("Pun_OverwriteGameData", RpcTarget.AllBuffered, (object)characterCardsList, "CharacterList");
+        //view.RPC("Pun_OverwriteGameData", RpcTarget.AllBuffered, (object)characterCardsList, "CharacterList"); //27.06.2023 NO NEED ANYMORE
         view.RPC("Pun_OverwriteGameData", RpcTarget.AllBuffered, (object)mansionCardsList, "MatchMansionCards");
 
         GetComponent<LobbyRoomOpen>().TextFilesAreLoadedToOthers();

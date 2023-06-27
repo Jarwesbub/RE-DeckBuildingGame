@@ -4697,7 +4697,7 @@ GameObject:
   - component: {fileID: 442323337}
   - component: {fileID: 442323336}
   m_Layer: 5
-  m_Name: otherMenu_tmp
+  m_Name: returnTo_tmp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4743,7 +4743,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Other Menu
+  m_text: Return To
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -14566,7 +14566,7 @@ GameObject:
   - component: {fileID: 1530787034}
   - component: {fileID: 1530787033}
   m_Layer: 5
-  m_Name: OtherSettings_btn
+  m_Name: returnTo_btn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

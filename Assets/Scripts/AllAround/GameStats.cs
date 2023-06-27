@@ -11,11 +11,14 @@ public static class GameStats
     public static int ShopDeckDataValue { get; set; }
     public static int ShopDeckDataCount { get; set; }
 
-    public static int CharacterDeckValue { get; set; } //0 = Normal, 1 = Custom
+    public static int CharacterDeckValue { get; set; }
+    public static int CharacterDeckCount { get; set; }
+    public static int CharacterDeckType { get; set; } //0 = Normal, 1 = Custom
 
-    public static int currentPlayerID { get; set; }
 
-    public static Hashtable playerInfos { get; set; }
+    public static int CurrentPlayerID { get; set; }
+
+    public static Hashtable PlayerInfos { get; set; }
 
 }
 

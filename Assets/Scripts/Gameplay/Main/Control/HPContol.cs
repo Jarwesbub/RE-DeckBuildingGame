@@ -44,7 +44,7 @@ public class HPContol : MonoBehaviour
     {
         int characterNumber = 0;
 
-        foreach (DictionaryEntry info in GameStats.playerInfos)
+        foreach (DictionaryEntry info in GameStats.PlayerInfos)
         {
             int id = (int)info.Key;
             string cardName = (string)info.Value;

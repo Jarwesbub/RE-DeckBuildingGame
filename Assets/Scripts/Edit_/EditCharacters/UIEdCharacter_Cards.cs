@@ -4,14 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class UIEdMansion_Cards: MonoBehaviour
+public class UIEdCharacter_Cards : MonoBehaviour
 {
-    private GameObject EditMansionControl, ShowCaseCard;
+    private GameObject EdCharacterControl, ShowCaseCard;
     Image img;
 
     private void Start()
     {
-        EditMansionControl = GameObject.FindWithTag("EditMansionControl");
+        EdCharacterControl = GameObject.FindWithTag("EditMansionControl");
         ShowCaseCard = GameObject.FindWithTag("UICardShowcase");
         img = GetComponent<Image>();
 
@@ -22,7 +22,7 @@ public class UIEdMansion_Cards: MonoBehaviour
     public void OnClickDeleteCard()
     {
         int index = transform.GetSiblingIndex();
-        EditMansionControl.GetComponent<EditMansionControl>().OnUIDeleteCard(index);
+        EdCharacterControl.GetComponent<EditCharacterControl>().OnUIDeleteCard(index);
         Destroy(gameObject);
     }
 
@@ -30,8 +30,8 @@ public class UIEdMansion_Cards: MonoBehaviour
     {
         string name = img.sprite.name;
         name = name.Replace("(Clone)", "");
-        Debug.Log(name+" ADDED!");
-        EditMansionControl.GetComponent<EditMansionControl>().OnUIAddCard(name);
+        Debug.Log(name + " ADDED!");
+        EdCharacterControl.GetComponent<EditCharacterControl>().OnUIAddCard(name);
     }
 
     public void OnClickChangeCardShowcaseImage()

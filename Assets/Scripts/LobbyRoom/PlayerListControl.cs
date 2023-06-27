@@ -52,7 +52,7 @@ public class PlayerListControl : MonoBehaviourPun
     {
         int id = PhotonNetwork.LocalPlayer.ActorNumber;
 
-        if (id == GameStats.currentPlayerID)
+        if (id == GameStats.CurrentPlayerID)
             view.RPC("RPC_UpdatePlayerPoints", RpcTarget.AllBuffered, id, points);
 
     }

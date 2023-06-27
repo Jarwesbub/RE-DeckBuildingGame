@@ -18,6 +18,9 @@ EditorBuildSettings:
     path: Assets/Scenes/EditShop.unity
     guid: d0072b432ee9c944faeed9a840029d51
   - enabled: 1
+    path: Assets/Scenes/EditCharacters.unity
+    guid: fd9e53a4fb2fe074e941b6f59b21dd33
+  - enabled: 1
     path: Assets/Scenes/Loading.unity
     guid: 5d9051fa5cfbfaf44af1313401da3d5f
   - enabled: 1
