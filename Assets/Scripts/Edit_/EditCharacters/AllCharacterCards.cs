@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 //Newest version
@@ -10,7 +11,7 @@ public class CharacterCardsList
 		if (type == 1)
 			return GetAllCustomCharacterCards();
 		else
-			return GetCharacterCards();
+			return GetSupportedCharacterCards();
 
 	}
 
@@ -20,9 +21,9 @@ public class CharacterCardsList
 	}
 
 
-    private string[] GetCharacterCards()
+    private string[] GetSupportedCharacterCards()
     {
-		string[] characters = new string[26]
+		string[] normalCharacters = new string[26]
 		{
 		"ch-001_premier_albert_wesker1",
 		"ch-002_premier_leon_s_kennedy1",
@@ -51,7 +52,9 @@ public class CharacterCardsList
 		"ch-100_rare_promo_cloak_hunk",
 		"ch-101_rare_promo_nurse_rebecca"
 		};
-		return characters;
+		string[] customCharacters = GetAllCustomCharacterCards();
+
+        return normalCharacters.Concat(customCharacters).ToArray(); // Combines normal and custom character arrays
 
     }
 
@@ -109,6 +112,16 @@ public class CharacterCardsList
 		};
         return characters;
     }
+
+	public bool CheckIfCardIsSupported(string cardName)
+	{
+		string[] supportedCards = GetSupportedCharacterCards();
+		if (supportedCards.Contains(cardName))
+		{
+			return true;
+		}
+		return false;
+	}
 
 	public string[] GetAllCustomCharacterCards()
     {

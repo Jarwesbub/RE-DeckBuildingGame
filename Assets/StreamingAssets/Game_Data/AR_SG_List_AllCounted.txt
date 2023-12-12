@@ -1,6 +1,5 @@
-mg_ak
-mg_mp5
 mg_mp5plus
-mg_sig
-mg_thompson
-mg_tmp
+mg_scorpion
+mg_scorpion
+mg_scorpion
+mg_scorpion

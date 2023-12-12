@@ -1,4 +1,5 @@
 ras_automaticshotgun
-ras_hydra
-ras_m3
+ras_shotgun1
+ras_shotgun1
+ras_shotgun1
 ras_shotgun1

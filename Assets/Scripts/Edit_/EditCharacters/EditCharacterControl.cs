@@ -25,7 +25,7 @@ public class EditCharacterControl : MonoBehaviour
     [SerializeField] private List<string> CustomDeckCardsList;
     [SerializeField] private string[] normalCardsList, customCardsList;
     public int textListCount;
-    [SerializeField] private Color32 colorON;
+    [SerializeField] private Color32 colorON, colorOFF;
 
     private void Awake()
     {
@@ -60,6 +60,7 @@ public class EditCharacterControl : MonoBehaviour
         Debug.Log("LEngth=" + length);
         GetComponent<SpriteFromAtlas>().SetMansionCardSprite(s);
         ShowCaseCard1.GetComponent<Image>().sprite = img.sprite;
+
     }
 
     private void UpdateCardsCount(bool reset)
@@ -79,7 +80,7 @@ public class EditCharacterControl : MonoBehaviour
         UI_CurrentDeck.SetActive(true);
         UI_AddCards.SetActive(false);
         currentDeck_btn.GetComponent<Image>().color = colorON;
-        addCards_btn.GetComponent<Image>().color = Color.black;
+        addCards_btn.GetComponent<Image>().color = colorOFF;
     }
     public void OnClickChooseAddCards()
     {
@@ -88,12 +89,12 @@ public class EditCharacterControl : MonoBehaviour
             mainTitleText.text = "Add Character Cards";
             UI_CurrentDeck.SetActive(false);
             UI_AddCards.SetActive(true);
-            currentDeck_btn.GetComponent<Image>().color = Color.black;
+            currentDeck_btn.GetComponent<Image>().color = colorOFF;
             addCards_btn.GetComponent<Image>().color = colorON;
         }
         else
         {
-            StartCoroutine(ShowInConsole("Load your Custom Deck first!"));
+            StartCoroutine(ShowInConsole("Load your Custom Deck first"));
         }
     }
 
@@ -133,14 +134,14 @@ public class EditCharacterControl : MonoBehaviour
                 UI_Custom.SetActive(false);
 
                 normal_btn.GetComponent<Image>().color = colorON;
-                custom_btn.GetComponent<Image>().color = Color.black;
+                custom_btn.GetComponent<Image>().color = colorOFF;
             }
             else // CUSTOM CARDS
             {
                 UI_Normal.SetActive(false);
                 UI_Custom.SetActive(true);
 
-                normal_btn.GetComponent<Image>().color = Color.black;
+                normal_btn.GetComponent<Image>().color = colorOFF;
                 custom_btn.GetComponent<Image>().color = colorON;
             }
 
@@ -160,10 +161,10 @@ public class EditCharacterControl : MonoBehaviour
             UpdateCardsCount(true); //reset = true
 
             if (characterValue != 0)
-                StartCoroutine(ShowInConsole("Custom Deck " + characterValue + " was cleared!"));
+                StartCoroutine(ShowInConsole("Custom Deck " + characterValue + " was cleared"));
         }
     }
-    public void OnClickLoadCustomMansion()
+    public void OnClickLoadData()
     {
         if (!isButtonLock)
         {
@@ -203,7 +204,7 @@ public class EditCharacterControl : MonoBehaviour
         Debug.Log("File loaded: " + name + ".txt");
     }
 
-    public void OnClickSaveCustomMansion()
+    public void OnClickSaveData()
     {
         if (!isButtonLock)
         {
@@ -245,7 +246,7 @@ public class EditCharacterControl : MonoBehaviour
         card.GetComponent<Image>().sprite = img.sprite;
         card.transform.SetParent(CharacterGridContent.transform);
         card.transform.localScale = new Vector3(1f, 1f, 1f);
-        StartCoroutine(ShowInConsole("'" + name + "'" + " was added to Custom Deck " + characterValue));
+        StartCoroutine(ShowInConsole("'" + name + "'" + " was added to the Custom Deck " + characterValue));
         Debug.Log(name + " added!");
         UpdateCardsCount(false); //reset = false
     }
@@ -282,7 +283,8 @@ public class EditCharacterControl : MonoBehaviour
 
             loadSaveInfo.text = "";
             isButtonLock = false;
-            StartCoroutine(ShowInConsole("Deck " + characterValue + " loaded succesfully!"));
+            OnClickSelectNormalType(true);
+            StartCoroutine(ShowInConsole("Deck " + characterValue + " loaded successfully"));
         }
         else //Save
         {
@@ -290,7 +292,7 @@ public class EditCharacterControl : MonoBehaviour
             yield return new WaitForSeconds(1f);
             loadSaveInfo.text = "";
             isButtonLock = false;
-            StartCoroutine(ShowInConsole("Deck " + characterValue + " saved succesfully!"));
+            StartCoroutine(ShowInConsole("Deck " + characterValue + " saved successfully"));
         }
     }
 

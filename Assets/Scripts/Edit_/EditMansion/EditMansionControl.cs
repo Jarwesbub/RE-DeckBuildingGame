@@ -25,7 +25,7 @@ public class EditMansionControl : MonoBehaviour
     [SerializeField] private List<string> CustomDeckCardsList;
     [SerializeField] private string[] LowTierCardsList, MidTierCardsList, HighTierCardsList, ItemCardsList;
     public int textListCount;
-    [SerializeField] private Color32 colorON;
+    [SerializeField] private Color32 colorON, colorOFF;
 
     private void Awake()
     {
@@ -73,7 +73,7 @@ public class EditMansionControl : MonoBehaviour
         UI_CurrentDeck.SetActive(true);
         UI_AddCards.SetActive(false);
         currentDeck_btn.GetComponent<Image>().color = colorON;
-        addCards_btn.GetComponent<Image>().color = Color.black;
+        addCards_btn.GetComponent<Image>().color = colorOFF;
     }
     public void OnClickChooseAddCards()
     {
@@ -82,12 +82,12 @@ public class EditMansionControl : MonoBehaviour
             mainTitleText.text = "Add Enemy Cards";
             UI_CurrentDeck.SetActive(false);
             UI_AddCards.SetActive(true);
-            currentDeck_btn.GetComponent<Image>().color = Color.black;
+            currentDeck_btn.GetComponent<Image>().color = colorOFF;
             addCards_btn.GetComponent<Image>().color = colorON;
         }
         else
         {
-            StartCoroutine(ShowInConsole("Load your Custom Deck first!"));
+            StartCoroutine(ShowInConsole("Load your Custom Deck first"));
         }
     }
 
@@ -133,9 +133,9 @@ public class EditMansionControl : MonoBehaviour
                 UI_Items.SetActive(false);
 
                 easy_btn.GetComponent<Image>().color = colorON;
-                normal_btn.GetComponent<Image>().color = Color.black;
-                hard_btn.GetComponent<Image>().color = Color.black;
-                items_btn.GetComponent<Image>().color = Color.black;
+                normal_btn.GetComponent<Image>().color = colorOFF;
+                hard_btn.GetComponent<Image>().color = colorOFF;
+                items_btn.GetComponent<Image>().color = colorOFF;
             }
             else if (value == 1) //NORMAL
             {
@@ -144,10 +144,10 @@ public class EditMansionControl : MonoBehaviour
                 UI_HardTier.SetActive(false);
                 UI_Items.SetActive(false);
 
-                easy_btn.GetComponent<Image>().color = Color.black;
+                easy_btn.GetComponent<Image>().color = colorOFF;
                 normal_btn.GetComponent<Image>().color = colorON;
-                hard_btn.GetComponent<Image>().color = Color.black;
-                items_btn.GetComponent<Image>().color = Color.black;
+                hard_btn.GetComponent<Image>().color = colorOFF;
+                items_btn.GetComponent<Image>().color = colorOFF;
             }
             else if (value == 2)  //2 = HARD
             {
@@ -156,10 +156,10 @@ public class EditMansionControl : MonoBehaviour
                 UI_HardTier.SetActive(true);
                 UI_Items.SetActive(false);
 
-                easy_btn.GetComponent<Image>().color = Color.black;
-                normal_btn.GetComponent<Image>().color = Color.black;
+                easy_btn.GetComponent<Image>().color = colorOFF;
+                normal_btn.GetComponent<Image>().color = colorOFF;
                 hard_btn.GetComponent<Image>().color = colorON;
-                items_btn.GetComponent<Image>().color = Color.black;
+                items_btn.GetComponent<Image>().color = colorOFF;
             }
             else // 3 = MANSION ITEMS
             {
@@ -168,9 +168,9 @@ public class EditMansionControl : MonoBehaviour
                 UI_HardTier.SetActive(false);
                 UI_Items.SetActive(true);
 
-                easy_btn.GetComponent<Image>().color = Color.black;
-                normal_btn.GetComponent<Image>().color = Color.black;
-                hard_btn.GetComponent<Image>().color = Color.black;
+                easy_btn.GetComponent<Image>().color = colorOFF;
+                normal_btn.GetComponent<Image>().color = colorOFF;
+                hard_btn.GetComponent<Image>().color = colorOFF;
                 items_btn.GetComponent<Image>().color = colorON;
             }
 
@@ -190,7 +190,7 @@ public class EditMansionControl : MonoBehaviour
             UpdateCardsCount(true); //reset = true
 
             if (mansionValue != 0)
-                StartCoroutine(ShowInConsole("Custom Deck " + mansionValue + " was cleared!"));
+                StartCoroutine(ShowInConsole("Custom Deck " + mansionValue + " was cleared"));
         }
     }
     public void OnClickLoadCustomMansion()
@@ -288,8 +288,8 @@ public class EditMansionControl : MonoBehaviour
         card.GetComponent<Image>().sprite = img.sprite;
         card.transform.SetParent(MansionGridContent.transform);
         card.transform.localScale = new Vector3(1f, 1f, 1f);
-        StartCoroutine(ShowInConsole("'" +name+ "'" + " was added to Custom Deck " + mansionValue));
-        Debug.Log(name + " added!");
+        StartCoroutine(ShowInConsole("'" +name+ "'" + " was added to the Custom Deck " + mansionValue));
+        Debug.Log(name + " added");
         UpdateCardTierCountByName(name, true);
     }
     private void UpdateCardTierCountByName(string name, bool add)
@@ -352,7 +352,8 @@ public class EditMansionControl : MonoBehaviour
             //currentDeckName.text = "Custom Deck " + mansionValue;
             loadSaveInfo.text = "";
             isButtonLock = false;
-            StartCoroutine(ShowInConsole("Custom Deck " + mansionValue + " loaded succesfully!"));
+            OnClickSelectEnemyTier(0);
+            StartCoroutine(ShowInConsole("Custom Deck " + mansionValue + " loaded successfully"));
         }
         else //Save
         {
@@ -360,7 +361,7 @@ public class EditMansionControl : MonoBehaviour
             yield return new WaitForSeconds(1f);
             loadSaveInfo.text = "";
             isButtonLock = false;
-            StartCoroutine(ShowInConsole("Custom Deck " + mansionValue + " saved succesfully!"));
+            StartCoroutine(ShowInConsole("Custom Deck " + mansionValue + " saved successfully"));
         }
     }
 

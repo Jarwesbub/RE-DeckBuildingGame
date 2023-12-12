@@ -11,7 +11,7 @@ using TMPro;
 public class ShopControl : ShopBaseControl   //
 {
     private GameObject SpawnCards;
-    public TMP_Text Sold, BuysCounttxt;
+    public TMP_Text Sold, BuysCounttxt, BuysCount2txt;
     public GameObject LeftMenuControl;
     public GameObject ShopScrollBar, Shop_Items;
     private float scrollBarValue;
@@ -35,6 +35,7 @@ public class ShopControl : ShopBaseControl   //
         Sold.text = "";
         buysCount = 0;
         BuysCounttxt.text = "Buys (B) = "+buysCount;
+        BuysCount2txt.text = "Buys (B) = " + buysCount;
 
         SetCountValuesList();
 
@@ -155,6 +156,7 @@ public class ShopControl : ShopBaseControl   //
             buysCount++;
 
             BuysCounttxt.text = "Buys (B) = " + buysCount;
+            BuysCount2txt.text = "Buys (B) = " + buysCount;
 
     }
     IEnumerator ExtraRandomCard()

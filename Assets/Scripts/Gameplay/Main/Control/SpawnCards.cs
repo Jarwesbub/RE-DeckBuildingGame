@@ -110,7 +110,7 @@ public class SpawnCards : MonoBehaviourPun
     private void SetDeckCountText()
     {
          deckCountTxt.text = "Deck: " + sDeck.Count;
-         discardpileCountTxt.text = "Discardpile: " + sDiscardPileCards.Count;
+         discardpileCountTxt.text = "Discard pile: " + sDiscardPileCards.Count;
     }
 
 

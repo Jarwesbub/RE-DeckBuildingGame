@@ -7,7 +7,8 @@ using TMPro;
 public class UIEdCharacter_Cards : MonoBehaviour
 {
     private GameObject EdCharacterControl, ShowCaseCard;
-    Image img;
+    private Image img;
+    [SerializeField] TMP_Text supportedText;
 
     private void Start()
     {
@@ -15,6 +16,19 @@ public class UIEdCharacter_Cards : MonoBehaviour
         ShowCaseCard = GameObject.FindWithTag("UICardShowcase");
         img = GetComponent<Image>();
 
+        CharacterCardsList cardsList = new();
+        string name = img.sprite.name;
+        name = name.Replace("(Clone)", "");
+        if (cardsList.CheckIfCardIsSupported(name))
+        {
+            supportedText.text = "Supported";
+            supportedText.color = Color.green;
+        } 
+        else
+        {
+            supportedText.text = "Not supported";
+            supportedText.color = Color.red;
+        }
 
     }
 
